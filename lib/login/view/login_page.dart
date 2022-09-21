@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newtook/login/bloc/login_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../../qr/qr.dart';
+import '../../pages/qr/qr.dart';
 import 'login_form.dart';
 
 class LoginPage extends StatelessWidget {
