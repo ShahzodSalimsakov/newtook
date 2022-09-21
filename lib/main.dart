@@ -19,18 +19,13 @@ import 'app.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final storage = await HydratedStorage.build(
-    storageDirectory: kIsWeb
-        ? HydratedStorage.webStorageDirectory
-        : await getTemporaryDirectory(),
+    storageDirectory: await getTemporaryDirectory(),
   );
 
   HydratedBlocOverrides.runZoned(
       () => {
             runApp(
-              App(
-                authenticationRepository: AuthenticationRepository(),
-                userRepository: UserRepository(),
-              ),
+              App(),
             )
           },
       storage: storage);
