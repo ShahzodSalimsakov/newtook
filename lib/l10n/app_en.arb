@@ -1,4 +1,8 @@
 {
     "scan": "Scan",
-    "scan_brand_qr": "Scan Brand Code"
+    "scan_brand_qr": "Scan Brand Code",
+    "profile": "Profile",
+    "orders": "Orders",
+    "settings": "Settings"
+
 }

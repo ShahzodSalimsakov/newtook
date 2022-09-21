@@ -1,4 +1,7 @@
 {
     "scan": "Skanerlang",
-    "scan_brand_qr": "Brand QR-kodni skanerlang"
+    "scan_brand_qr": "Brand QR-kodni skanerlang",
+    "profile": "Profil",
+    "orders": "Buyurtmalar",
+    "settings": "Sozlamalar"
 }
