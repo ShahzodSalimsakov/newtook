@@ -29,6 +29,12 @@ class _$AppRouter extends RootStackRouter {
         child: const HomePage(),
       );
     },
+    QRRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const QRPage(),
+      );
+    },
   };
 
   @override
@@ -40,6 +46,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           HomeRoute.name,
           path: '/home',
+        ),
+        RouteConfig(
+          QRRoute.name,
+          path: '/qr',
         ),
       ];
 }
@@ -66,4 +76,16 @@ class HomeRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'HomeRoute';
+}
+
+/// generated route for
+/// [QRPage]
+class QRRoute extends PageRouteInfo<void> {
+  const QRRoute()
+      : super(
+          QRRoute.name,
+          path: '/qr',
+        );
+
+  static const String name = 'QRRoute';
 }

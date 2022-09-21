@@ -1,4 +1,8 @@
 {
     "scan": "Scan",
-    "scan_brand_qr": "Scan Brand Code"
+    "scan_brand_qr": "Scan Brand Code",
+    "app_clients_intro_title": "Connect to the service",
+    "app_clients_intro_description": "Scan the brand code to connect to the service. If you don't have a code, ask the delivery manager.",
+    "error_label": "Error",
+    "this_service_is_not_valid": "This service is not valid"
 }

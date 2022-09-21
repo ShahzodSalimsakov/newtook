@@ -1,4 +1,8 @@
 {
     "scan": "Skanerlang",
-    "scan_brand_qr": "Brand QR-kodni skanerlang"
+    "scan_brand_qr": "Brand QR-kodni skanerlang",
+    "app_clients_intro_title": "Xizmatga ulaning",
+    "app_clients_intro_description": "Brand QR-kodini skanerlang, xizmatga ulaning. Agar sizda QR-kod yo'q bo'lsa, yetkazib beruvchining menejeriga so'rang.",
+    "error_label": "Xato",
+    "this_service_is_not_valid": "Bu xizmat haqiqiy emas"
 }

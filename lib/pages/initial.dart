@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:newtook/bloc/block_imports.dart';
-import 'package:newtook/pages/qr/qr.dart';
+import 'api_client_intro/api_client_intro.dart';
 
 class InitialPage extends StatelessWidget {
   const InitialPage({Key? key}) : super(key: key);
@@ -23,7 +21,7 @@ class _InitialPageView extends StatelessWidget {
         builder: (context, state) {
       print(state.apiClients);
       if (state.apiClients.isEmpty) {
-        return QRViewWidget();
+        return const ApiClientIntroPage();
       } else {
         return const Center(child: Text('Initial Page'));
       }
