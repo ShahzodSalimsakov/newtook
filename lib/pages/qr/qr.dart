@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -87,6 +88,14 @@ class _QRViewWidgetState extends State<QRViewWidget> {
                                 }
                               },
                             )),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.all(8),
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              AutoRouter.of(context).replaceNamed('/home');
+                            },
+                            child: Icon(Icons.home)),
                       )
                     ],
                   ),

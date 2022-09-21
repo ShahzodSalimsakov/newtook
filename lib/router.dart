@@ -9,7 +9,7 @@ part 'router.gr.dart';
   replaceInRouteName: 'Page,Route',
   routes: <AutoRoute>[
     AutoRoute(page: InitialPage, initial: true),
-    AutoRoute(page: HomePage, path: '/'),
+    AutoRoute(page: HomePage, path: '/home'),
   ],
 )
 // extend the generated private router

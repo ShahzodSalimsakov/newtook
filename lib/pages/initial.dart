@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:newtook/bloc/block_imports.dart';
+import 'package:newtook/pages/qr/qr.dart';
 
 class InitialPage extends StatelessWidget {
   const InitialPage({Key? key}) : super(key: key);
@@ -20,12 +21,12 @@ class _InitialPageView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ApiClientsBloc, ApiClientsState>(
         builder: (context, state) {
-      print(state);
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
+      print(state.apiClients);
+      if (state.apiClients.isEmpty) {
+        return QRViewWidget();
+      } else {
+        return const Center(child: Text('Initial Page'));
+      }
     });
   }
 }

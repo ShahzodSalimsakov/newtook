@@ -39,7 +39,7 @@ class _$AppRouter extends RootStackRouter {
         ),
         RouteConfig(
           HomeRoute.name,
-          path: '/',
+          path: '/home',
         ),
       ];
 }
@@ -62,7 +62,7 @@ class HomeRoute extends PageRouteInfo<void> {
   const HomeRoute()
       : super(
           HomeRoute.name,
-          path: '/',
+          path: '/home',
         );
 
   static const String name = 'HomeRoute';
