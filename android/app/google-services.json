@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "92327347967",
+    "project_id": "arryt-b201e",
+    "storage_bucket": "arryt-b201e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92327347967:android:a81e5e2848167b0816eeca",
+        "android_client_info": {
+          "package_name": "com.example.newtook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "92327347967-nr5o80cb2t1jg18gjh38vafsg9jn0q6r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDz5DeoDqhOQuO2e3g2rp40TYo-vSItZHE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "92327347967-nr5o80cb2t1jg18gjh38vafsg9jn0q6r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "92327347967-i90lg2brvpj5do6u2u8737phetfh5f8m.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.newtook"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
