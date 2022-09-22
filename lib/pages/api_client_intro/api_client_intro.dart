@@ -52,13 +52,12 @@ class ApiClientIntroPage extends StatelessWidget {
                   //     title: AppLocalizations.of(context)!.scan,
                   //   ),
                   // ),
-                  GestureDetector(
+                  InkWell(
                     onTap: () {
                       AutoRouter.of(context).pushNamed('/qr');
                     },
                     child: Container(
                       height: 50,
-                      width: double.infinity,
                       decoration: BoxDecoration(
                         color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.circular(40),

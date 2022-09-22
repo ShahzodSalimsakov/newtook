@@ -35,6 +35,14 @@ class _$AppRouter extends RootStackRouter {
         child: const QRPage(),
       );
     },
+    LoginTypePhoneRoute.name: (routeData) {
+      final args = routeData.argsAs<LoginTypePhoneRouteArgs>(
+          orElse: () => const LoginTypePhoneRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: LoginTypePhonePage(key: args.key),
+      );
+    },
   };
 
   @override
@@ -50,6 +58,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           QRRoute.name,
           path: '/qr',
+        ),
+        RouteConfig(
+          LoginTypePhoneRoute.name,
+          path: '/login/type-phone',
         ),
       ];
 }
@@ -88,4 +100,28 @@ class QRRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'QRRoute';
+}
+
+/// generated route for
+/// [LoginTypePhonePage]
+class LoginTypePhoneRoute extends PageRouteInfo<LoginTypePhoneRouteArgs> {
+  LoginTypePhoneRoute({Key? key})
+      : super(
+          LoginTypePhoneRoute.name,
+          path: '/login/type-phone',
+          args: LoginTypePhoneRouteArgs(key: key),
+        );
+
+  static const String name = 'LoginTypePhoneRoute';
+}
+
+class LoginTypePhoneRouteArgs {
+  const LoginTypePhoneRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'LoginTypePhoneRouteArgs{key: $key}';
+  }
 }

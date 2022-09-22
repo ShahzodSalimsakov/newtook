@@ -4,5 +4,11 @@
     "app_clients_intro_title": "Подключитесь к сервису",
     "app_clients_intro_description": "Отсканируйте QR-код бренда, чтобы подключиться к сервису. Если у вас нет QR-кода, запросите у менеджера по доставке.",
     "error_label": "Ошибка",
-    "this_service_is_not_valid": "Этот сервис не действителен"
+    "this_service_is_not_valid": "Этот сервис не действителен",
+    "profile": "Профиль",
+    "orders": "Заказы",
+    "settings": "Настройки",
+    "typed_phone_incorrect": "Неверный формат номера телефона",
+    "phone_field_label": "Номер телефона",
+    "send_code": "Отправить код"
 }

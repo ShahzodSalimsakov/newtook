@@ -6,6 +6,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hex/hex.dart';
+import 'package:newtook/bloc/block_imports.dart';
+import 'package:newtook/pages/login/type_phone.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
@@ -144,7 +146,7 @@ class _QRViewWidgetState extends State<QRViewWidgetPage> {
     // we need to listen for Flutter SizeChanged notification and update controller
     return QRView(
       key: qrKey,
-      onQRViewCreated: _onQRViewCreated,
+      onQRViewCreated: (controller) => _onQRViewCreated(controller, context),
       overlay: QrScannerOverlayShape(
           borderColor: Colors.red,
           borderRadius: 10,
@@ -155,7 +157,7 @@ class _QRViewWidgetState extends State<QRViewWidgetPage> {
     );
   }
 
-  void _onQRViewCreated(QRViewController controller) {
+  void _onQRViewCreated(QRViewController controller, BuildContext context) {
     setState(() {
       this.controller = controller;
     });
@@ -194,14 +196,15 @@ class _QRViewWidgetState extends State<QRViewWidgetPage> {
         }
         ''',
         );
+        print(response.body);
         var result = jsonDecode(response.body);
         if (result['errors'] != null) {
           _onErrorServiceCheck(context);
         } else {
-          _onSuccessServiceCheck(context);
+          _onSuccessServiceCheck(context, serviceName, apiUrl);
         }
-        print(response.body);
       } catch (e) {
+        print(e);
         _onErrorServiceCheck(context);
       }
     });
@@ -241,26 +244,40 @@ class _QRViewWidgetState extends State<QRViewWidgetPage> {
         });
   }
 
-  void _onSuccessServiceCheck(BuildContext context) {
+  Future<void> _onSuccessServiceCheck(
+      BuildContext context, String serviceName, String apiUrl) async {
     setState(() {
       isShowLoading = false;
     });
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text('Success'),
-            content: Text('Service:'),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    controller!.resumeCamera();
-                  },
-                  child: const Text('OK'))
-            ],
-          );
-        });
+    BlocProvider.of<ApiClientsBloc>(context).add(ApiClientsAdd(
+        apiUrl: apiUrl, serviceName: serviceName, isServiceDefault: true));
+    // context.read<ApiClientsBloc>().add(ApiClientsAdd(
+    //     apiUrl: apiUrl, serviceName: serviceName, isServiceDefault: true));
+    await Future.delayed(Duration.zero);
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => LoginTypePhonePage(),
+      ),
+    );
+    // AutoRouter.of(context).replaceNamed('/login/type-phone');
+    // ApiClientsBloc apiClientsBloc = BlocProvider.of<ApiClientsBloc>(context);
+    // print(apiClientsBloc.state.apiClients);
+    // showDialog(
+    //     context: context,
+    //     builder: (context) {
+    //       return AlertDialog(
+    //         title: const Text('Success'),
+    //         content: Text('Service:'),
+    //         actions: [
+    //           TextButton(
+    //               onPressed: () {
+    //                 Navigator.of(context).pop();
+    //                 controller!.resumeCamera();
+    //               },
+    //               child: const Text('OK'))
+    //         ],
+    //       );
+    //     });
   }
 
   @override

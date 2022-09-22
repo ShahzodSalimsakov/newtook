@@ -7,8 +7,7 @@ class InitialPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (_) => ApiClientsBloc(), child: const _InitialPageView());
+    return const _InitialPageView();
   }
 }
 
