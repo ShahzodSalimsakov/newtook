@@ -54,6 +54,7 @@ class ApiClients extends Equatable {
   }
 
   factory ApiClients.fromMap(Map<String, dynamic> map) {
+    print(map['apiUrl']);
     return ApiClients(
       apiUrl: map['apiUrl'] as String,
       serviceName: map['serviceName'] as String,

@@ -42,12 +42,18 @@ class ApiClientsBloc extends HydratedBloc<ApiClientsEvent, ApiClientsState> {
       ));
       emit(ApiClientsInitial(apiClients: apiClients));
     });
+    on<ApiClientsRemoveAllIsServiceDefault>((event, emit) {
+      final apiClients = List<ApiClients>.from(state.apiClients);
+      apiClients.removeWhere((element) => element.isServiceDefault == true);
+      emit(ApiClientsInitial(apiClients: apiClients));
+    });
   }
 
   @override
-  ApiClientsState? fromJson(Map<String, dynamic> json) => json['value']
-      .map<ApiClients>((item) => ApiClients.fromMap(item))
-      .toList();
+  ApiClientsState? fromJson(Map<String, dynamic> json) => ApiClientsInitial(
+      apiClients: List<ApiClients>.from(jsonDecode(json['value'])
+          .map((e) => ApiClients.fromJson(e))
+          .toList()));
 
   @override
   Map<String, dynamic>? toJson(ApiClientsState state) =>

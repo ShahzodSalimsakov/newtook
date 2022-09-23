@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newtook/bloc/block_imports.dart';
+import 'package:newtook/pages/orders/orders.dart';
 import 'api_client_intro/api_client_intro.dart';
 
 class InitialPage extends StatelessWidget {
@@ -22,7 +23,8 @@ class _InitialPageView extends StatelessWidget {
       if (state.apiClients.isEmpty) {
         return const ApiClientIntroPage();
       } else {
-        return const Center(child: Text('Initial Page'));
+        return const OrdersPage();
+        // return const Center(child: Text('Initial Page'));
       }
     });
   }

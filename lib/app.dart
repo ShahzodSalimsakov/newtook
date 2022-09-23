@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:newtook/bloc/block_imports.dart';
+import 'package:newtook/bloc/user_data/user_data_bloc.dart';
 import 'package:newtook/router.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -37,7 +38,11 @@ class _AppViewState extends State<AppView> {
         ),
         BlocProvider<OtpPhoneNumberBloc>(
           create: (context) => OtpPhoneNumberBloc(),
-        )
+        ),
+        BlocProvider<OtpTokenBloc>(
+          create: (context) => OtpTokenBloc(),
+        ),
+        BlocProvider<UserDataBloc>(create: (context) => UserDataBloc())
       ],
       child: MaterialApp.router(
           debugShowCheckedModeBanner: false,

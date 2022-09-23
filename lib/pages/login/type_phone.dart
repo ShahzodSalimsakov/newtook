@@ -1,11 +1,19 @@
+import 'dart:convert';
+
+import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:newtook/bloc/block_imports.dart';
 import 'package:newtook/bloc/otp_phone_number/otp_phone_number_bloc.dart';
 import 'package:newtook/helpers/api_graphql_provider.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:http/http.dart' as http;
 
 import '../../widgets/wave/wave_widget.dart';
 
@@ -20,10 +28,78 @@ class _LoginTypePhonePageState extends State<LoginTypePhonePage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   final TextEditingController controller = TextEditingController();
+  final RoundedLoadingButtonController _btnController =
+      RoundedLoadingButtonController();
 
   String initialCountry = 'UZ';
 
   PhoneNumber number = PhoneNumber(isoCode: 'UZ');
+
+  String phoneNumber = '';
+  bool isInputValid = false;
+
+  void trySendPhoneNumber() async {
+    if (isInputValid) {
+      BlocProvider.of<OtpPhoneNumberBloc>(context).add(
+        OtpPhoneNumberChanged(
+          phoneNumber: phoneNumber,
+        ),
+      );
+      ApiClientsBloc apiClientsBloc = BlocProvider.of<ApiClientsBloc>(context);
+
+      // get first isServiceDefault client
+      ApiClients? apiClient = apiClientsBloc.state.apiClients
+          .firstWhere((element) => element.isServiceDefault == true);
+      if (apiClient != null) {
+        // send phone number to server
+        var requestBody = '''
+        {
+          "query": "mutation {sendOtp(phone: \\"$phoneNumber\\") {\\n details}}\\n",
+          "variables": null
+        }
+        ''';
+        var response = await http.post(
+          Uri.parse('https://${apiClient.apiUrl}/graphql'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: requestBody,
+        );
+        var result = jsonDecode(response.body);
+        if (result['errors'] != null) {
+          // show snackbar with error
+          AnimatedSnackBar.material(
+            AppLocalizations.of(context)!.error_label,
+            type: AnimatedSnackBarType.error,
+          ).show(context);
+        } else {
+          var details = result['data']['sendOtp']['details'];
+          OtpTokenBloc otpTokenBloc = BlocProvider.of<OtpTokenBloc>(context);
+          otpTokenBloc.add(OtpTokenChanged(token: details));
+          _btnController.success();
+          _btnController.reset();
+          // zero delayed
+          Future.delayed(Duration(milliseconds: 200), () {
+            AutoRouter.of(context).pushNamed('/login/type-otp');
+          });
+        }
+      }
+
+      _btnController.success();
+    } else {
+      // show snackbar with error
+
+      _btnController.error();
+      AnimatedSnackBar.material(
+        AppLocalizations.of(context)!.typed_phone_incorrect,
+        type: AnimatedSnackBarType.error,
+      ).show(context);
+      Future.delayed(const Duration(seconds: 1), () {
+        _btnController.reset();
+      });
+      // _btnController.reset();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,12 +117,37 @@ class _LoginTypePhonePageState extends State<LoginTypePhonePage> {
           AnimatedPositioned(
             duration: Duration(milliseconds: 500),
             curve: Curves.easeOutQuad,
-            top: keyboardOpen ? -size.height / 3.7 : 0.0,
+            top: keyboardOpen ? -size.height / 6 : 0.0,
             child: WaveWidget(
               size: size,
-              yOffset: size.height / 2.5,
+              yOffset: size.height / 2,
               color: Colors.white,
             ),
+          ),
+          Padding(
+              padding: const EdgeInsets.only(top: 50, left: 20),
+              child: GestureDetector(
+                onTap: () {
+                  ApiClientsBloc apiClientsBloc =
+                      BlocProvider.of<ApiClientsBloc>(context);
+                  apiClientsBloc.add(ApiClientsRemoveAllIsServiceDefault());
+                  AutoRouter.of(context).pop();
+                },
+                child: const Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  color: Colors.white,
+                  size: 25,
+                ),
+              )),
+          Padding(
+            padding: EdgeInsets.only(top: 130),
+            child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text('arryt',
+                  style: GoogleFonts.comfortaa(
+                      fontSize: 90,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white))
+            ]),
           ),
           Padding(
               padding: EdgeInsets.all(30.0),
@@ -55,10 +156,14 @@ class _LoginTypePhonePageState extends State<LoginTypePhonePage> {
                 children: [
                   InternationalPhoneNumberInput(
                     onInputChanged: (PhoneNumber number) {
-                      print(number.phoneNumber);
+                      setState(() {
+                        phoneNumber = number.phoneNumber!;
+                      });
                     },
                     onInputValidated: (bool value) {
-                      print(value);
+                      setState(() {
+                        isInputValid = value;
+                      });
                     },
                     selectorConfig: const SelectorConfig(
                         selectorType: PhoneInputSelectorType.BOTTOM_SHEET,
@@ -85,54 +190,24 @@ class _LoginTypePhonePageState extends State<LoginTypePhonePage> {
                         signed: true, decimal: true),
                     inputBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(40)),
-                    onSaved: (PhoneNumber number) {
-                      print('On Saved: $number');
-                    },
+                    onSaved: (PhoneNumber number) {},
                     countries: ['UZ'],
                     countrySelectorScrollControlled: false,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  SizedBox(
-                    height: 50,
-                    width: double.infinity,
-                    // child: ApiGraphqlProvider(
-                    child: GestureDetector(
-                      onTap: () {
-                        print("object");
-                        print(controller.text);
-                        // print(context
-                        //     .select((ApiClientsBloc value) => value.state));
-                        print(context.read<ApiClientsBloc>().state);
-                        // context.read<OtpPhoneNumberBloc>().add(
-                        //     OtpPhoneNumberChanged(
-                        //         phoneNumber: controller.text));
-                        ApiClientsBloc apiClientsBloc =
-                            BlocProvider.of<ApiClientsBloc>(context);
-                        print(apiClientsBloc.state.apiClients);
-                      },
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor,
-                          borderRadius: BorderRadius.circular(40),
-                        ),
-                        child: Center(
-                          child: Text(
-                            AppLocalizations.of(context)!
-                                .send_code
-                                .toUpperCase(),
-                            style: Theme.of(context)
-                                .textTheme
-                                .button!
-                                .copyWith(color: Colors.white),
-                          ),
-                        ),
-                      ),
-                    ),
-                    // ),
-                  ),
+                  RoundedLoadingButton(
+                    controller: _btnController,
+                    onPressed: trySendPhoneNumber,
+                    color: Theme.of(context).primaryColor,
+                    child: Text(
+                        AppLocalizations.of(context)!.send_code.toUpperCase(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .button!
+                            .copyWith(color: Colors.white)),
+                  )
                 ],
               )),
         ],
@@ -142,6 +217,7 @@ class _LoginTypePhonePageState extends State<LoginTypePhonePage> {
 
   @override
   void dispose() {
+    _btnController.reset();
     controller.dispose();
     super.dispose();
   }

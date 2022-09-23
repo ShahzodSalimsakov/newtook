@@ -54,17 +54,6 @@ class _QRViewWidgetState extends State<QRViewWidgetPage> {
     });
   }
 
-  // In order to get hot reload to work we need to pause the camera if the platform
-  // is android, or resume the camera if the platform is iOS.
-  @override
-  void reassemble() {
-    super.reassemble();
-    if (Platform.isAndroid) {
-      controller!.pauseCamera();
-    }
-    controller!.resumeCamera();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -254,12 +243,9 @@ class _QRViewWidgetState extends State<QRViewWidgetPage> {
     // context.read<ApiClientsBloc>().add(ApiClientsAdd(
     //     apiUrl: apiUrl, serviceName: serviceName, isServiceDefault: true));
     await Future.delayed(Duration.zero);
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => LoginTypePhonePage(),
-      ),
-    );
-    // AutoRouter.of(context).replaceNamed('/login/type-phone');
+    await controller!.pauseCamera();
+    controller!.dispose();
+    AutoRouter.of(context).replaceNamed('/login/type-phone');
     // ApiClientsBloc apiClientsBloc = BlocProvider.of<ApiClientsBloc>(context);
     // print(apiClientsBloc.state.apiClients);
     // showDialog(

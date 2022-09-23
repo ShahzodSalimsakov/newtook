@@ -43,6 +43,12 @@ class _$AppRouter extends RootStackRouter {
         child: LoginTypePhonePage(key: args.key),
       );
     },
+    LoginTypeOtpRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const LoginTypeOtpPage(),
+      );
+    },
   };
 
   @override
@@ -62,6 +68,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           LoginTypePhoneRoute.name,
           path: '/login/type-phone',
+        ),
+        RouteConfig(
+          LoginTypeOtpRoute.name,
+          path: '/login/type-otp',
         ),
       ];
 }
@@ -124,4 +134,16 @@ class LoginTypePhoneRouteArgs {
   String toString() {
     return 'LoginTypePhoneRouteArgs{key: $key}';
   }
+}
+
+/// generated route for
+/// [LoginTypeOtpPage]
+class LoginTypeOtpRoute extends PageRouteInfo<void> {
+  const LoginTypeOtpRoute()
+      : super(
+          LoginTypeOtpRoute.name,
+          path: '/login/type-otp',
+        );
+
+  static const String name = 'LoginTypeOtpRoute';
 }

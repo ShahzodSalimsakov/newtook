@@ -52,3 +52,7 @@ class ApiClientsUpdate extends ApiClientsEvent {
   @override
   List<Object> get props => [apiUrl, serviceName, isServiceDefault];
 }
+
+class ApiClientsRemoveAllIsServiceDefault extends ApiClientsEvent {
+  const ApiClientsRemoveAllIsServiceDefault();
+}

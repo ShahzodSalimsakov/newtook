@@ -8,7 +8,9 @@
     "profile": "Profil",
     "orders": "Buyurtmalar",
     "settings": "Sozlamalar",
-    "typed_phone_incorrect": "Telefon raqam formati noto'g'ri",
+    "typed_phone_incorrect": "Telefon raqami noto'g'ri",
     "phone_field_label": "Telefon raqami",
-    "send_code": "Kodni yuborish"
+    "send_code": "Kodni olish",
+    "sigin_in": "Kirish",
+    "otpCodeError": "Noto'g'ri kod"
 }

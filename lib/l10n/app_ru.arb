@@ -8,7 +8,9 @@
     "profile": "Профиль",
     "orders": "Заказы",
     "settings": "Настройки",
-    "typed_phone_incorrect": "Неверный формат номера телефона",
+    "typed_phone_incorrect": "Указан неверный номер телефона",
     "phone_field_label": "Номер телефона",
-    "send_code": "Отправить код"
+    "send_code": "Получить код",
+    "sigin_in": "Войти",
+    "otpCodeError": "Неверный код"
 }

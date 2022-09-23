@@ -8,7 +8,9 @@
     "profile": "Profile",
     "orders": "Orders",
     "settings": "Settings",
-    "typed_phone_incorrect": "Invalid phone number format",
+    "typed_phone_incorrect": "The phone number is incorrect",
     "phone_field_label": "Phone number",
-    "send_code": "Send code"
+    "send_code": "Get code",
+    "sigin_in": "Sign in",
+    "otpCodeError": "Invalid code"
 }
