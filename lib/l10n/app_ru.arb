@@ -10,5 +10,6 @@
     "settings": "Настройки",
     "typed_phone_incorrect": "Неверный формат номера телефона",
     "phone_field_label": "Номер телефона",
-    "send_code": "Отправить код"
+    "send_code": "Отправить код",
+    "choose_lang": "Выберите язык"
 }

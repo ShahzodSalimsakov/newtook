@@ -10,5 +10,6 @@
     "settings": "Sozlamalar",
     "typed_phone_incorrect": "Telefon raqam formati noto'g'ri",
     "phone_field_label": "Telefon raqami",
-    "send_code": "Kodni yuborish"
+    "send_code": "Kodni yuborish",
+    "choose_lang": "Tilni tanlang"
 }

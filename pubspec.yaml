@@ -40,6 +40,8 @@ dependencies:
   flutter_services_binding:
   user_repository:
     path: packages/user_repository
+  country_icons: ^2.0.2
+  provider: ^6.0.3
 
 dev_dependencies:
   auto_route_generator: ^5.0.2
