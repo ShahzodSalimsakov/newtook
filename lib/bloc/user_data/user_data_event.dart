@@ -14,7 +14,8 @@ class UserDataEventChange extends UserDataEvent {
       this.accessToken,
       this.refreshToken,
       this.accessTokenExpires,
-      this.userProfile});
+      this.userProfile,
+      required this.is_online});
 
   final List<String> permissions;
   final List<Role> roles;
@@ -22,7 +23,8 @@ class UserDataEventChange extends UserDataEvent {
   final String? refreshToken;
   final String? accessTokenExpires;
   final UserProfileModel? userProfile;
+  final bool is_online;
 
   @override
-  List<Object> get props => [permissions, roles];
+  List<Object> get props => [permissions, roles, is_online];
 }

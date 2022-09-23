@@ -117,20 +117,22 @@ class _LoginTypeOtpPageState extends State<LoginTypeOtpPage> {
             isLoading = false;
           });
           _btnController.success();
+          print(result['data']['verifyOtp']['user']);
           UserDataBloc userDataBloc = BlocProvider.of<UserDataBloc>(context);
           userDataBloc.add(UserDataEventChange(
             accessToken: result['data']['verifyOtp']['token']['accessToken'],
             refreshToken: result['data']['verifyOtp']['token']['refreshToken'],
             accessTokenExpires: result['data']['verifyOtp']['token']
                 ['accessTokenExpires'],
-            userProfile:
-                UserProfileModel.fromJson(result['data']['verifyOtp']['user']),
+            userProfile: UserProfileModel.fromJson(
+                jsonDecode(result['data']['verifyOtp']['user'])),
             permissions: List.from(
                 result['data']['verifyOtp']['access']['additionalPermissions']),
             roles: List<Role>.from(result['data']['verifyOtp']['access']
                     ['roles']
                 .map((x) => Role.fromJson(x))
                 .toList()),
+            is_online: result['data']['verifyOtp']['users']['is_online'],
           ));
           Future.delayed(Duration(milliseconds: 200)).then((value) {
             _btnController.reset();

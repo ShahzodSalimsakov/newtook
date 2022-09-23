@@ -15,7 +15,8 @@ class UserDataBloc extends HydratedBloc<UserDataEvent, UserDataState> {
             permissions: [],
             refreshToken: '',
             roles: [],
-            userProfile: null)) {
+            userProfile: null,
+            is_online: false)) {
     on<UserDataEvent>((event, emit) {
       // TODO: implement event handler
     });
@@ -26,7 +27,8 @@ class UserDataBloc extends HydratedBloc<UserDataEvent, UserDataState> {
           permissions: event.permissions,
           refreshToken: event.refreshToken,
           roles: event.roles,
-          userProfile: event.userProfile));
+          userProfile: event.userProfile,
+          is_online: true));
     });
   }
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../home/view/work_switch.dart';
+
 class OrdersPage extends StatelessWidget {
   const OrdersPage({super.key});
 
@@ -12,13 +14,24 @@ class OrdersPage extends StatelessWidget {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-              title: Text(AppLocalizations.of(context)!.orders.toUpperCase(),
-                  style: const TextStyle(color: Colors.black)),
+              toolbarHeight: 120,
+              title: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(AppLocalizations.of(context)!.orders,
+                          style: const TextStyle(
+                              color: Colors.black, fontSize: 35)),
+                      const HomeViewWorkSwitch()
+                    ]),
+              ),
               elevation: 0,
               backgroundColor: Colors.transparent,
               primary: true,
               bottom: const PreferredSize(
-                preferredSize: Size.fromHeight(50),
+                preferredSize: Size.fromHeight(20),
                 child: TabBar(
                   labelColor: Colors.black,
                   tabs: [

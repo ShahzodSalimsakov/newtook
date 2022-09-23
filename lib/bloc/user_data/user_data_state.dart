@@ -136,13 +136,15 @@ abstract class UserDataState extends Equatable {
   final String? refreshToken;
   final String? accessTokenExpires;
   final UserProfileModel? userProfile;
+  final bool is_online;
   const UserDataState(
       {required this.permissions,
       required this.roles,
       this.accessToken,
       this.refreshToken,
       this.accessTokenExpires,
-      this.userProfile});
+      this.userProfile,
+      required this.is_online});
 
   @override
   List<Object> get props => [];
@@ -156,13 +158,15 @@ class UserDataInitial extends UserDataState {
     required String? refreshToken,
     required String? accessTokenExpires,
     required UserProfileModel? userProfile,
+    required bool is_online,
   }) : super(
             permissions: permissions,
             roles: roles,
             accessToken: accessToken,
             refreshToken: refreshToken,
             accessTokenExpires: accessTokenExpires,
-            userProfile: userProfile);
+            userProfile: userProfile,
+            is_online: is_online);
 
   static fromJson(json) {
     return UserDataInitial(
@@ -173,6 +177,7 @@ class UserDataInitial extends UserDataState {
       refreshToken: json['refreshToken'] as String?,
       accessTokenExpires: json['accessTokenExpires'] as String?,
       userProfile: UserProfileModel.fromJson(json['userProfile']),
+      is_online: json['is_online'] as bool,
     );
   }
 }
