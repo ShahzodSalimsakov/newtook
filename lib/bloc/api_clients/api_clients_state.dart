@@ -2,18 +2,21 @@
 
 part of 'api_clients_bloc.dart';
 
-class ApiClientsState extends Equatable {
-  final List<ApiClients> apiClients;
+abstract class ApiClientsState extends Equatable {
   const ApiClientsState({
     required this.apiClients,
   });
+  final List<ApiClients> apiClients;
 
   @override
   List<Object> get props => [apiClients];
 }
 
 class ApiClientsInitial extends ApiClientsState {
-  const ApiClientsInitial() : super(apiClients: const []);
+  @override
+  final List<ApiClients> apiClients;
+  const ApiClientsInitial({required this.apiClients})
+      : super(apiClients: apiClients);
 }
 
 class ApiClients extends Equatable {

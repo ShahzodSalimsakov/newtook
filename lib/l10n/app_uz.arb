@@ -1,7 +1,14 @@
 {
     "scan": "Skanerlang",
     "scan_brand_qr": "Brand QR-kodni skanerlang",
+    "app_clients_intro_title": "Xizmatga ulaning",
+    "app_clients_intro_description": "Brand QR-kodini skanerlang, xizmatga ulaning. Agar sizda QR-kod yo'q bo'lsa, yetkazib beruvchining menejeriga so'rang.",
+    "error_label": "Xato",
+    "this_service_is_not_valid": "Bu xizmat haqiqiy emas",
     "profile": "Profil",
     "orders": "Buyurtmalar",
-    "settings": "Sozlamalar"
+    "settings": "Sozlamalar",
+    "typed_phone_incorrect": "Telefon raqam formati noto'g'ri",
+    "phone_field_label": "Telefon raqami",
+    "send_code": "Kodni yuborish"
 }
