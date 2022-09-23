@@ -12,5 +12,7 @@
     "phone_field_label": "Telefon raqami",
     "send_code": "Kodni olish",
     "sigin_in": "Kirish",
-    "otpCodeError": "Noto'g'ri kod"
+    "otpCodeError": "Noto'g'ri kod",
+    "send_code": "Kodni yuborish",
+    "choose_lang": "Tilni tanlang"
 }

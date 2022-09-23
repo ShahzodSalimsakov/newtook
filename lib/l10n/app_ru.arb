@@ -12,5 +12,7 @@
     "phone_field_label": "Номер телефона",
     "send_code": "Получить код",
     "sigin_in": "Войти",
-    "otpCodeError": "Неверный код"
+    "otpCodeError": "Неверный код",
+    "send_code": "Отправить код",
+    "choose_lang": "Выберите язык"
 }

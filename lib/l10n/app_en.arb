@@ -12,5 +12,7 @@
     "phone_field_label": "Phone number",
     "send_code": "Get code",
     "sigin_in": "Sign in",
-    "otpCodeError": "Invalid code"
+    "otpCodeError": "Invalid code",
+    "send_code": "Send code",
+    "choose_lang": "Choose language"
 }

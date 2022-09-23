@@ -19,19 +19,19 @@ class HomePage extends StatelessWidget {
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.person),
           title: AppLocalizations.of(context)!.profile,
-          activeColorPrimary: Colors.purple.shade400,
+          activeColorPrimary: Theme.of(context).primaryColor,
           inactiveColorPrimary: Colors.grey,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.list),
           title: AppLocalizations.of(context)!.orders,
-          activeColorPrimary: Colors.purple.shade400,
+          activeColorPrimary: Theme.of(context).primaryColor,
           inactiveColorPrimary: Colors.grey,
         ),
         PersistentBottomNavBarItem(
           icon: const Icon(Icons.settings),
           title: AppLocalizations.of(context)!.settings,
-          activeColorPrimary: Colors.purple.shade400,
+          activeColorPrimary: Theme.of(context).primaryColor,
           inactiveColorPrimary: Colors.grey,
         ),
       ],
