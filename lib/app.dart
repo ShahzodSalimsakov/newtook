@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:geolocator/geolocator.dart';
@@ -15,6 +17,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:workmanager/workmanager.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -47,6 +50,13 @@ class _AppViewState extends State<AppView> {
   );
 
   late StreamSubscription<Position> positionStream;
+
+  void callbackDispatcher() {
+    Workmanager().executeTask((task, inputData) {
+      DartPluginRegistrant.ensureInitialized();
+      return Future.value(true);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
