@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:newtook/pages/brands/brands.dart';
 import 'package:newtook/pages/home/view/home_page.dart';
 import 'package:newtook/pages/initial.dart';
 import 'package:newtook/pages/login/type_otp.dart';
@@ -16,6 +17,7 @@ part 'router.gr.dart';
     AutoRoute(page: QRPage, path: '/qr'),
     AutoRoute(page: LoginTypePhonePage, path: '/login/type-phone'),
     AutoRoute(page: LoginTypeOtpPage, path: '/login/type-otp'),
+    AutoRoute(page: BrandsPage, path: '/brands'),
   ],
 )
 // extend the generated private router

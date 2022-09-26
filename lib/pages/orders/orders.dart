@@ -33,8 +33,6 @@ class OrdersPage extends StatelessWidget {
                       BlocBuilder<UserDataBloc, UserDataState>(
                         builder: (context, state) {
                           // if roles exist and courier role exists
-                          print('davr');
-                          print(state.roles);
                           // find role with code = courier
                           if (state.roles != null &&
                               state.roles!.any((element) =>

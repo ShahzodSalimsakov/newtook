@@ -15,5 +15,7 @@
     "otpCodeError": "Неверный код",
     "send_code": "Отправить код",
     "choose_lang": "Выберите язык",
-    "location_is_disabled_error": "Включите геолокацию"
+    "location_is_disabled_error": "Включите геолокацию",
+    "choose_brand": "Выберите бренд",
+    "add" : "Добавить"
 }

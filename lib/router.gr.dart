@@ -49,6 +49,12 @@ class _$AppRouter extends RootStackRouter {
         child: const LoginTypeOtpPage(),
       );
     },
+    BrandsRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const BrandsPage(),
+      );
+    },
   };
 
   @override
@@ -72,6 +78,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           LoginTypeOtpRoute.name,
           path: '/login/type-otp',
+        ),
+        RouteConfig(
+          BrandsRoute.name,
+          path: '/brands',
         ),
       ];
 }
@@ -146,4 +156,16 @@ class LoginTypeOtpRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'LoginTypeOtpRoute';
+}
+
+/// generated route for
+/// [BrandsPage]
+class BrandsRoute extends PageRouteInfo<void> {
+  const BrandsRoute()
+      : super(
+          BrandsRoute.name,
+          path: '/brands',
+        );
+
+  static const String name = 'BrandsRoute';
 }

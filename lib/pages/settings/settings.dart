@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:newtook/provider/locale_provider.dart';
@@ -8,27 +9,44 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return // toggle notification with text
-        Scaffold(
+    return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 120,
         elevation: 0,
         backgroundColor: Colors.transparent,
-        title: Text(AppLocalizations.of(context)!.settings.toUpperCase(),
-            style: const TextStyle(color: Colors.black)),
+        title: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(AppLocalizations.of(context)!.settings,
+                  style: const TextStyle(color: Colors.black, fontSize: 35)),
+            ],
+          ),
+        ),
       ),
-      body: SafeArea(
-          child: Padding(
+      body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            //choose brands  and route to brands page
+            ListTile(
+              title: Text(AppLocalizations.of(context)!.choose_brand),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                context.router.pushNamed('/brands');
+              },
+            ),
+
+            const Spacer(),
             Text(AppLocalizations.of(context)!.choose_lang.toUpperCase(),
                 style: const TextStyle(color: Colors.black)),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Container(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(50),
-                  color: Theme.of(context).primaryColor),
+                  color: Colors.grey[200]),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -83,7 +101,7 @@ class SettingsPage extends StatelessWidget {
             )
           ],
         ),
-      )),
+      ),
     );
   }
 }

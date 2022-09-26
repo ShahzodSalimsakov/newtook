@@ -15,81 +15,113 @@ class ProfilePage extends StatelessWidget {
               style: const TextStyle(color: Colors.black)),
         ),
         body: SafeArea(
-          child: Column(children: [
-            Container(
-              margin: const EdgeInsets.all(10),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Name',
+            child: Column(children: [
+          //create profile image
+          Container(
+            margin: const EdgeInsets.all(16),
+            child: Row(
+              children: [
+                Container(
+                  width: 100,
+                  height: 100,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/api_clients_intro.png'),
+                      fit: BoxFit.cover,
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(50)),
+                  ),
                 ),
-              ),
-            ),
-
-            //create email input field
-            Container(
-              margin: const EdgeInsets.all(10),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Email',
+                const SizedBox(width: 20),
+                //create profile name
+                Container(
+                  margin: const EdgeInsets.only(left: 10),
+                  child: const Text(
+                    'Profile name',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-
-            //create phone input field
-            Container(
-              margin: const EdgeInsets.all(10),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Phone',
+          ),
+          const Divider(),
+          //create profile info
+          Container(
+            margin: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                //create profile phone
+                Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.phone),
+                      const SizedBox(width: 10),
+                      const Text(
+                        'Phone number',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
-
-            //create address input field
-            Container(
-              margin: const EdgeInsets.all(10),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Address',
+                //create profile email
+                Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.email),
+                      const SizedBox(width: 10),
+                      const Text(
+                        'Email',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
-
-            //create password input field
-            Container(
-              margin: const EdgeInsets.all(10),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Password',
+                //create profile address
+                Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.location_on),
+                      const SizedBox(width: 10),
+                      const Text(
+                        'Address',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ),
-
-            //create confirm password input field
-            Container(
-              margin: const EdgeInsets.all(10),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Confirm Password',
-                ),
-              ),
-            ),
-
-            //create update button
-            Container(
-              margin: const EdgeInsets.all(10),
-              child: ElevatedButton(
-                onPressed: () {},
-                child: const Text('Update'),
-              ),
-            ),
-          ]),
-        ));
+          ),
+          const Divider(),
+          //create profile edit button
+          Container(
+              margin: const EdgeInsets.all(16),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'Edit profile',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    )
+                  ])),
+        ])));
   }
 }
