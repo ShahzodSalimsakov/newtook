@@ -11,6 +11,7 @@ import 'package:newtook/bloc/user_data/user_data_bloc.dart';
 import 'package:newtook/l10n/support_locale.dart';
 import 'package:newtook/provider/locale_provider.dart';
 import 'package:newtook/router.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -64,7 +65,6 @@ class _AppViewState extends State<AppView> {
       ],
       child: BlocConsumer<UserDataBloc, UserDataState>(
         listener: (context, state) async {
-          print("listening");
           try {
             bool serviceEnabled;
             LocationPermission permission;
@@ -99,7 +99,29 @@ class _AppViewState extends State<AppView> {
             if (state.is_online) {
               positionStream = Geolocator.getPositionStream(
                       locationSettings: locationSettings)
-                  .listen((Position? position) {
+                  .listen((Position? position) async {
+                ApiClientsState apiClientsState =
+                    BlocProvider.of<ApiClientsBloc>(context).state;
+                final apiClient = apiClientsState.apiClients.firstWhere(
+                    (element) => element.isServiceDefault == true,
+                    orElse: () => apiClientsState.apiClients.first);
+
+                if (apiClient != null) {
+                  var requestBody = '''
+                  {
+                    "query": "mutation {storeLocation(latitude: \\"${position!.latitude}\\", longitude: \\"${position!.longitude}\\") {\\nsuccess\\n}}\\n",
+                    "variables": null
+                  }
+                  ''';
+                  var response = await http.post(
+                    Uri.parse("https://${apiClient.apiUrl}/graphql"),
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'Authorization': 'Bearer ${state.accessToken}'
+                    },
+                    body: requestBody,
+                  );
+                }
                 print(position.toString());
               });
             } else {

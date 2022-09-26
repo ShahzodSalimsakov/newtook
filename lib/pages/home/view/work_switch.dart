@@ -125,7 +125,6 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
   Widget build(BuildContext context) {
     return BlocBuilder<UserDataBloc, UserDataState>(
       builder: (context, state) {
-        print(state.is_online);
         return Container(
           child: LoadSwitch(
             value: state.is_online,
@@ -134,7 +133,6 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
             },
             onChange: (v) {
               value = v;
-              print('Value changed to $v');
               setState(() {});
             },
             onTap: (bool) {},
