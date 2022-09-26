@@ -9,14 +9,15 @@ part 'user_data_state.dart';
 
 class UserDataBloc extends HydratedBloc<UserDataEvent, UserDataState> {
   UserDataBloc()
-      : super(const UserDataInitial(
+      : super(UserDataInitial(
             accessToken: '',
             accessTokenExpires: '',
             permissions: [],
             refreshToken: '',
             roles: [],
             userProfile: null,
-            is_online: false)) {
+            is_online: false,
+            tokenExpires: DateTime.now())) {
     on<UserDataEvent>((event, emit) {
       // TODO: implement event handler
     });
@@ -28,7 +29,8 @@ class UserDataBloc extends HydratedBloc<UserDataEvent, UserDataState> {
           refreshToken: event.refreshToken,
           roles: event.roles,
           userProfile: event.userProfile,
-          is_online: true));
+          is_online: event.is_online,
+          tokenExpires: event.tokenExpires));
     });
   }
 
@@ -38,5 +40,5 @@ class UserDataBloc extends HydratedBloc<UserDataEvent, UserDataState> {
 
   @override
   Map<String, dynamic>? toJson(UserDataState state) =>
-      {'value': jsonEncode(state)};
+      {'value': UserDataInitial.toJson(state)};
 }

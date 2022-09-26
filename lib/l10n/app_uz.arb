@@ -14,5 +14,6 @@
     "sigin_in": "Kirish",
     "otpCodeError": "Noto'g'ri kod",
     "send_code": "Kodni yuborish",
-    "choose_lang": "Tilni tanlang"
+    "choose_lang": "Tilni tanlang",
+    "location_is_disabled_error": "Joylashuvni yoqish"
 }

@@ -82,7 +82,7 @@ class _LoginTypeOtpPageState extends State<LoginTypeOtpPage> {
         // send phone number to server
         var requestBody = '''
         {
-          "query": "mutation {verifyOtp(phone: \\"$phoneNumber\\", otp: \\"$code\\", verificationKey: \\"$otpToken\\") {\\n access {\\nadditionalPermissions\\nroles {\\nname\\nactive\\n}\\n}\\ntoken {\\naccessToken\\naccessTokenExpires\\nrefreshToken\\ntokenType\\n}\\nuser {\\nfirst_name\\nid\\nis_super_user\\nlast_name\\npermissions {\\nactive\\nslug\\nid\\n}\\nphone\\n}\\n}}\\n",
+          "query": "mutation {verifyOtp(phone: \\"$phoneNumber\\", otp: \\"$code\\", verificationKey: \\"$otpToken\\") {\\n access {\\nadditionalPermissions\\nroles {\\nname\\ncode\\nactive\\n}\\n}\\ntoken {\\naccessToken\\naccessTokenExpires\\nrefreshToken\\ntokenType\\n}\\nuser {\\nfirst_name\\nid\\nis_super_user\\nlast_name\\nis_online\\npermissions {\\nactive\\nslug\\nid\\n}\\nphone\\n}\\n}}\\n",
           "variables": null
         }
         ''';
@@ -118,25 +118,34 @@ class _LoginTypeOtpPageState extends State<LoginTypeOtpPage> {
           });
           _btnController.success();
           print(result['data']['verifyOtp']['user']);
+          print(List<Role>.from(result['data']['verifyOtp']['access']['roles']
+              .map((x) => Role.fromMap(x))
+              .toList()));
           UserDataBloc userDataBloc = BlocProvider.of<UserDataBloc>(context);
           userDataBloc.add(UserDataEventChange(
             accessToken: result['data']['verifyOtp']['token']['accessToken'],
             refreshToken: result['data']['verifyOtp']['token']['refreshToken'],
             accessTokenExpires: result['data']['verifyOtp']['token']
                 ['accessTokenExpires'],
-            userProfile: UserProfileModel.fromJson(
-                jsonDecode(result['data']['verifyOtp']['user'])),
+            userProfile:
+                UserProfileModel.fromMap(result['data']['verifyOtp']['user']),
             permissions: List.from(
                 result['data']['verifyOtp']['access']['additionalPermissions']),
             roles: List<Role>.from(result['data']['verifyOtp']['access']
                     ['roles']
-                .map((x) => Role.fromJson(x))
+                .map((x) => Role.fromMap(x))
                 .toList()),
-            is_online: result['data']['verifyOtp']['users']['is_online'],
+            is_online: result['data']['verifyOtp']['user']['is_online'],
+            // parse 1h to duration
+            tokenExpires: DateTime.now().add(Duration(
+                hours: int.parse(result['data']['verifyOtp']['token']
+                        ['accessTokenExpires']
+                    .split('h')[0]))),
           ));
           Future.delayed(Duration(milliseconds: 200)).then((value) {
             _btnController.reset();
           });
+          AutoRouter.of(context).pushNamed('/home');
         } else {
           setState(() {
             isLoading = false;

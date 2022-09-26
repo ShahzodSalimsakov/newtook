@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:newtook/bloc/block_imports.dart';
+import 'package:newtook/helpers/api_graphql_provider.dart';
 
 import '../home/view/work_switch.dart';
 
 class OrdersPage extends StatelessWidget {
   const OrdersPage({super.key});
+
+  bool checkCourier() {
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +30,23 @@ class OrdersPage extends StatelessWidget {
                       Text(AppLocalizations.of(context)!.orders,
                           style: const TextStyle(
                               color: Colors.black, fontSize: 35)),
-                      const HomeViewWorkSwitch()
+                      BlocBuilder<UserDataBloc, UserDataState>(
+                        builder: (context, state) {
+                          // if roles exist and courier role exists
+                          print('davr');
+                          print(state.roles);
+                          // find role with code = courier
+                          if (state.roles != null &&
+                              state.roles!.any((element) =>
+                                  element.code == 'courier' &&
+                                  element.active)) {
+                            return ApiGraphqlProvider(
+                                child: const HomeViewWorkSwitch());
+                          } else {
+                            return const SizedBox();
+                          }
+                        },
+                      )
                     ]),
               ),
               elevation: 0,

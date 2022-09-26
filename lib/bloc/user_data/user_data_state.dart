@@ -1,29 +1,34 @@
+// ignore_for_file:  sort_constructors_first
 // ignore_for_file: public_member_api_docs, s
 
 part of 'user_data_bloc.dart';
 
 class Role {
   final String name;
+  final String code;
   final bool active;
 
   Role({
     required this.name,
+    required this.code,
     required this.active,
   });
 
   Role copyWith({
     String? name,
+    String? code,
     bool? active,
   }) {
     return Role(
-      name: name ?? this.name,
-      active: active ?? this.active,
-    );
+        name: name ?? this.name,
+        active: active ?? this.active,
+        code: code ?? this.code);
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,
+      'code': code,
       'active': active,
     };
   }
@@ -31,6 +36,7 @@ class Role {
   factory Role.fromMap(Map<String, dynamic> map) {
     return Role(
       name: map['name'] as String,
+      code: map['code'] as String,
       active: map['active'] as bool,
     );
   }
@@ -41,13 +47,13 @@ class Role {
       Role.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'Role(name: $name, active: $active)';
+  String toString() => 'Role(name: $name, active: $active, code: $code)';
 
   @override
   bool operator ==(covariant Role other) {
     if (identical(this, other)) return true;
 
-    return other.name == name && other.active == active;
+    return other.name == name && other.active == active && other.code == code;
   }
 
   @override
@@ -137,6 +143,7 @@ abstract class UserDataState extends Equatable {
   final String? accessTokenExpires;
   final UserProfileModel? userProfile;
   final bool is_online;
+  final DateTime tokenExpires;
   const UserDataState(
       {required this.permissions,
       required this.roles,
@@ -144,10 +151,39 @@ abstract class UserDataState extends Equatable {
       this.refreshToken,
       this.accessTokenExpires,
       this.userProfile,
-      required this.is_online});
+      required this.is_online,
+      required this.tokenExpires});
+
+  static copyWith({
+    List<String>? permissions,
+    List<Role>? roles,
+    String? accessToken,
+    String? refreshToken,
+    String? accessTokenExpires,
+    UserProfileModel? userProfile,
+    bool? is_online,
+    DateTime? tokenExpires,
+  }) {
+    return UserDataInitial(
+      permissions: permissions ?? [],
+      roles: roles ?? [],
+      accessToken: accessToken ?? '',
+      refreshToken: refreshToken ?? '',
+      accessTokenExpires: accessTokenExpires ?? '',
+      userProfile: userProfile ??
+          UserProfileModel(
+            first_name: '',
+            last_name: '',
+            phone: '',
+            is_super_user: false,
+          ),
+      is_online: is_online ?? false,
+      tokenExpires: tokenExpires ?? DateTime.now(),
+    );
+  }
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [permissions, roles, is_online, tokenExpires];
 }
 
 class UserDataInitial extends UserDataState {
@@ -159,6 +195,7 @@ class UserDataInitial extends UserDataState {
     required String? accessTokenExpires,
     required UserProfileModel? userProfile,
     required bool is_online,
+    required DateTime tokenExpires,
   }) : super(
             permissions: permissions,
             roles: roles,
@@ -166,7 +203,8 @@ class UserDataInitial extends UserDataState {
             refreshToken: refreshToken,
             accessTokenExpires: accessTokenExpires,
             userProfile: userProfile,
-            is_online: is_online);
+            is_online: is_online,
+            tokenExpires: tokenExpires);
 
   static fromJson(json) {
     return UserDataInitial(
@@ -178,6 +216,33 @@ class UserDataInitial extends UserDataState {
       accessTokenExpires: json['accessTokenExpires'] as String?,
       userProfile: UserProfileModel.fromJson(json['userProfile']),
       is_online: json['is_online'] as bool,
+      tokenExpires: DateTime.parse(json['tokenExpires']),
+    );
+  }
+
+  static toJson(UserDataState state) {
+    return {
+      'permissions': state.permissions,
+      'roles': state.roles.map((e) => e.toJson()).toList(),
+      'accessToken': state.accessToken,
+      'refreshToken': state.refreshToken,
+      'accessTokenExpires': state.accessTokenExpires,
+      'userProfile': state.userProfile?.toJson(),
+      'is_online': state.is_online,
+      'tokenExpires': state.tokenExpires.toIso8601String(),
+    };
+  }
+
+  static copyWith(UserDataState state) {
+    return UserDataInitial(
+      permissions: state.permissions,
+      roles: state.roles,
+      accessToken: state.accessToken,
+      refreshToken: state.refreshToken,
+      accessTokenExpires: state.accessTokenExpires,
+      userProfile: state.userProfile,
+      is_online: state.is_online,
+      tokenExpires: state.tokenExpires,
     );
   }
 }

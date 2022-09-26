@@ -14,5 +14,6 @@
     "sigin_in": "Sign in",
     "otpCodeError": "Invalid code",
     "send_code": "Send code",
-    "choose_lang": "Choose language"
+    "choose_lang": "Choose language",
+    "location_is_disabled_error": "Enable location"
 }

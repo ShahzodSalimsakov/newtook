@@ -42,8 +42,11 @@ class _AppViewState extends State<AppView> {
   final LocationSettings locationSettings = LocationSettings(
     accuracy: LocationAccuracy.high,
     distanceFilter: 2,
-    timeLimit: Duration(seconds: 5),
+    // timeLimit: Duration(seconds: 30),
   );
+
+  late StreamSubscription<Position> positionStream;
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -60,38 +63,50 @@ class _AppViewState extends State<AppView> {
         BlocProvider<UserDataBloc>(create: (context) => UserDataBloc())
       ],
       child: BlocConsumer<UserDataBloc, UserDataState>(
-        listener: (context, state) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('started listening'),
-            ),
-          );
-          StreamSubscription<Position> positionStream =
-              Geolocator.getPositionStream(locationSettings: locationSettings)
+        listener: (context, state) async {
+          print("listening");
+          try {
+            bool serviceEnabled;
+            LocationPermission permission;
+
+            // Test if location services are enabled.
+            // serviceEnabled = await Geolocator.isLocationServiceEnabled();
+            // if (!serviceEnabled) {
+            //   // Location services are not enabled don't continue
+            //   // accessing the position and request users of the
+            //   // App to enable the location services.
+            //   return Future.error('Location services are disabled.');
+            // }
+
+            permission = await Geolocator.checkPermission();
+            if (permission == LocationPermission.denied) {
+              permission = await Geolocator.requestPermission();
+              if (permission == LocationPermission.denied) {
+                // Permissions are denied, next time you could try
+                // requesting permissions again (this is also where
+                // Android's shouldShowRequestPermissionRationale
+                // returned true. According to Android guidelines
+                // your App should show an explanatory UI now.
+                return Future.error('Location permissions are denied');
+              }
+            }
+
+            if (permission == LocationPermission.deniedForever) {
+              // Permissions are denied forever, handle appropriately.
+              return Future.error(
+                  'Location permissions are permanently denied, we cannot request permissions.');
+            }
+            if (state.is_online) {
+              positionStream = Geolocator.getPositionStream(
+                      locationSettings: locationSettings)
                   .listen((Position? position) {
-            // show snackbar
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(position.toString()),
-              ),
-            );
-          });
-          if (state.is_online) {
-            // _rootRouter.pushAndPopUntil(
-            //   const HomeRoute(),
-            //   predicate: (route) => false,
-            // );
-            positionStream =
-                Geolocator.getPositionStream(locationSettings: locationSettings)
-                    .listen((Position? position) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(position.toString()),
-                ),
-              );
-            });
-          } else {
-            positionStream.cancel();
+                print(position.toString());
+              });
+            } else {
+              positionStream.cancel();
+            }
+          } catch (e) {
+            print(e);
           }
         },
         builder: (context, state) {
