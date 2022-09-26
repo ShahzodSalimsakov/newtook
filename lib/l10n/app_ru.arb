@@ -14,5 +14,7 @@
     "sigin_in": "Войти",
     "otpCodeError": "Неверный код",
     "send_code": "Отправить код",
-    "choose_lang": "Выберите язык"
+    "choose_lang": "Выберите язык",
+    "choose_brand": "Выберите бренд",
+    "add" : "Добавить"
 }
