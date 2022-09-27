@@ -133,6 +133,10 @@ class _AppViewState extends State<AppView> {
                   );
                 }
                 print(position.toString());
+                AlertDialog(
+                  title: Text('Location'),
+                  content: Text(position.toString()),
+                );
               });
             } else {
               positionStream.cancel();
