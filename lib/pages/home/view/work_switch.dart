@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:load_switch/load_switch.dart';
 import 'package:location/location.dart';
 import 'package:newtook/bloc/block_imports.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:http/http.dart' as http;
 
 class HomeViewWorkSwitch extends StatefulWidget {
   const HomeViewWorkSwitch({super.key});
@@ -168,6 +170,86 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
       }
     }
     return !value;
+  }
+
+  Future<void> checkLocationListen() async {
+    UserDataState userDataState = context.read<UserDataBloc>().state;
+    if (userDataState.is_online) {
+      enableBackgroundMode();
+      location.changeSettings(
+          accuracy: LocationAccuracy.high, distanceFilter: 2, interval: 30000);
+      _locationSubscription = location.onLocationChanged
+          .listen((LocationData currentLocation) async {
+        var accessToken = userDataState.refreshToken;
+        ApiClientsState apiClientsState =
+            BlocProvider.of<ApiClientsBloc>(context).state;
+        final apiClient = apiClientsState.apiClients.firstWhere(
+            (element) => element.isServiceDefault == true,
+            orElse: () => apiClientsState.apiClients.first);
+        if (DateTime.now().isAfter(userDataState.tokenExpires)) {
+          if (apiClient != null) {
+            var requestBody = '''
+        {
+          "query": "mutation {refreshToken(refreshToken: \\"${userDataState.refreshToken}\\") {\\naccessToken\\naccessTokenExpires\\nrefreshToken\\n}}\\n",
+          "variables": null
+        }
+        ''';
+
+            var response = await http.post(
+              Uri.parse("https://${apiClient.apiUrl}/graphql"),
+              headers: {'Content-Type': 'application/json'},
+              body: requestBody,
+            );
+            if (response.statusCode == 200) {
+              var result = jsonDecode(response.body);
+              if (result['errors'] == null) {
+                var data = result['data']['refreshToken'];
+
+                accessToken = data!['accessToken'];
+                Future.delayed(Duration(microseconds: 500), () {
+                  context.read<UserDataBloc>().add(
+                        UserDataEventChange(
+                          accessToken: data!['accessToken'],
+                          accessTokenExpires: data!['accessTokenExpires'],
+                          refreshToken: data!['refreshToken'],
+                          permissions: userDataState.permissions,
+                          roles: userDataState.roles,
+                          userProfile: userDataState.userProfile,
+                          is_online: userDataState.is_online,
+                          tokenExpires: DateTime.now().add(Duration(
+                              hours: int.parse(
+                                  data!['accessTokenExpires'].split('h')[0]))),
+                        ),
+                      );
+                });
+              }
+            }
+          }
+        }
+
+        var requestBody = '''
+        {
+          "query": "mutation {storeLocation(latitude: ${currentLocation!.latitude}, longitude: ${currentLocation!.longitude}) {\\nsuccess\\n}}\\n",
+          "variables": null
+        }
+        ''';
+        var response = await http.post(
+          Uri.parse("https://${apiClient.apiUrl}/graphql"),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ${accessToken}'
+          },
+          body: requestBody,
+        );
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    checkLocationListen();
   }
 
   @override

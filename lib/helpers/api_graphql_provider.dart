@@ -97,7 +97,16 @@ class _ApiGraphqlProviderView extends StatelessWidget {
           final AuthLink authLink = AuthLink(
             getToken: () async => await getBoxToken(context),
           );
-          final Link link = authLink.concat(httpLink);
+
+          final WebSocketLink wsLink = WebSocketLink(
+            'wss://${apiClient.apiUrl}/ws',
+            config: SocketClientConfig(
+              autoReconnect: true,
+              inactivityTimeout: Duration(seconds: 30),
+            ),
+          );
+
+          final Link link = authLink.concat(httpLink).concat(wsLink);
 
           ValueNotifier<GraphQLClient> client = ValueNotifier(
             GraphQLClient(
