@@ -1,16 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:newtook/bloc/block_imports.dart';
 import 'package:newtook/helpers/api_graphql_provider.dart';
+import 'package:newtook/models/order.dart';
 
 import '../home/view/work_switch.dart';
 
 class OrdersPage extends StatelessWidget {
-  const OrdersPage({super.key});
+  OrdersPage({super.key});
 
   bool checkCourier() {
     return true;
   }
+
+  final subscriptionDocument = gql(
+    r'''
+    subscription orderUpdate($courierId: String!) {
+      orderUpdate(courier_id: $courierId) {
+        id
+      }
+    }
+  ''',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -60,10 +72,42 @@ class OrdersPage extends StatelessWidget {
                   ],
                 ),
               )),
-          body: const TabBarView(
+          body: TabBarView(
             children: [
-              Center(child: Text('Pending')),
-              Center(child: Text('Completed')),
+              Center(
+                  child: BlocBuilder<UserDataBloc, UserDataState>(
+                builder: (context, state) => ApiGraphqlProvider(
+                    child: Subscription(
+                  options: SubscriptionOptions(
+                    document: subscriptionDocument,
+                    variables: {'courierId': state.userProfile?.id},
+                  ),
+                  builder: (result) {
+                    if (result.hasException) {
+                      return Text(result.exception.toString());
+                    }
+
+                    if (result.isLoading) {
+                      return Center(
+                        child: const CircularProgressIndicator(),
+                      );
+                    }
+                    // ResultAccumulator is a provided helper widget for collating subscription results.
+                    // careful though! It is stateful and will discard your results if the state is disposed
+                    return ResultAccumulator.appendUniqueEntries(
+                      latest: result.data,
+                      builder: (context, {results}) => ListView.builder(
+                        itemCount: results?.length,
+                        itemBuilder: (context, index) {
+                          final item = results?[index] as Order;
+                          return Text(item.id);
+                        },
+                      ),
+                    );
+                  },
+                )),
+              )),
+              const Center(child: Text('Completed')),
             ],
           ),
         ),

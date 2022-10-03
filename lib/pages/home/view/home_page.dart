@@ -62,5 +62,5 @@ class HomePage extends StatelessWidget {
 }
 
 List<Widget> _buildScreens() {
-  return [const ProfilePage(), const OrdersPage(), const SettingsPage()];
+  return [const ProfilePage(), OrdersPage(), const SettingsPage()];
 }

@@ -61,24 +61,28 @@ class Role {
 }
 
 class UserProfileModel {
+  final String? id;
   final String? first_name;
   final String? last_name;
   final String? phone;
   final bool? is_super_user;
 
   UserProfileModel(
-      {required this.first_name,
+      {required this.id,
+      required this.first_name,
       required this.last_name,
       required this.phone,
       required this.is_super_user});
 
   UserProfileModel copyWith({
+    String? id,
     String? first_name,
     String? last_name,
     String? phone,
     bool? is_super_user,
   }) {
     return UserProfileModel(
+      id: id ?? this.id,
       first_name: this.first_name ?? '',
       last_name: this.last_name ?? '',
       phone: this.phone ?? '',
@@ -97,6 +101,7 @@ class UserProfileModel {
 
   factory UserProfileModel.fromMap(Map<String, dynamic> map) {
     return UserProfileModel(
+      id: map['id'] as String,
       first_name:
           map['first_name'] != null ? map['first_name'] as String : null,
       last_name: map['last_name'] != null ? map['last_name'] as String : null,
@@ -123,7 +128,8 @@ class UserProfileModel {
     return other.first_name == first_name &&
         other.last_name == last_name &&
         other.phone == phone &&
-        other.is_super_user == is_super_user;
+        other.is_super_user == is_super_user &&
+        other.id == id;
   }
 
   @override
@@ -131,7 +137,8 @@ class UserProfileModel {
     return first_name.hashCode ^
         last_name.hashCode ^
         phone.hashCode ^
-        is_super_user.hashCode;
+        is_super_user.hashCode ^
+        id.hashCode;
   }
 }
 
@@ -176,6 +183,7 @@ abstract class UserDataState extends Equatable {
             last_name: '',
             phone: '',
             is_super_user: false,
+            id: '',
           ),
       is_online: is_online ?? false,
       tokenExpires: tokenExpires ?? DateTime.now(),
