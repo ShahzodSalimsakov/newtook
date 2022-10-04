@@ -17,5 +17,6 @@
     "choose_lang": "Выберите язык",
     "location_is_disabled_error": "Включите геолокацию",
     "choose_brand": "Выберите бренд",
-    "add" : "Добавить"
+    "add" : "Добавить",
+    "order_list_empty": "Список заказов пуст"
 }

@@ -67,7 +67,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> with HydratedMixin {
 
   @override
   LoginState? fromJson(Map<String, dynamic> json) {
-    print(json);
     // TODO: implement fromJson
     throw UnimplementedError();
   }

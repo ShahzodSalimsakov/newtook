@@ -631,19 +631,23 @@ packages:
     source: hosted
     version: "0.2.2"
   graphql:
-    dependency: transitive
+    dependency: "direct main"
     description:
-      name: graphql
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.1.1"
+      path: "packages/graphql"
+      ref: graphql-transport-ws
+      resolved-ref: "493ef751d6aba1f8474a568915382f493f1625e7"
+      url: "https://github.com/maximilianmaihoefner/graphql-flutter"
+    source: git
+    version: "5.1.2-beta.1"
   graphql_flutter:
     dependency: "direct main"
     description:
-      name: graphql_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.1.0"
+      path: "packages/graphql_flutter"
+      ref: graphql-transport-ws
+      resolved-ref: "493ef751d6aba1f8474a568915382f493f1625e7"
+      url: "https://github.com/maximilianmaihoefner/graphql-flutter"
+    source: git
+    version: "5.1.1-beta.2"
   graphs:
     dependency: transitive
     description:

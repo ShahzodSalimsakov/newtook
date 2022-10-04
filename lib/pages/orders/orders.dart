@@ -4,6 +4,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:newtook/bloc/block_imports.dart';
 import 'package:newtook/helpers/api_graphql_provider.dart';
 import 'package:newtook/models/order.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../home/view/work_switch.dart';
 
@@ -74,38 +75,52 @@ class OrdersPage extends StatelessWidget {
               )),
           body: TabBarView(
             children: [
-              Center(
-                  child: BlocBuilder<UserDataBloc, UserDataState>(
-                builder: (context, state) => ApiGraphqlProvider(
-                    child: Subscription(
-                  options: SubscriptionOptions(
-                    document: subscriptionDocument,
-                    variables: {'courierId': state.userProfile?.id},
-                  ),
-                  builder: (result) {
-                    if (result.hasException) {
-                      return Text(result.exception.toString());
-                    }
+              Center(child: BlocBuilder<UserDataBloc, UserDataState>(
+                builder: (context, state) {
+                  return ApiGraphqlProvider(
+                      child: Subscription(
+                    options: SubscriptionOptions(
+                      document: subscriptionDocument,
+                      variables: {'courierId': state.userProfile?.id},
+                    ),
+                    builder: (result) {
+                      print(result);
+                      if (result.hasException) {
+                        return Text(result.exception.toString());
+                      }
 
-                    if (result.isLoading) {
-                      return Center(
-                        child: const CircularProgressIndicator(),
+                      if (result.isLoading) {
+                        return Center(
+                          child: const CircularProgressIndicator(),
+                        );
+                      }
+
+                      if (result.data == null) {
+                        return Text(
+                            AppLocalizations.of(context)!.order_list_empty);
+                      }
+                      if (result.data?['orderUpdate'] == null) {
+                        return Text(
+                            AppLocalizations.of(context)!.order_list_empty);
+                      }
+
+                      print(result.data?['orderUpdate']);
+
+                      // ResultAccumulator is a provided helper widget for collating subscription results.
+                      // careful though! It is stateful and will discard your results if the state is disposed
+                      return ResultAccumulator.appendUniqueEntries(
+                        latest: result.data?['orderUpdate'],
+                        builder: (context, {results}) => ListView.builder(
+                          itemCount: results?.length,
+                          itemBuilder: (context, index) {
+                            print(results![index]);
+                            return Text("davr");
+                          },
+                        ),
                       );
-                    }
-                    // ResultAccumulator is a provided helper widget for collating subscription results.
-                    // careful though! It is stateful and will discard your results if the state is disposed
-                    return ResultAccumulator.appendUniqueEntries(
-                      latest: result.data,
-                      builder: (context, {results}) => ListView.builder(
-                        itemCount: results?.length,
-                        itemBuilder: (context, index) {
-                          final item = results?[index] as Order;
-                          return Text(item.id);
-                        },
-                      ),
-                    );
-                  },
-                )),
+                    },
+                  ));
+                },
               )),
               const Center(child: Text('Completed')),
             ],

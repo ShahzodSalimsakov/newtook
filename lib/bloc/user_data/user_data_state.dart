@@ -92,6 +92,7 @@ class UserProfileModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
       'first_name': first_name,
       'last_name': last_name,
       'phone': phone,
@@ -118,7 +119,7 @@ class UserProfileModel {
 
   @override
   String toString() {
-    return 'UserProfileModel(first_name: $first_name, last_name: $last_name, phone: $phone, is_super_user: $is_super_user)';
+    return 'UserProfileModel(first_name: $first_name, last_name: $last_name, phone: $phone, is_super_user: $is_super_user, id: $id)';
   }
 
   @override

@@ -17,5 +17,6 @@
     "choose_lang": "Choose language",
     "location_is_disabled_error": "Enable location",
     "choose_brand": "Choose brand",
-    "add" : "Add"
+    "add" : "Add",
+    "order_list_empty": "Order list is empty"
 }

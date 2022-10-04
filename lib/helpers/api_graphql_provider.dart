@@ -26,7 +26,6 @@ class _ApiGraphqlProviderView extends StatelessWidget {
 
   FutureOr<String> getBoxToken(BuildContext context) async {
     UserDataBloc userDataBloc = BlocProvider.of<UserDataBloc>(context);
-    print('Bearer ${userDataBloc.state.accessToken}');
     // compare if DateTime.now() is after userDataBloc.state.tokenExpires
     if (DateTime.now().isAfter(userDataBloc.state.tokenExpires)) {
       ApiClientsState apiClientsState =
@@ -104,9 +103,13 @@ class _ApiGraphqlProviderView extends StatelessWidget {
               autoReconnect: true,
               inactivityTimeout: Duration(seconds: 30),
             ),
+            subProtocol: SocketSubProtocol.graphqlTransportWs,
           );
 
-          final Link link = authLink.concat(httpLink).concat(wsLink);
+          final Link queryLink = authLink.concat(httpLink);
+
+          final Link link = Link.split(
+              (request) => request.isSubscription, wsLink, queryLink);
 
           ValueNotifier<GraphQLClient> client = ValueNotifier(
             GraphQLClient(

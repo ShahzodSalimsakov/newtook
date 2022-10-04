@@ -43,7 +43,6 @@ class _LoginTypeOtpPageState extends State<LoginTypeOtpPage> {
 
     Future<void> _verifyOtpCode() async {
       var code = textEditingController.text;
-      print(code);
 
       if (isLoading) {
         return;
@@ -92,9 +91,6 @@ class _LoginTypeOtpPageState extends State<LoginTypeOtpPage> {
           headers: {'Content-Type': 'application/json'},
           body: requestBody,
         );
-        print(requestBody);
-        print(response.body);
-        print(response.statusCode);
         if (response.statusCode == 200) {
           var result = jsonDecode(response.body);
 
@@ -117,10 +113,6 @@ class _LoginTypeOtpPageState extends State<LoginTypeOtpPage> {
             isLoading = false;
           });
           _btnController.success();
-          print(result['data']['verifyOtp']['user']);
-          print(List<Role>.from(result['data']['verifyOtp']['access']['roles']
-              .map((x) => Role.fromMap(x))
-              .toList()));
           UserDataBloc userDataBloc = BlocProvider.of<UserDataBloc>(context);
           userDataBloc.add(UserDataEventChange(
             accessToken: result['data']['verifyOtp']['token']['accessToken'],
@@ -239,11 +231,8 @@ class _LoginTypeOtpPageState extends State<LoginTypeOtpPage> {
                   onCompleted: (v) {
                     _verifyOtpCode();
                   },
-                  onChanged: (value) {
-                    print(value);
-                  },
+                  onChanged: (value) {},
                   beforeTextPaste: (text) {
-                    print("Allowing to paste $text");
                     //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
                     //but you can show anything you want here, like your pop up saying wrong paste format or etc
                     return true;

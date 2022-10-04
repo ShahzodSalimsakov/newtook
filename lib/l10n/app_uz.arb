@@ -17,5 +17,6 @@
     "choose_lang": "Tilni tanlang",
     "location_is_disabled_error": "Joylashuvni yoqish",
     "choose_brand": "Brendni tanlang",
-    "add" : "Qo'shish"
+    "add" : "Qo'shish",
+    "order_list_empty": "Buyurtma ro'yxati bo'sh"
 }
