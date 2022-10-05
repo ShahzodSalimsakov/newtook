@@ -18,5 +18,7 @@
     "location_is_disabled_error": "Enable location",
     "choose_brand": "Choose brand",
     "add" : "Add",
-    "order_list_empty": "Order list is empty"
+    "order_list_empty": "Order list is empty",
+    "order_tab_current": "Current",
+    "you_are_not_courier": "You are not courier"
 }

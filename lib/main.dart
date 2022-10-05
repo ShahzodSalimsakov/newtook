@@ -9,6 +9,7 @@ import 'package:flutter_services_binding/flutter_services_binding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:newtook/helpers/objectbox.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:workmanager/workmanager.dart';
@@ -25,6 +26,8 @@ import 'app.dart';
 //   );
 // }
 
+late ObjectBox objectBox;
+
 Future<void> main() async {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
@@ -33,6 +36,7 @@ Future<void> main() async {
     ),
   );
   WidgetsFlutterBinding.ensureInitialized();
+  objectBox = await ObjectBox.init();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   await initHiveForFlutter();

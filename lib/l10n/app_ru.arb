@@ -18,5 +18,7 @@
     "location_is_disabled_error": "Включите геолокацию",
     "choose_brand": "Выберите бренд",
     "add" : "Добавить",
-    "order_list_empty": "Список заказов пуст"
+    "order_list_empty": "Список заказов пуст",
+    "order_tab_current": "Текущие",
+    "you_are_not_courier": "Вы не курьер"
 }

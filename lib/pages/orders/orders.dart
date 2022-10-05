@@ -5,6 +5,8 @@ import 'package:newtook/bloc/block_imports.dart';
 import 'package:newtook/helpers/api_graphql_provider.dart';
 import 'package:newtook/models/order.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:newtook/widgets/orders/current_orders.dart';
+import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 import '../home/view/work_switch.dart';
 
@@ -63,64 +65,35 @@ class OrdersPage extends StatelessWidget {
               elevation: 0,
               backgroundColor: Colors.transparent,
               primary: true,
-              bottom: const PreferredSize(
-                preferredSize: Size.fromHeight(20),
+              bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(20),
                 child: TabBar(
-                  labelColor: Colors.black,
+                  labelColor: Colors.white,
+                  unselectedLabelColor: Colors.black,
+                  labelStyle: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                  indicator: RectangularIndicator(
+                    color: Theme.of(context).primaryColor,
+                    bottomLeftRadius: 30,
+                    bottomRightRadius: 30,
+                    topLeftRadius: 30,
+                    topRightRadius: 30,
+                  ),
                   tabs: [
-                    Tab(text: 'Pending'),
-                    Tab(text: 'Completed'),
+                    Tab(
+                        text: AppLocalizations.of(context)!
+                            .order_tab_current
+                            .toUpperCase()),
+                    const Tab(text: 'Completed'),
                   ],
                 ),
               )),
           body: TabBarView(
             children: [
-              Center(child: BlocBuilder<UserDataBloc, UserDataState>(
-                builder: (context, state) {
-                  return ApiGraphqlProvider(
-                      child: Subscription(
-                    options: SubscriptionOptions(
-                      document: subscriptionDocument,
-                      variables: {'courierId': state.userProfile?.id},
-                    ),
-                    builder: (result) {
-                      print(result);
-                      if (result.hasException) {
-                        return Text(result.exception.toString());
-                      }
-
-                      if (result.isLoading) {
-                        return Center(
-                          child: const CircularProgressIndicator(),
-                        );
-                      }
-
-                      if (result.data == null) {
-                        return Text(
-                            AppLocalizations.of(context)!.order_list_empty);
-                      }
-                      if (result.data?['orderUpdate'] == null) {
-                        return Text(
-                            AppLocalizations.of(context)!.order_list_empty);
-                      }
-
-                      print(result.data?['orderUpdate']);
-
-                      // ResultAccumulator is a provided helper widget for collating subscription results.
-                      // careful though! It is stateful and will discard your results if the state is disposed
-                      return ResultAccumulator.appendUniqueEntries(
-                        latest: result.data?['orderUpdate'],
-                        builder: (context, {results}) => ListView.builder(
-                          itemCount: results?.length,
-                          itemBuilder: (context, index) {
-                            print(results![index]);
-                            return Text("davr");
-                          },
-                        ),
-                      );
-                    },
-                  ));
-                },
+              Center(
+                  child: Column(
+                children: const [MyCurrentOrdersList()],
               )),
               const Center(child: Text('Completed')),
             ],

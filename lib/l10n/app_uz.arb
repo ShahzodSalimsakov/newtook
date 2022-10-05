@@ -18,5 +18,7 @@
     "location_is_disabled_error": "Joylashuvni yoqish",
     "choose_brand": "Brendni tanlang",
     "add" : "Qo'shish",
-    "order_list_empty": "Buyurtma ro'yxati bo'sh"
+    "order_list_empty": "Buyurtma ro'yxati bo'sh",
+    "order_tab_current": "Joriy",
+    "you_are_not_courier": "Siz kuryer emassiz"
 }
