@@ -2,44 +2,38 @@
 
 import 'dart:convert';
 
-import '../objectbox.g.dart';
+import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class OrderStatus {
-  @Id()
-  int osId = 0;
-  final String id;
+  late int id;
+  final String identity;
   final String name;
   OrderStatus({
-    required this.osId,
-    required this.id,
+    required this.identity,
     required this.name,
   });
 
   OrderStatus copyWith({
-    int? osId,
-    String? id,
+    String? identity,
     String? name,
   }) {
     return OrderStatus(
-      osId: osId ?? this.osId,
-      id: id ?? this.id,
+      identity: identity ?? this.identity,
       name: name ?? this.name,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'osId': osId,
-      'id': id,
+      'id': identity,
       'name': name,
     };
   }
 
   factory OrderStatus.fromMap(Map<String, dynamic> map) {
     return OrderStatus(
-      osId: map['osId'] as int,
-      id: map['id'] as String,
+      identity: map['id'] as String,
       name: map['name'] as String,
     );
   }
@@ -50,15 +44,15 @@ class OrderStatus {
       OrderStatus.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'OrderStatus(osId: $osId, id: $id, name: $name)';
+  String toString() => 'OrderStatus(id: $identity, name: $name)';
 
   @override
   bool operator ==(covariant OrderStatus other) {
     if (identical(this, other)) return true;
 
-    return other.osId == osId && other.id == id && other.name == name;
+    return other.identity == identity && other.name == name;
   }
 
   @override
-  int get hashCode => osId.hashCode ^ id.hashCode ^ name.hashCode;
+  int get hashCode => identity.hashCode ^ name.hashCode;
 }

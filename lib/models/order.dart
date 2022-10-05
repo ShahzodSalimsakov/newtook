@@ -2,19 +2,21 @@
 import 'dart:convert';
 import 'dart:ffi';
 
+import 'package:newtook/models/terminals.dart';
 import 'package:objectbox/objectbox.dart';
+
+import 'customer.dart';
+import 'order_status.dart';
 
 @Entity()
 class OrderModel {
-  @Id()
-  int oId = 0;
-  final String id;
-  final String name;
-  final String status;
-  final int to_lat;
-  final int to_lon;
-  final Float? pre_distance;
-  final int order_number;
+  late int id;
+  @Index()
+  final String identity;
+  final double to_lat;
+  final double to_lon;
+  final int pre_distance;
+  final String order_number;
   final int order_price;
   final int? delivery_price;
   final String? delivery_address;
@@ -22,13 +24,10 @@ class OrderModel {
   final DateTime created_at;
 
   OrderModel({
-    required this.oId,
-    required this.id,
-    required this.name,
-    required this.status,
+    required this.identity,
     required this.to_lat,
     required this.to_lon,
-    this.pre_distance,
+    required this.pre_distance,
     required this.order_number,
     required this.order_price,
     this.delivery_price,
@@ -37,15 +36,16 @@ class OrderModel {
     required this.created_at,
   });
 
+  final customer = ToOne<Customer>();
+  final terminal = ToOne<Terminals>();
+  final orderStatus = ToOne<OrderStatus>();
+
   OrderModel copyWith({
-    int? oId,
-    String? id,
-    String? name,
-    String? status,
-    int? to_lat,
-    int? to_lon,
-    Float? pre_distance,
-    int? order_number,
+    String? identity,
+    double? to_lat,
+    double? to_lon,
+    int? pre_distance,
+    String? order_number,
     int? order_price,
     int? delivery_price,
     String? delivery_address,
@@ -53,10 +53,7 @@ class OrderModel {
     DateTime? created_at,
   }) {
     return OrderModel(
-      oId: oId ?? this.oId,
-      id: id ?? this.id,
-      name: name ?? this.name,
-      status: status ?? this.status,
+      identity: identity ?? this.identity,
       to_lat: to_lat ?? this.to_lat,
       to_lon: to_lon ?? this.to_lon,
       pre_distance: pre_distance ?? this.pre_distance,
@@ -71,10 +68,7 @@ class OrderModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'oId': oId,
-      'id': id,
-      'name': name,
-      'status': status,
+      'id': identity,
       'to_lat': to_lat,
       'to_lon': to_lon,
       'pre_distance': pre_distance,
@@ -89,14 +83,11 @@ class OrderModel {
 
   factory OrderModel.fromMap(Map<String, dynamic> map) {
     return OrderModel(
-      oId: map['oId'] as int,
-      id: map['id'] as String,
-      name: map['name'] as String,
-      status: map['status'] as String,
-      to_lat: map['to_lat'] as int,
-      to_lon: map['to_lon'] as int,
-      pre_distance: map['pre_distance'] as Float?,
-      order_number: map['order_number'] as int,
+      identity: map['id'] as String,
+      to_lat: map['to_lat'] as double,
+      to_lon: map['to_lon'] as double,
+      pre_distance: map['pre_distance'] as int,
+      order_number: map['order_number'] as String,
       order_price: map['order_price'] as int,
       delivery_price: map['delivery_price'] as int?,
       delivery_address: map['delivery_address'] as String?,
@@ -111,15 +102,15 @@ class OrderModel {
       OrderModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'Order(id: $id, name: $name, status: $status)';
+  String toString() => 'Order(id: $identity)';
 
   @override
   bool operator ==(covariant OrderModel other) {
     if (identical(this, other)) return true;
 
-    return other.id == id && other.name == name && other.status == status;
+    return other.identity == identity;
   }
 
   @override
-  int get hashCode => id.hashCode ^ name.hashCode ^ status.hashCode;
+  int get hashCode => identity.hashCode;
 }

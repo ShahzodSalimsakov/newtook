@@ -1,44 +1,39 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:newtook/objectbox.g.dart';
+import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class Terminals {
-  @Id()
-  int tId = 0;
-  final String id;
+  late int id;
+  @Index()
+  final String identity;
   final String name;
   Terminals({
-    required this.tId,
-    required this.id,
+    required this.identity,
     required this.name,
   });
 
   Terminals copyWith({
-    int? tId,
-    String? id,
+    String? identity,
     String? name,
   }) {
     return Terminals(
-      tId: tId ?? this.tId,
-      id: id ?? this.id,
+      identity: identity ?? this.identity,
       name: name ?? this.name,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'tId': tId,
-      'id': id,
+      'id': identity,
       'name': name,
     };
   }
 
   factory Terminals.fromMap(Map<String, dynamic> map) {
     return Terminals(
-      tId: map['tId'] as int,
-      id: map['id'] as String,
+      identity: map['id'] as String,
       name: map['name'] as String,
     );
   }
@@ -49,15 +44,15 @@ class Terminals {
       Terminals.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'Terminals(tId: $tId, id: $id, name: $name)';
+  String toString() => 'Terminals(id: $identity, name: $name)';
 
   @override
   bool operator ==(covariant Terminals other) {
     if (identical(this, other)) return true;
 
-    return other.tId == tId && other.id == id && other.name == name;
+    return other.id == id && other.name == name;
   }
 
   @override
-  int get hashCode => tId.hashCode ^ id.hashCode ^ name.hashCode;
+  int get hashCode => id.hashCode ^ name.hashCode;
 }

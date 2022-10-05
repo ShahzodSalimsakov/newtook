@@ -28,4 +28,15 @@ class ObjectBox {
     final store = await openStore();
     return ObjectBox._init(store);
   }
+
+  void addCurrentOrders(List<OrderModel> orders) {
+    _currentOrdersBox.putMany(orders);
+  }
+
+  Stream<List<OrderModel>> getCurrentOrders() {
+    final builder = _currentOrdersBox.query()..order(OrderModel_.pre_distance);
+    return builder.watch(triggerImmediately: true).map((query) {
+      return query.find();
+    });
+  }
 }

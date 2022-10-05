@@ -23,122 +23,30 @@ export 'package:objectbox/objectbox.dart'; // so that callers only have to impor
 
 final _entities = <ModelEntity>[
   ModelEntity(
-      id: const IdUid(2, 8619516910133107737),
-      name: 'Customer',
-      lastPropertyId: const IdUid(4, 616016896979766167),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 6801889756641705086),
-            name: 'cId',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 4599324437995865890),
-            name: 'id',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 2575838619834289619),
-            name: 'name',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 616016896979766167),
-            name: 'phone',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
-      id: const IdUid(3, 135028551281165955),
-      name: 'Terminals',
-      lastPropertyId: const IdUid(3, 6062476513322378053),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 8551996614833550299),
-            name: 'tId',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 6227792049006403338),
-            name: 'id',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 6062476513322378053),
-            name: 'name',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
-      id: const IdUid(4, 1846751678898275623),
-      name: 'OrderStatus',
-      lastPropertyId: const IdUid(3, 2094901791835261984),
-      flags: 0,
-      properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 786840397266920362),
-            name: 'osId',
-            type: 6,
-            flags: 1),
-        ModelProperty(
-            id: const IdUid(2, 8266593758222525160),
-            name: 'id',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 2094901791835261984),
-            name: 'name',
-            type: 9,
-            flags: 0)
-      ],
-      relations: <ModelRelation>[],
-      backlinks: <ModelBacklink>[]),
-  ModelEntity(
       id: const IdUid(5, 8938918269802989134),
       name: 'OrderModel',
-      lastPropertyId: const IdUid(12, 840164195621845206),
+      lastPropertyId: const IdUid(17, 7913170474316076287),
       flags: 0,
       properties: <ModelProperty>[
-        ModelProperty(
-            id: const IdUid(1, 6685362917590658499),
-            name: 'oId',
-            type: 6,
-            flags: 1),
         ModelProperty(
             id: const IdUid(2, 4764357116416772482),
             name: 'id',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(3, 1290841174320871070),
-            name: 'name',
-            type: 9,
-            flags: 0),
-        ModelProperty(
-            id: const IdUid(4, 1643304251919963795),
-            name: 'status',
-            type: 9,
-            flags: 0),
+            type: 6,
+            flags: 1),
         ModelProperty(
             id: const IdUid(5, 5466737264095854493),
             name: 'to_lat',
-            type: 6,
+            type: 8,
             flags: 0),
         ModelProperty(
             id: const IdUid(6, 4697113116362280261),
             name: 'to_lon',
-            type: 6,
+            type: 8,
             flags: 0),
         ModelProperty(
             id: const IdUid(7, 2220628863310541438),
             name: 'order_number',
-            type: 6,
+            type: 9,
             flags: 0),
         ModelProperty(
             id: const IdUid(8, 3463541009649801615),
@@ -164,7 +72,118 @@ final _entities = <ModelEntity>[
             id: const IdUid(12, 840164195621845206),
             name: 'created_at',
             type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(13, 4233819846249036246),
+            name: 'identity',
+            type: 9,
+            flags: 2048,
+            indexId: const IdUid(3, 7570389727441659977)),
+        ModelProperty(
+            id: const IdUid(14, 4199781037572021773),
+            name: 'customerId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(4, 4078823414943240754),
+            relationTarget: 'Customer'),
+        ModelProperty(
+            id: const IdUid(15, 2809260946128085365),
+            name: 'terminalId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(5, 4120201620197913261),
+            relationTarget: 'Terminals'),
+        ModelProperty(
+            id: const IdUid(16, 3357979323474007785),
+            name: 'orderStatusId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(6, 7166992057764112272),
+            relationTarget: 'OrderStatus'),
+        ModelProperty(
+            id: const IdUid(17, 7913170474316076287),
+            name: 'pre_distance',
+            type: 6,
             flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(6, 9091961325872571771),
+      name: 'Terminals',
+      lastPropertyId: const IdUid(4, 3920934876080503761),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(2, 840822925344105162),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(3, 2210336822924642268),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 3920934876080503761),
+            name: 'identity',
+            type: 9,
+            flags: 2048,
+            indexId: const IdUid(1, 1676434599599334635))
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(7, 8563256737949417726),
+      name: 'OrderStatus',
+      lastPropertyId: const IdUid(3, 8962048234501600838),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 2828808062281907829),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 4459246252108730740),
+            name: 'identity',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(3, 8962048234501600838),
+            name: 'name',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(8, 6192037116325498403),
+      name: 'Customer',
+      lastPropertyId: const IdUid(5, 3090020386679110062),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(2, 897756238628117785),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(3, 7094149867248436284),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 1001685769562708279),
+            name: 'phone',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 3090020386679110062),
+            name: 'identity',
+            type: 9,
+            flags: 2048,
+            indexId: const IdUid(2, 1130095198174930973))
       ],
       relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
@@ -190,11 +209,16 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(5, 8938918269802989134),
-      lastIndexId: const IdUid(0, 0),
+      lastEntityId: const IdUid(8, 6192037116325498403),
+      lastIndexId: const IdUid(6, 7166992057764112272),
       lastRelationId: const IdUid(0, 0),
       lastSequenceId: const IdUid(0, 0),
-      retiredEntityUids: const [1863924414234841213],
+      retiredEntityUids: const [
+        1863924414234841213,
+        8619516910133107737,
+        135028551281165955,
+        1846751678898275623
+      ],
       retiredIndexUids: const [],
       retiredPropertyUids: const [
         2644272314132256799,
@@ -208,7 +232,22 @@ ModelDefinition getObjectBoxModel() {
         564995292937529856,
         4052066614249312864,
         2219328941636834940,
-        4593010863572601325
+        4593010863572601325,
+        6801889756641705086,
+        4599324437995865890,
+        2575838619834289619,
+        616016896979766167,
+        8551996614833550299,
+        6227792049006403338,
+        6062476513322378053,
+        786840397266920362,
+        8266593758222525160,
+        2094901791835261984,
+        8945765911252574506,
+        8107958439781220600,
+        6685362917590658499,
+        1290841174320871070,
+        1643304251919963795
       ],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -216,155 +255,57 @@ ModelDefinition getObjectBoxModel() {
       version: 1);
 
   final bindings = <Type, EntityDefinition>{
-    Customer: EntityDefinition<Customer>(
-        model: _entities[0],
-        toOneRelations: (Customer object) => [],
-        toManyRelations: (Customer object) => {},
-        getId: (Customer object) => object.cId,
-        setId: (Customer object, int id) {
-          object.cId = id;
-        },
-        objectToFB: (Customer object, fb.Builder fbb) {
-          final idOffset = fbb.writeString(object.id);
-          final nameOffset = fbb.writeString(object.name);
-          final phoneOffset = fbb.writeString(object.phone);
-          fbb.startTable(5);
-          fbb.addInt64(0, object.cId);
-          fbb.addOffset(1, idOffset);
-          fbb.addOffset(2, nameOffset);
-          fbb.addOffset(3, phoneOffset);
-          fbb.finish(fbb.endTable());
-          return object.cId;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Customer(
-              id: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              name: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 8, ''),
-              phone: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''))
-            ..cId = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
-
-          return object;
-        }),
-    Terminals: EntityDefinition<Terminals>(
-        model: _entities[1],
-        toOneRelations: (Terminals object) => [],
-        toManyRelations: (Terminals object) => {},
-        getId: (Terminals object) => object.tId,
-        setId: (Terminals object, int id) {
-          object.tId = id;
-        },
-        objectToFB: (Terminals object, fb.Builder fbb) {
-          final idOffset = fbb.writeString(object.id);
-          final nameOffset = fbb.writeString(object.name);
-          fbb.startTable(4);
-          fbb.addInt64(0, object.tId);
-          fbb.addOffset(1, idOffset);
-          fbb.addOffset(2, nameOffset);
-          fbb.finish(fbb.endTable());
-          return object.tId;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = Terminals(
-              tId: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              id: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              name: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 8, ''));
-
-          return object;
-        }),
-    OrderStatus: EntityDefinition<OrderStatus>(
-        model: _entities[2],
-        toOneRelations: (OrderStatus object) => [],
-        toManyRelations: (OrderStatus object) => {},
-        getId: (OrderStatus object) => object.osId,
-        setId: (OrderStatus object, int id) {
-          object.osId = id;
-        },
-        objectToFB: (OrderStatus object, fb.Builder fbb) {
-          final idOffset = fbb.writeString(object.id);
-          final nameOffset = fbb.writeString(object.name);
-          fbb.startTable(4);
-          fbb.addInt64(0, object.osId);
-          fbb.addOffset(1, idOffset);
-          fbb.addOffset(2, nameOffset);
-          fbb.finish(fbb.endTable());
-          return object.osId;
-        },
-        objectFromFB: (Store store, ByteData fbData) {
-          final buffer = fb.BufferContext(fbData);
-          final rootOffset = buffer.derefObject(0);
-
-          final object = OrderStatus(
-              osId: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              id: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              name: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 8, ''));
-
-          return object;
-        }),
     OrderModel: EntityDefinition<OrderModel>(
-        model: _entities[3],
-        toOneRelations: (OrderModel object) => [],
+        model: _entities[0],
+        toOneRelations: (OrderModel object) =>
+            [object.customer, object.terminal, object.orderStatus],
         toManyRelations: (OrderModel object) => {},
-        getId: (OrderModel object) => object.oId,
+        getId: (OrderModel object) => object.id,
         setId: (OrderModel object, int id) {
-          object.oId = id;
+          object.id = id;
         },
         objectToFB: (OrderModel object, fb.Builder fbb) {
-          final idOffset = fbb.writeString(object.id);
-          final nameOffset = fbb.writeString(object.name);
-          final statusOffset = fbb.writeString(object.status);
+          final order_numberOffset = fbb.writeString(object.order_number);
           final delivery_addressOffset = object.delivery_address == null
               ? null
               : fbb.writeString(object.delivery_address!);
           final delivery_commentOffset = object.delivery_comment == null
               ? null
               : fbb.writeString(object.delivery_comment!);
-          fbb.startTable(13);
-          fbb.addInt64(0, object.oId);
-          fbb.addOffset(1, idOffset);
-          fbb.addOffset(2, nameOffset);
-          fbb.addOffset(3, statusOffset);
-          fbb.addInt64(4, object.to_lat);
-          fbb.addInt64(5, object.to_lon);
-          fbb.addInt64(6, object.order_number);
+          final identityOffset = fbb.writeString(object.identity);
+          fbb.startTable(18);
+          fbb.addInt64(1, object.id);
+          fbb.addFloat64(4, object.to_lat);
+          fbb.addFloat64(5, object.to_lon);
+          fbb.addOffset(6, order_numberOffset);
           fbb.addInt64(7, object.order_price);
           fbb.addInt64(8, object.delivery_price);
           fbb.addOffset(9, delivery_addressOffset);
           fbb.addOffset(10, delivery_commentOffset);
           fbb.addInt64(11, object.created_at.millisecondsSinceEpoch);
+          fbb.addOffset(12, identityOffset);
+          fbb.addInt64(13, object.customer.targetId);
+          fbb.addInt64(14, object.terminal.targetId);
+          fbb.addInt64(15, object.orderStatus.targetId);
+          fbb.addInt64(16, object.pre_distance);
           fbb.finish(fbb.endTable());
-          return object.oId;
+          return object.id;
         },
         objectFromFB: (Store store, ByteData fbData) {
           final buffer = fb.BufferContext(fbData);
           final rootOffset = buffer.derefObject(0);
 
           final object = OrderModel(
-              oId: const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0),
-              id: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 6, ''),
-              name: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 8, ''),
-              status: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 10, ''),
+              identity: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 28, ''),
               to_lat:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0),
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0),
               to_lon:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 14, 0),
-              order_number:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0),
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0),
+              pre_distance:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0),
+              order_number: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, ''),
               order_price:
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0),
               delivery_price: const fb.Int64Reader()
@@ -373,7 +314,114 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGetNullable(buffer, rootOffset, 22),
               delivery_comment: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 24),
-              created_at: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0)));
+              created_at:
+                  DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0)))
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+          object.customer.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
+          object.customer.attach(store);
+          object.terminal.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 32, 0);
+          object.terminal.attach(store);
+          object.orderStatus.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0);
+          object.orderStatus.attach(store);
+          return object;
+        }),
+    Terminals: EntityDefinition<Terminals>(
+        model: _entities[1],
+        toOneRelations: (Terminals object) => [],
+        toManyRelations: (Terminals object) => {},
+        getId: (Terminals object) => object.id,
+        setId: (Terminals object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Terminals object, fb.Builder fbb) {
+          final nameOffset = fbb.writeString(object.name);
+          final identityOffset = fbb.writeString(object.identity);
+          fbb.startTable(5);
+          fbb.addInt64(1, object.id);
+          fbb.addOffset(2, nameOffset);
+          fbb.addOffset(3, identityOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Terminals(
+              identity: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              name: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''))
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
+
+          return object;
+        }),
+    OrderStatus: EntityDefinition<OrderStatus>(
+        model: _entities[2],
+        toOneRelations: (OrderStatus object) => [],
+        toManyRelations: (OrderStatus object) => {},
+        getId: (OrderStatus object) => object.id,
+        setId: (OrderStatus object, int id) {
+          object.id = id;
+        },
+        objectToFB: (OrderStatus object, fb.Builder fbb) {
+          final identityOffset = fbb.writeString(object.identity);
+          final nameOffset = fbb.writeString(object.name);
+          fbb.startTable(4);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, identityOffset);
+          fbb.addOffset(2, nameOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = OrderStatus(
+              identity: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              name: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''))
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+          return object;
+        }),
+    Customer: EntityDefinition<Customer>(
+        model: _entities[3],
+        toOneRelations: (Customer object) => [],
+        toManyRelations: (Customer object) => {},
+        getId: (Customer object) => object.id,
+        setId: (Customer object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Customer object, fb.Builder fbb) {
+          final nameOffset = fbb.writeString(object.name);
+          final phoneOffset = fbb.writeString(object.phone);
+          final identityOffset = fbb.writeString(object.identity);
+          fbb.startTable(6);
+          fbb.addInt64(1, object.id);
+          fbb.addOffset(2, nameOffset);
+          fbb.addOffset(3, phoneOffset);
+          fbb.addOffset(4, identityOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Customer(
+              identity: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, ''),
+              name: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              phone: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''))
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
 
           return object;
         })
@@ -382,44 +430,87 @@ ModelDefinition getObjectBoxModel() {
   return ModelDefinition(model, bindings);
 }
 
-/// [Customer] entity fields to define ObjectBox queries.
-class Customer_ {
-  /// see [Customer.cId]
-  static final cId = QueryIntegerProperty<Customer>(_entities[0].properties[0]);
+/// [OrderModel] entity fields to define ObjectBox queries.
+class OrderModel_ {
+  /// see [OrderModel.id]
+  static final id =
+      QueryIntegerProperty<OrderModel>(_entities[0].properties[0]);
 
-  /// see [Customer.id]
-  static final id = QueryStringProperty<Customer>(_entities[0].properties[1]);
+  /// see [OrderModel.to_lat]
+  static final to_lat =
+      QueryDoubleProperty<OrderModel>(_entities[0].properties[1]);
 
-  /// see [Customer.name]
-  static final name = QueryStringProperty<Customer>(_entities[0].properties[2]);
+  /// see [OrderModel.to_lon]
+  static final to_lon =
+      QueryDoubleProperty<OrderModel>(_entities[0].properties[2]);
 
-  /// see [Customer.phone]
-  static final phone =
-      QueryStringProperty<Customer>(_entities[0].properties[3]);
+  /// see [OrderModel.order_number]
+  static final order_number =
+      QueryStringProperty<OrderModel>(_entities[0].properties[3]);
+
+  /// see [OrderModel.order_price]
+  static final order_price =
+      QueryIntegerProperty<OrderModel>(_entities[0].properties[4]);
+
+  /// see [OrderModel.delivery_price]
+  static final delivery_price =
+      QueryIntegerProperty<OrderModel>(_entities[0].properties[5]);
+
+  /// see [OrderModel.delivery_address]
+  static final delivery_address =
+      QueryStringProperty<OrderModel>(_entities[0].properties[6]);
+
+  /// see [OrderModel.delivery_comment]
+  static final delivery_comment =
+      QueryStringProperty<OrderModel>(_entities[0].properties[7]);
+
+  /// see [OrderModel.created_at]
+  static final created_at =
+      QueryIntegerProperty<OrderModel>(_entities[0].properties[8]);
+
+  /// see [OrderModel.identity]
+  static final identity =
+      QueryStringProperty<OrderModel>(_entities[0].properties[9]);
+
+  /// see [OrderModel.customer]
+  static final customer =
+      QueryRelationToOne<OrderModel, Customer>(_entities[0].properties[10]);
+
+  /// see [OrderModel.terminal]
+  static final terminal =
+      QueryRelationToOne<OrderModel, Terminals>(_entities[0].properties[11]);
+
+  /// see [OrderModel.orderStatus]
+  static final orderStatus =
+      QueryRelationToOne<OrderModel, OrderStatus>(_entities[0].properties[12]);
+
+  /// see [OrderModel.pre_distance]
+  static final pre_distance =
+      QueryIntegerProperty<OrderModel>(_entities[0].properties[13]);
 }
 
 /// [Terminals] entity fields to define ObjectBox queries.
 class Terminals_ {
-  /// see [Terminals.tId]
-  static final tId =
-      QueryIntegerProperty<Terminals>(_entities[1].properties[0]);
-
   /// see [Terminals.id]
-  static final id = QueryStringProperty<Terminals>(_entities[1].properties[1]);
+  static final id = QueryIntegerProperty<Terminals>(_entities[1].properties[0]);
 
   /// see [Terminals.name]
   static final name =
+      QueryStringProperty<Terminals>(_entities[1].properties[1]);
+
+  /// see [Terminals.identity]
+  static final identity =
       QueryStringProperty<Terminals>(_entities[1].properties[2]);
 }
 
 /// [OrderStatus] entity fields to define ObjectBox queries.
 class OrderStatus_ {
-  /// see [OrderStatus.osId]
-  static final osId =
-      QueryIntegerProperty<OrderStatus>(_entities[2].properties[0]);
-
   /// see [OrderStatus.id]
   static final id =
+      QueryIntegerProperty<OrderStatus>(_entities[2].properties[0]);
+
+  /// see [OrderStatus.identity]
+  static final identity =
       QueryStringProperty<OrderStatus>(_entities[2].properties[1]);
 
   /// see [OrderStatus.name]
@@ -427,52 +518,19 @@ class OrderStatus_ {
       QueryStringProperty<OrderStatus>(_entities[2].properties[2]);
 }
 
-/// [OrderModel] entity fields to define ObjectBox queries.
-class OrderModel_ {
-  /// see [OrderModel.oId]
-  static final oId =
-      QueryIntegerProperty<OrderModel>(_entities[3].properties[0]);
+/// [Customer] entity fields to define ObjectBox queries.
+class Customer_ {
+  /// see [Customer.id]
+  static final id = QueryIntegerProperty<Customer>(_entities[3].properties[0]);
 
-  /// see [OrderModel.id]
-  static final id = QueryStringProperty<OrderModel>(_entities[3].properties[1]);
+  /// see [Customer.name]
+  static final name = QueryStringProperty<Customer>(_entities[3].properties[1]);
 
-  /// see [OrderModel.name]
-  static final name =
-      QueryStringProperty<OrderModel>(_entities[3].properties[2]);
+  /// see [Customer.phone]
+  static final phone =
+      QueryStringProperty<Customer>(_entities[3].properties[2]);
 
-  /// see [OrderModel.status]
-  static final status =
-      QueryStringProperty<OrderModel>(_entities[3].properties[3]);
-
-  /// see [OrderModel.to_lat]
-  static final to_lat =
-      QueryIntegerProperty<OrderModel>(_entities[3].properties[4]);
-
-  /// see [OrderModel.to_lon]
-  static final to_lon =
-      QueryIntegerProperty<OrderModel>(_entities[3].properties[5]);
-
-  /// see [OrderModel.order_number]
-  static final order_number =
-      QueryIntegerProperty<OrderModel>(_entities[3].properties[6]);
-
-  /// see [OrderModel.order_price]
-  static final order_price =
-      QueryIntegerProperty<OrderModel>(_entities[3].properties[7]);
-
-  /// see [OrderModel.delivery_price]
-  static final delivery_price =
-      QueryIntegerProperty<OrderModel>(_entities[3].properties[8]);
-
-  /// see [OrderModel.delivery_address]
-  static final delivery_address =
-      QueryStringProperty<OrderModel>(_entities[3].properties[9]);
-
-  /// see [OrderModel.delivery_comment]
-  static final delivery_comment =
-      QueryStringProperty<OrderModel>(_entities[3].properties[10]);
-
-  /// see [OrderModel.created_at]
-  static final created_at =
-      QueryIntegerProperty<OrderModel>(_entities[3].properties[11]);
+  /// see [Customer.identity]
+  static final identity =
+      QueryStringProperty<Customer>(_entities[3].properties[3]);
 }

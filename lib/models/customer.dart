@@ -1,18 +1,18 @@
-import '../objectbox.g.dart';
+import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class Customer {
-  @Id()
-  int cId = 0;
-  final String id;
+  late int id;
+  @Index()
+  final String identity;
   final String name;
   final String phone;
 
-  Customer({required this.id, required this.name, required this.phone});
+  Customer({required this.identity, required this.name, required this.phone});
 
   factory Customer.fromJson(Map<String, dynamic> json) {
     return Customer(
-      id: json['id'],
+      identity: json['id'],
       name: json['name'],
       phone: json['phone'],
     );

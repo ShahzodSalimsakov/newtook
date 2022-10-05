@@ -3,6 +3,12 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:newtook/bloc/block_imports.dart';
 import 'package:newtook/helpers/api_graphql_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:newtook/models/order_status.dart';
+import 'package:newtook/models/terminals.dart';
+
+import '../../main.dart';
+import '../../models/customer.dart';
+import '../../models/order.dart';
 
 class MyCurrentOrdersList extends StatelessWidget {
   const MyCurrentOrdersList({super.key});
@@ -58,6 +64,31 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView> {
     );
     print(data.data?['myCurrentOrders']);
     // var store = await ObjectBoxStore.getStore();
+    if (data.data?['myCurrentOrders'] != null) {
+      List<OrderModel> orders = [];
+      data.data?['myCurrentOrders'].forEach((order) {
+        OrderStatus orderStatus = OrderStatus(
+          identity: order['orders_order_status']['id'],
+          name: order['orders_order_status']['name'],
+        );
+        Terminals terminals = Terminals(
+          identity: order['orders_terminals']['id'],
+          name: order['orders_terminals']['name'],
+        );
+        Customer customer = Customer(
+          identity: order['orders_customers']['id'],
+          name: order['orders_customers']['name'],
+          phone: order['orders_customers']['phone'],
+        );
+        OrderModel orderModel = OrderModel.fromMap(order);
+        orderModel.customer.target = customer;
+        orderModel.terminal.target = terminals;
+        orderModel.orderStatus.target = orderStatus;
+        orders.add(orderModel);
+        print(orderStatus);
+      });
+      objectBox.addCurrentOrders(orders);
+    }
   }
 
   @override
@@ -85,7 +116,30 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView> {
             ],
           ));
         } else {
-          return const SizedBox();
+          return StreamBuilder<List<OrderModel>>(
+            stream: objectBox.getCurrentOrders(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: ListTile(
+                        title:
+                            Text(snapshot.data![index].order_number.toString()),
+                        subtitle:
+                            Text(snapshot.data![index].delivery_address ?? ''),
+                        trailing: Text(
+                            snapshot.data![index].orderStatus.target!.name),
+                      ),
+                    );
+                  },
+                );
+              } else {
+                return const Center(child: Text('Заказов нет'));
+              }
+            },
+          );
         }
       } else {
         return Text(AppLocalizations.of(context)!.you_are_not_courier,
