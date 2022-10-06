@@ -1,3 +1,4 @@
+import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:newtook/bloc/block_imports.dart';
@@ -5,10 +6,13 @@ import 'package:newtook/helpers/api_graphql_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:newtook/models/order_status.dart';
 import 'package:newtook/models/terminals.dart';
+import 'package:newtook/objectbox.g.dart';
+import 'package:newtook/widgets/orders/listen_deleted_current_order.dart';
 
 import '../../main.dart';
 import '../../models/customer.dart';
 import '../../models/order.dart';
+import 'current_order_card.dart';
 
 class MyCurrentOrdersList extends StatelessWidget {
   const MyCurrentOrdersList({super.key});
@@ -27,6 +31,8 @@ class MyCurrentOrderListView extends StatefulWidget {
 }
 
 class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView> {
+  late EasyRefreshController _controller;
+
   Future<void> _loadOrders() async {
     UserDataBloc userDataBloc = context.read<UserDataBloc>();
     var client = GraphQLProvider.of(context).value;
@@ -88,6 +94,7 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView> {
         print(orderStatus);
       });
       await objectBox.clearCurrentOrders();
+      _controller.finishLoad(IndicatorResult.success);
       objectBox.addCurrentOrders(orders);
     }
   }
@@ -96,9 +103,19 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _controller = EasyRefreshController(
+      controlFinishRefresh: true,
+      controlFinishLoad: true,
+    );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _loadOrders();
     });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -137,30 +154,40 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView> {
             ],
           );
         } else {
-          return StreamBuilder<List<OrderModel>>(
-            stream: objectBox.getCurrentOrders(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (context, index) {
-                    return Card(
-                      child: ListTile(
-                        title:
-                            Text(snapshot.data![index].order_number.toString()),
-                        subtitle:
-                            Text(snapshot.data![index].delivery_address ?? ''),
-                        trailing: Text(
-                            snapshot.data![index].orderStatus.target!.name),
-                      ),
-                    );
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ApiGraphqlProvider(child: ListenDeletedCurrentOrders()),
+              Expanded(
+                child: StreamBuilder<List<OrderModel>>(
+                  stream: objectBox.getCurrentOrders(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return EasyRefresh(
+                        controller: _controller,
+                        header: const BezierCircleHeader(),
+                        onRefresh: () async {
+                          await _loadOrders();
+                          _controller.finishRefresh();
+                          _controller.resetFooter();
+                        },
+                        child: ListView.builder(
+                          // shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            return CurrentOrderCard(
+                                order: snapshot.data![index]);
+                          },
+                        ),
+                      );
+                    } else {
+                      return const Center(child: Text('Заказов нет'));
+                    }
                   },
-                );
-              } else {
-                return const Center(child: Text('Заказов нет'));
-              }
-            },
+                ),
+              ),
+            ],
           );
         }
       } else {
