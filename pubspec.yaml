@@ -51,7 +51,8 @@ dependencies:
   intl: ^0.17.0
   intl_phone_number_input: ^0.7.1
   load_switch: ^1.1.0
-  location: ^4.4.0
+  location: 5.0.0-dev.8
+  map_launcher: ^2.4.0
   objectbox: ^1.6.2
   objectbox_flutter_libs: ^1.6.2
   path_provider: ^2.0.11

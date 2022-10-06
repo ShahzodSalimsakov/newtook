@@ -10,7 +10,7 @@ import 'order_status.dart';
 
 @Entity()
 class OrderModel {
-  late int id;
+  int id = 0;
   @Index()
   final String identity;
   final double to_lat;
@@ -92,7 +92,7 @@ class OrderModel {
       delivery_price: map['delivery_price'] as int?,
       delivery_address: map['delivery_address'] as String?,
       delivery_comment: map['delivery_comment'] as String?,
-      created_at: DateTime.fromMillisecondsSinceEpoch(map['created_at'] as int),
+      created_at: DateTime.parse(map['created_at'] as String),
     );
   }
 

@@ -5,7 +5,7 @@ import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class Terminals {
-  late int id;
+  int id = 0;
   @Index()
   final String identity;
   final String name;

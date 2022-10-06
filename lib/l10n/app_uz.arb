@@ -20,5 +20,7 @@
     "add" : "Qo'shish",
     "order_list_empty": "Buyurtma ro'yxati bo'sh",
     "order_tab_current": "Joriy",
-    "you_are_not_courier": "Siz kuryer emassiz"
+    "you_are_not_courier": "Siz kuryer emassiz",
+    "error_work_schedule_offline_title": "Ish rejimini yoqishni bosishingiz kerak",
+    "notice_torn_on_work_schedule_subtitle": "Buyurtmalarni qabul qilish uchun yuqoridagi ish rejimini yoqishni bosing"
 }

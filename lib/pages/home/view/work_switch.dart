@@ -3,9 +3,9 @@ import 'dart:convert';
 
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:load_switch/load_switch.dart';
-import 'package:location/location.dart';
 import 'package:newtook/bloc/block_imports.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
@@ -18,65 +18,47 @@ class HomeViewWorkSwitch extends StatefulWidget {
 }
 
 class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
-  StreamSubscription<LocationData>? _locationSubscription;
+  StreamSubscription<Position>? positionStream;
   bool value = false;
-
-  Location location = new Location();
-
-  Future<bool> enableBackgroundMode() async {
-    bool _bgModeEnabled = await location.isBackgroundModeEnabled();
-    if (_bgModeEnabled) {
-      return true;
-    } else {
-      try {
-        await location.enableBackgroundMode();
-      } catch (e) {
-        debugPrint(e.toString());
-      }
-      try {
-        _bgModeEnabled = await location.enableBackgroundMode();
-      } catch (e) {
-        debugPrint(e.toString());
-      }
-      print(_bgModeEnabled); //True!
-      return _bgModeEnabled;
-    }
-  }
 
   Future<bool> _toggleWork(BuildContext context) async {
     UserDataBloc userDataBloc = BlocProvider.of<UserDataBloc>(context);
     var client = GraphQLProvider.of(context).value;
-
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
-
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        AnimatedSnackBar.material(
-          AppLocalizations.of(context)!.location_is_disabled_error,
-          type: AnimatedSnackBarType.error,
-        ).show(context);
-        return value;
-      }
-    }
-
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        AnimatedSnackBar.material(
-          AppLocalizations.of(context)!.location_is_disabled_error,
-          type: AnimatedSnackBarType.error,
-        ).show(context);
-        return value;
-      }
-    }
-
-    LocationData currentPosition = await location.getLocation();
     UserDataState userDataState = context.read<UserDataBloc>().state;
+
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      await Geolocator.openLocationSettings();
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        await Geolocator.requestPermission();
+        return userDataState.is_online;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return userDataState.is_online;
+    }
+
+    Position currentPosition = await Geolocator.getCurrentPosition();
+    print('get current position');
     if (userDataState.is_online) {
       var query = gql('''
       mutation {
@@ -107,9 +89,9 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
               userProfile: userDataBloc.state.userProfile,
               tokenExpires: userDataBloc.state.tokenExpires,
             ));
-        _locationSubscription?.cancel();
+        positionStream?.cancel();
         setState(() {
-          _locationSubscription = null;
+          positionStream = null;
         });
         return false;
       }
@@ -148,15 +130,16 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
               userProfile: userDataBloc.state.userProfile,
               tokenExpires: userDataBloc.state.tokenExpires,
             ));
-        enableBackgroundMode();
-        location.changeSettings(
-            accuracy: LocationAccuracy.high,
-            distanceFilter: 2,
-            interval: 30000);
-        _locationSubscription = location.onLocationChanged
-            .listen((LocationData currentLocation) async {
+        final LocationSettings locationSettings = LocationSettings(
+          accuracy: LocationAccuracy.high,
+          distanceFilter: 2,
+        );
+
+        positionStream =
+            Geolocator.getPositionStream(locationSettings: locationSettings)
+                .listen((Position? position) async {
           var query = gql('''mutation {
-            storeLocation(latitude: ${currentLocation!.latitude}, longitude: ${currentLocation!.longitude}) {
+            storeLocation(latitude: ${position!.latitude}, longitude: ${position!.longitude}) {
               success
               }
               },''');
@@ -173,11 +156,38 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
   Future<void> checkLocationListen() async {
     UserDataState userDataState = context.read<UserDataBloc>().state;
     if (userDataState.is_online) {
-      enableBackgroundMode();
-      location.changeSettings(
-          accuracy: LocationAccuracy.high, distanceFilter: 2, interval: 30000);
-      _locationSubscription = location.onLocationChanged
-          .listen((LocationData currentLocation) async {
+      bool serviceEnabled;
+      LocationPermission permission;
+
+      // Test if location services are enabled.
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        // Location services are not enabled don't continue
+        // accessing the position and request users of the
+        // App to enable the location services.
+        await Geolocator.openLocationSettings();
+      }
+
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          // Permissions are denied, next time you could try
+          // requesting permissions again (this is also where
+          // Android's shouldShowRequestPermissionRationale
+          // returned true. According to Android guidelines
+          // your App should show an explanatory UI now.
+          await Geolocator.requestPermission();
+        }
+      }
+
+      final LocationSettings locationSettings = LocationSettings(
+        accuracy: LocationAccuracy.high,
+        distanceFilter: 2,
+      );
+      positionStream =
+          Geolocator.getPositionStream(locationSettings: locationSettings)
+              .listen((Position? currentLocation) async {
         var accessToken = userDataState.refreshToken;
         ApiClientsState apiClientsState =
             BlocProvider.of<ApiClientsBloc>(context).state;

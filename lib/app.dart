@@ -6,7 +6,6 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:newtook/bloc/block_imports.dart';
 import 'package:newtook/bloc/user_data/user_data_bloc.dart';
@@ -43,13 +42,6 @@ class _AppViewState extends State<AppView> {
   final _rootRouter = AppRouter(
       // authGuard: AuthGuard(),
       );
-  final LocationSettings locationSettings = LocationSettings(
-    accuracy: LocationAccuracy.high,
-    distanceFilter: 2,
-    // timeLimit: Duration(seconds: 30),
-  );
-
-  late StreamSubscription<Position> positionStream;
 
   @override
   Widget build(BuildContext context) {
@@ -67,78 +59,7 @@ class _AppViewState extends State<AppView> {
         BlocProvider<UserDataBloc>(create: (context) => UserDataBloc())
       ],
       child: BlocConsumer<UserDataBloc, UserDataState>(
-        listener: (context, state) async {
-          // try {
-          //   bool serviceEnabled;
-          //   LocationPermission permission;
-
-          //   // Test if location services are enabled.
-          //   // serviceEnabled = await Geolocator.isLocationServiceEnabled();
-          //   // if (!serviceEnabled) {
-          //   //   // Location services are not enabled don't continue
-          //   //   // accessing the position and request users of the
-          //   //   // App to enable the location services.
-          //   //   return Future.error('Location services are disabled.');
-          //   // }
-
-          //   permission = await Geolocator.checkPermission();
-          //   if (permission == LocationPermission.denied) {
-          //     permission = await Geolocator.requestPermission();
-          //     if (permission == LocationPermission.denied) {
-          //       // Permissions are denied, next time you could try
-          //       // requesting permissions again (this is also where
-          //       // Android's shouldShowRequestPermissionRationale
-          //       // returned true. According to Android guidelines
-          //       // your App should show an explanatory UI now.
-          //       return Future.error('Location permissions are denied');
-          //     }
-          //   }
-
-          //   if (permission == LocationPermission.deniedForever) {
-          //     // Permissions are denied forever, handle appropriately.
-          //     return Future.error(
-          //         'Location permissions are permanently denied, we cannot request permissions.');
-          //   }
-          //   if (state.is_online) {
-          //     positionStream = Geolocator.getPositionStream(
-          //             locationSettings: locationSettings)
-          //         .listen((Position? position) async {
-          //       ApiClientsState apiClientsState =
-          //           BlocProvider.of<ApiClientsBloc>(context).state;
-          //       final apiClient = apiClientsState.apiClients.firstWhere(
-          //           (element) => element.isServiceDefault == true,
-          //           orElse: () => apiClientsState.apiClients.first);
-
-          //       if (apiClient != null) {
-          //         var requestBody = '''
-          //         {
-          //           "query": "mutation {storeLocation(latitude: ${position!.latitude}, longitude: ${position!.longitude}) {\\nsuccess\\n}}\\n",
-          //           "variables": null
-          //         }
-          //         ''';
-          //         var response = await http.post(
-          //           Uri.parse("https://${apiClient.apiUrl}/graphql"),
-          //           headers: {
-          //             'Content-Type': 'application/json',
-          //             'Authorization': 'Bearer ${state.accessToken}'
-          //           },
-          //           body: requestBody,
-          //         );
-          //         print(response.body);
-          //       }
-          //       print(position.toString());
-          //       AlertDialog(
-          //         title: Text('Location'),
-          //         content: Text(position.toString()),
-          //       );
-          //     });
-          //   } else {
-          //     positionStream.cancel();
-          //   }
-          // } catch (e) {
-          //   print(e);
-          // }
-        },
+        listener: (context, state) async {},
         builder: (context, state) {
           return ChangeNotifierProvider(
               create: (context) => LocaleProvider(),

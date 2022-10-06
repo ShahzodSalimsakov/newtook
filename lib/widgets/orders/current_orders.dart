@@ -87,6 +87,7 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView> {
         orders.add(orderModel);
         print(orderStatus);
       });
+      await objectBox.clearCurrentOrders();
       objectBox.addCurrentOrders(orders);
     }
   }
@@ -107,20 +108,41 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView> {
           state.roles!
               .any((element) => element.code == 'courier' && element.active)) {
         if (!state.is_online) {
-          return Center(
-              child: Column(
-            children: const [
-              Text('Вы не включили режим работы'),
-              Text(
-                  'Включите режим работы сверху в углу, чтобы принимать заказы'),
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+                child: Text(
+                  AppLocalizations.of(context)!
+                      .error_work_schedule_offline_title
+                      .toUpperCase(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline5
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Text(
+                  AppLocalizations.of(context)!
+                      .notice_torn_on_work_schedule_subtitle,
+                  style: Theme.of(context).textTheme.subtitle1,
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ],
-          ));
+          );
         } else {
           return StreamBuilder<List<OrderModel>>(
             stream: objectBox.getCurrentOrders(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ListView.builder(
+                  shrinkWrap: true,
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
                     return Card(

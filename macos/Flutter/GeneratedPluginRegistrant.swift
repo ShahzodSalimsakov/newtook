@@ -13,7 +13,7 @@ import firebase_messaging
 import firebase_remote_config
 import flutter_local_notifications
 import geolocator_apple
-import location
+import location_macos
 import objectbox_flutter_libs
 import path_provider_macos
 

@@ -29,6 +29,11 @@ class ObjectBox {
     return ObjectBox._init(store);
   }
 
+  Future<void> clearCurrentOrders() {
+    _currentOrdersBox.removeAll();
+    return Future.value();
+  }
+
   void addCurrentOrders(List<OrderModel> orders) {
     _currentOrdersBox.putMany(orders);
   }

@@ -6,7 +6,7 @@ import 'package:objectbox/objectbox.dart';
 
 @Entity()
 class OrderStatus {
-  late int id;
+  int id = 0;
   final String identity;
   final String name;
   OrderStatus({

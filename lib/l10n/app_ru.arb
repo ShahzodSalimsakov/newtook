@@ -20,5 +20,7 @@
     "add" : "Добавить",
     "order_list_empty": "Список заказов пуст",
     "order_tab_current": "Текущие",
-    "you_are_not_courier": "Вы не курьер"
+    "you_are_not_courier": "Вы не курьер",
+    "error_work_schedule_offline_title": "Вы не включили режим работы",
+    "notice_torn_on_work_schedule_subtitle": "Включите режим работы сверху в углу, чтобы принимать заказы"
 }

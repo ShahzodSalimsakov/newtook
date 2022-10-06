@@ -67,36 +67,39 @@ class OrdersPage extends StatelessWidget {
               primary: true,
               bottom: PreferredSize(
                 preferredSize: const Size.fromHeight(20),
-                child: TabBar(
-                  labelColor: Colors.white,
-                  unselectedLabelColor: Colors.black,
-                  labelStyle: const TextStyle(
-                    fontWeight: FontWeight.bold,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: TabBar(
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Colors.black,
+                    labelStyle: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    indicator: RectangularIndicator(
+                      color: Theme.of(context).primaryColor,
+                      bottomLeftRadius: 30,
+                      bottomRightRadius: 30,
+                      topLeftRadius: 30,
+                      topRightRadius: 30,
+                    ),
+                    tabs: [
+                      Tab(
+                          text: AppLocalizations.of(context)!
+                              .order_tab_current
+                              .toUpperCase()),
+                      const Tab(text: 'Completed'),
+                    ],
                   ),
-                  indicator: RectangularIndicator(
-                    color: Theme.of(context).primaryColor,
-                    bottomLeftRadius: 30,
-                    bottomRightRadius: 30,
-                    topLeftRadius: 30,
-                    topRightRadius: 30,
-                  ),
-                  tabs: [
-                    Tab(
-                        text: AppLocalizations.of(context)!
-                            .order_tab_current
-                            .toUpperCase()),
-                    const Tab(text: 'Completed'),
-                  ],
                 ),
               )),
-          body: TabBarView(
-            children: [
-              Center(
-                  child: Column(
-                children: const [MyCurrentOrdersList()],
-              )),
-              const Center(child: Text('Completed')),
-            ],
+          body: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.0),
+            child: TabBarView(
+              children: [
+                MyCurrentOrdersList(),
+                const Center(child: Text('Completed')),
+              ],
+            ),
           ),
         ),
       ),
