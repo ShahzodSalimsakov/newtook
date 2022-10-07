@@ -103,7 +103,7 @@ class _ApiGraphqlProviderView extends StatelessWidget {
               autoReconnect: true,
               inactivityTimeout: Duration(seconds: 30),
             ),
-            subProtocol: SocketSubProtocol.graphqlTransportWs,
+            subProtocol: GraphQLProtocol.graphqlTransportWs,
           );
 
           final Link queryLink = authLink.concat(httpLink);

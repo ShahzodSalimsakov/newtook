@@ -37,16 +37,8 @@ dependencies:
   formz: ^0.4.0
   geolocator: ^9.0.2
   google_fonts: ^3.0.1
-  graphql:
-    git:
-      url: https://github.com/maximilianmaihoefner/graphql-flutter/tree/graphql-transport-ws
-      path: packages/graphql
-      ref: graphql-transport-ws
-  graphql_flutter:
-    git:
-      url: https://github.com/maximilianmaihoefner/graphql-flutter
-      path: packages/graphql_flutter
-      ref: graphql-transport-ws
+  graphql: 5.1.2-beta.4
+  graphql_flutter: 5.1.1-beta.4
   hex: ^0.2.0
   http: ^0.13.5
   hydrated_bloc: ^9.0.0-dev.3
@@ -70,12 +62,12 @@ dependencies:
     path: packages/user_repository
   workmanager: ^0.5.0
 
-dependency_overrides:
-  graphql:
-    git:
-      url: https://github.com/maximilianmaihoefner/graphql-flutter
-      path: packages/graphql
-      ref: graphql-transport-ws
+# dependency_overrides:
+#   graphql:
+#     git:
+#       url: https://github.com/maximilianmaihoefner/graphql-flutter
+#       path: packages/graphql
+#       ref: graphql-transport-ws
 
 dev_dependencies:
   auto_route_generator: ^5.0.2

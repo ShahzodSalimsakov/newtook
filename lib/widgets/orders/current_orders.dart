@@ -8,6 +8,7 @@ import 'package:newtook/models/order_status.dart';
 import 'package:newtook/models/terminals.dart';
 import 'package:newtook/objectbox.g.dart';
 import 'package:newtook/widgets/orders/listen_deleted_current_order.dart';
+import 'package:newtook/widgets/orders/listen_new_current_order.dart';
 
 import '../../main.dart';
 import '../../models/customer.dart';
@@ -154,11 +155,13 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView> {
             ],
           );
         } else {
-          return Column(
+          return ApiGraphqlProvider(
+              child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ApiGraphqlProvider(child: ListenDeletedCurrentOrders()),
+              ListenDeletedCurrentOrders(),
+              ListenNewCurrentOrder(),
               Expanded(
                 child: StreamBuilder<List<OrderModel>>(
                   stream: objectBox.getCurrentOrders(),
@@ -188,7 +191,7 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView> {
                 ),
               ),
             ],
-          );
+          ));
         }
       } else {
         return Text(AppLocalizations.of(context)!.you_are_not_courier,

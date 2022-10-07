@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:newtook/main.dart';
 
 final subscriptionDocument = gql(
   r'''
@@ -23,6 +24,11 @@ class ListenDeletedCurrentOrders extends HookWidget {
 
     if (!result.hasException && !result.isLoading) {
       print(result.data);
+      if (result.data != null && result.data!['deletedCurrentOrder'] != null) {
+        objectBox.deleteCurrentOrder(
+          result.data!['deletedCurrentOrder']['id'],
+        );
+      }
     }
 
     useEffect(() {}, []);

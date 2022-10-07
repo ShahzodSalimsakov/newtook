@@ -44,4 +44,11 @@ class ObjectBox {
       return query.find();
     });
   }
+
+  Future<void> deleteCurrentOrder(String identity) {
+    final query =
+        _currentOrdersBox.query(OrderModel_.identity.equals(identity)).build();
+    query.remove();
+    return Future.value();
+  }
 }
