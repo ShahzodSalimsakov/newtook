@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -78,13 +79,31 @@ class _LoginTypeOtpPageState extends State<LoginTypeOtpPage> {
       ApiClients? apiClient = apiClientsBloc.state.apiClients
           .firstWhere((element) => element.isServiceDefault == true);
       if (apiClient != null) {
+        var fcmToken;
+
+        try {
+          fcmToken = await FirebaseMessaging.instance.getToken();
+        } catch (e) {
+          fcmToken = null;
+        }
+
         // send phone number to server
-        var requestBody = '''
+        var requestBody;
+        if (fcmToken != null) {
+          requestBody = '''
+        {
+          "query": "mutation {verifyOtp(phone: \\"$phoneNumber\\", otp: \\"$code\\", verificationKey: \\"$otpToken\\", deviceToken: \\"$fcmToken\\") {\\n access {\\nadditionalPermissions\\nroles {\\nname\\ncode\\nactive\\n}\\n}\\ntoken {\\naccessToken\\naccessTokenExpires\\nrefreshToken\\ntokenType\\n}\\nuser {\\nfirst_name\\nid\\nis_super_user\\nlast_name\\nis_online\\npermissions {\\nactive\\nslug\\nid\\n}\\nphone\\n}\\n}}\\n",
+          "variables": null
+        }
+        ''';
+        } else {
+          requestBody = '''
         {
           "query": "mutation {verifyOtp(phone: \\"$phoneNumber\\", otp: \\"$code\\", verificationKey: \\"$otpToken\\") {\\n access {\\nadditionalPermissions\\nroles {\\nname\\ncode\\nactive\\n}\\n}\\ntoken {\\naccessToken\\naccessTokenExpires\\nrefreshToken\\ntokenType\\n}\\nuser {\\nfirst_name\\nid\\nis_super_user\\nlast_name\\nis_online\\npermissions {\\nactive\\nslug\\nid\\n}\\nphone\\n}\\n}}\\n",
           "variables": null
         }
         ''';
+        }
 
         var response = await http.post(
           Uri.parse("https://${apiClient.apiUrl}/graphql"),

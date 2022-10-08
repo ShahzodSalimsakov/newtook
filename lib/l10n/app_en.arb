@@ -22,5 +22,6 @@
     "order_tab_current": "Current",
     "you_are_not_courier": "You are not courier",
     "error_work_schedule_offline_title": "You did not turn on the work mode",
-    "notice_torn_on_work_schedule_subtitle": "Turn on the work mode in the upper right corner to accept orders"
+    "notice_torn_on_work_schedule_subtitle": "Turn on the work mode in the upper right corner to accept orders",
+    "logout_btn": "Logout"
 }
