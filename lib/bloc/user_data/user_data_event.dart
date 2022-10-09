@@ -30,3 +30,5 @@ class UserDataEventChange extends UserDataEvent {
   @override
   List<Object> get props => [permissions, roles, is_online, tokenExpires];
 }
+
+class UserDataEventLogout extends UserDataEvent {}

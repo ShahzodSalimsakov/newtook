@@ -32,6 +32,17 @@ class UserDataBloc extends HydratedBloc<UserDataEvent, UserDataState> {
           is_online: event.is_online,
           tokenExpires: event.tokenExpires));
     });
+    on<UserDataEventLogout>((event, emit) {
+      emit(UserDataInitial(
+          accessToken: '',
+          accessTokenExpires: '',
+          permissions: [],
+          refreshToken: '',
+          roles: [],
+          userProfile: null,
+          is_online: false,
+          tokenExpires: DateTime.now()));
+    });
   }
 
   @override

@@ -5,10 +5,18 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ProfileLogoutButton extends StatelessWidget {
+import '../../bloc/block_imports.dart';
+
+class ProfileLogoutButton extends StatefulWidget {
+  ProfileLogoutButton({super.key});
+
+  @override
+  State<ProfileLogoutButton> createState() => _ProfileLogoutButtonState();
+}
+
+class _ProfileLogoutButtonState extends State<ProfileLogoutButton> {
   final RoundedLoadingButtonController _btnController =
       RoundedLoadingButtonController();
-  ProfileLogoutButton({super.key});
 
   Future<void> _logout(BuildContext context) async {
     _btnController.start();
@@ -34,6 +42,7 @@ class ProfileLogoutButton extends StatelessWidget {
         });
         return;
       }
+      context.read<UserDataBloc>().add(UserDataEventLogout());
       _btnController.success();
     } on PlatformException catch (e) {
       _btnController.error();
