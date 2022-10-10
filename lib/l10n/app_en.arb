@@ -29,5 +29,9 @@
     "customer_orders_type_comment": "Write a comment",
     "customer_name": "Name",
     "address": "Address",
-    "customer_phone": "Phone"
+    "customer_phone": "Phone",
+    "pre_distance_label": "Approximate distance",
+    "order_total_price": "Total price",
+    "delivery_price": "Delivery price",
+    "order_status_label": "Order status"
 }

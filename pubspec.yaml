@@ -16,6 +16,7 @@ dependencies:
   country_icons: ^2.0.2
   cryptlib_2_0: ^0.0.1
   cupertino_icons: ^1.0.2
+  currency_formatter: ^2.0.0
   data_table_2: ^2.3.7
   easy_refresh: ^3.0.4+2
   equatable: ^2.0.5

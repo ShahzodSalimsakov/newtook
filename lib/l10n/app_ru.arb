@@ -29,5 +29,9 @@
     "customer_orders_type_comment": "Напишите комментарий",
     "customer_name": "Имя",
     "address": "Адрес",
-    "customer_phone": "Телефон"
+    "customer_phone": "Телефон",
+    "pre_distance_label": "Примерное расстояние",
+    "order_total_price": "Сумма заказа",
+    "delivery_price": "Стоимость доставки",
+    "order_status_label": "Статус заказа"
 }

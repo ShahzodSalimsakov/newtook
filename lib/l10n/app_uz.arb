@@ -29,5 +29,9 @@
     "customer_orders_type_comment": "Izoh yozing",
     "customer_name": "Ism",
     "address": "Manzil",
-    "customer_phone": "Telefon"
+    "customer_phone": "Telefon",
+    "pre_distance_label": "Tayyorlanadigan masofa",
+    "order_total_price": "Umumiy narx",
+    "delivery_price": "Yetkazib berish narxi",
+    "order_status_label": "Buyurtma holati"
 }

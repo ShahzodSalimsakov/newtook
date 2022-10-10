@@ -196,59 +196,67 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
             orElse: () => apiClientsState.apiClients.first);
         if (DateTime.now().isAfter(userDataState.tokenExpires)) {
           if (apiClient != null) {
-            var requestBody = '''
+            try {
+              var requestBody = '''
         {
           "query": "mutation {refreshToken(refreshToken: \\"${userDataState.refreshToken}\\") {\\naccessToken\\naccessTokenExpires\\nrefreshToken\\n}}\\n",
           "variables": null
         }
         ''';
 
-            var response = await http.post(
-              Uri.parse("https://${apiClient.apiUrl}/graphql"),
-              headers: {'Content-Type': 'application/json'},
-              body: requestBody,
-            );
-            if (response.statusCode == 200) {
-              var result = jsonDecode(response.body);
-              if (result['errors'] == null) {
-                var data = result['data']['refreshToken'];
+              var response = await http.post(
+                Uri.parse("https://${apiClient.apiUrl}/graphql"),
+                headers: {'Content-Type': 'application/json'},
+                body: requestBody,
+              );
+              if (response.statusCode == 200) {
+                var result = jsonDecode(response.body);
+                if (result['errors'] == null) {
+                  var data = result['data']['refreshToken'];
 
-                accessToken = data!['accessToken'];
-                Future.delayed(Duration(microseconds: 500), () {
-                  context.read<UserDataBloc>().add(
-                        UserDataEventChange(
-                          accessToken: data!['accessToken'],
-                          accessTokenExpires: data!['accessTokenExpires'],
-                          refreshToken: data!['refreshToken'],
-                          permissions: userDataState.permissions,
-                          roles: userDataState.roles,
-                          userProfile: userDataState.userProfile,
-                          is_online: userDataState.is_online,
-                          tokenExpires: DateTime.now().add(Duration(
-                              hours: int.parse(
-                                  data!['accessTokenExpires'].split('h')[0]))),
-                        ),
-                      );
-                });
+                  accessToken = data!['accessToken'];
+                  Future.delayed(Duration(microseconds: 500), () {
+                    context.read<UserDataBloc>().add(
+                          UserDataEventChange(
+                            accessToken: data!['accessToken'],
+                            accessTokenExpires: data!['accessTokenExpires'],
+                            refreshToken: data!['refreshToken'],
+                            permissions: userDataState.permissions,
+                            roles: userDataState.roles,
+                            userProfile: userDataState.userProfile,
+                            is_online: userDataState.is_online,
+                            tokenExpires: DateTime.now().add(Duration(
+                                hours: int.parse(data!['accessTokenExpires']
+                                    .split('h')[0]))),
+                          ),
+                        );
+                  });
+                }
               }
+            } catch (e) {
+              print(e);
             }
           }
         }
 
-        var requestBody = '''
+        try {
+          var requestBody = '''
         {
           "query": "mutation {storeLocation(latitude: ${currentLocation!.latitude}, longitude: ${currentLocation!.longitude}) {\\nsuccess\\n}}\\n",
           "variables": null
         }
         ''';
-        var response = await http.post(
-          Uri.parse("https://${apiClient.apiUrl}/graphql"),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ${accessToken}'
-          },
-          body: requestBody,
-        );
+          var response = await http.post(
+            Uri.parse("https://${apiClient.apiUrl}/graphql"),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ${accessToken}'
+            },
+            body: requestBody,
+          );
+        } catch (e) {
+          print(e);
+        }
       });
     }
   }

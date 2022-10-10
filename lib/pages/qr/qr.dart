@@ -94,17 +94,6 @@ class _QRViewWidgetState extends State<QRViewWidgetPage> {
                                     : Icons.flash_on);
                               },
                             )),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 30, vertical: 20)),
-                            onPressed: () async {
-                              AutoRouter.of(context).replaceNamed('/home');
-                            },
-                            child: const Icon(Icons.home)),
                       )
                     ],
                   ),

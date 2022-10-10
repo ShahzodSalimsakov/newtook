@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:currency_formatter/currency_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_svg/svg.dart';
@@ -14,7 +15,15 @@ import 'order_customer_comments.dart';
 
 class CurrentOrderCard extends StatelessWidget {
   final OrderModel order;
-  const CurrentOrderCard({super.key, required this.order});
+  CurrentOrderCard({super.key, required this.order});
+
+  CurrencyFormatterSettings euroSettings = CurrencyFormatterSettings(
+    symbol: 'сум',
+    symbolSide: SymbolSide.right,
+    thousandSeparator: ' ',
+    decimalSeparator: ',',
+    symbolSeparator: ' ',
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +43,16 @@ class CurrentOrderCard extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   "#${order.order_number}",
-                  style: const TextStyle(fontSize: 20),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   DateFormat('dd.MM.yyyy HH:mm').format(order.created_at),
-                  style: const TextStyle(fontSize: 20),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
               ),
             ],
@@ -56,7 +67,7 @@ class CurrentOrderCard extends StatelessWidget {
                   children: [
                     Text(
                       AppLocalizations.of(context)!.customer_name,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(order.customer.target!.name),
                   ],
@@ -66,7 +77,7 @@ class CurrentOrderCard extends StatelessWidget {
                   children: [
                     Text(
                       AppLocalizations.of(context)!.address,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     Text(
                       order.delivery_address ?? '',
@@ -78,7 +89,7 @@ class CurrentOrderCard extends StatelessWidget {
                   children: [
                     Text(
                       AppLocalizations.of(context)!.customer_phone,
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                     TextButton(
                       onPressed: () {
@@ -87,6 +98,16 @@ class CurrentOrderCard extends StatelessWidget {
                       },
                       child: Text(order.customer.target!.phone),
                     ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.pre_distance_label,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text("${(order.pre_distance / 1000).toString()} км"),
                   ],
                 ),
                 // Row(
@@ -105,7 +126,7 @@ class CurrentOrderCard extends StatelessWidget {
               ],
             )),
         Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -113,28 +134,85 @@ class CurrentOrderCard extends StatelessWidget {
                     child: Text(
                   order.terminal.target!.name,
                   maxLines: 4,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 )),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.navigation_outlined,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    Icon(
-                      Icons.keyboard_control_outlined,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    Icon(
-                      Icons.location_pin,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ],
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Icon(
+                        Icons.navigation_outlined,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      Icon(
+                        Icons.keyboard_control_outlined,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      Icon(
+                        Icons.location_pin,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ],
+                  ),
                 ),
                 Flexible(
                     child: Text(
                   order.delivery_address ?? '',
                   maxLines: 4,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 )),
+              ],
+            )),
+        Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.order_total_price,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                    Text(
+                      CurrencyFormatter.format(order.order_price, euroSettings),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.delivery_price,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                    Text(
+                      CurrencyFormatter.format(
+                          order.delivery_price, euroSettings),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.order_status_label,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                    Text(
+                      order.orderStatus.target!.name,
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 20),
+                    ),
+                  ],
+                )
               ],
             )),
         Padding(
@@ -227,6 +305,7 @@ class CurrentOrderCard extends StatelessWidget {
                 const VerticalDivider(
                   color: Colors.white,
                   thickness: 1,
+                  width: 1,
                 ),
                 GestureDetector(
                   onTap: () {
