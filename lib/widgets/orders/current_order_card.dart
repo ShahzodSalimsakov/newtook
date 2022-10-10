@@ -1,8 +1,16 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:map_launcher/map_launcher.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:newtook/helpers/api_graphql_provider.dart';
 import 'package:newtook/models/order.dart';
+import 'package:newtook/widgets/orders/orders_items.dart';
+
+import 'order_customer_comments.dart';
 
 class CurrentOrderCard extends StatelessWidget {
   final OrderModel order;
@@ -32,13 +40,103 @@ class CurrentOrderCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  order.orderStatus.target!.name,
+                  DateFormat('dd.MM.yyyy HH:mm').format(order.created_at),
                   style: const TextStyle(fontSize: 20),
                 ),
               ),
             ],
           ),
         ),
+        Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.customer_name,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(order.customer.target!.name),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.address,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      order.delivery_address ?? '',
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.customer_phone,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        FlutterPhoneDirectCaller.callNumber(
+                            order.customer.target!.phone);
+                      },
+                      child: Text(order.customer.target!.phone),
+                    ),
+                  ],
+                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
+                //     Text(
+                //       AppLocalizations.of(context)!.payment_type,
+                //       style: const TextStyle(fontSize: 20),
+                //     ),
+                //     Text(
+                //       order.payment_type,
+                //       style: const TextStyle(fontSize: 20),
+                //     ),
+                //   ],
+                // ),
+              ],
+            )),
+        Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                    child: Text(
+                  order.terminal.target!.name,
+                  maxLines: 4,
+                )),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.navigation_outlined,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    Icon(
+                      Icons.keyboard_control_outlined,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                    Icon(
+                      Icons.location_pin,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ],
+                ),
+                Flexible(
+                    child: Text(
+                  order.delivery_address ?? '',
+                  maxLines: 4,
+                )),
+              ],
+            )),
         Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -102,6 +200,62 @@ class CurrentOrderCard extends StatelessWidget {
                 )
               ],
             )),
+        Container(
+          color: Theme.of(context).primaryColor,
+          child: IntrinsicHeight(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    AutoRouter.of(context).pushNamed(
+                        '/order/customer-comments/${order.customer.target!.identity}');
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15.0),
+                    child: Text(
+                      AppLocalizations.of(context)!
+                          .order_card_comments
+                          .toUpperCase(),
+                      style: Theme.of(context)
+                          .textTheme
+                          .button
+                          ?.copyWith(fontSize: 14),
+                    ),
+                  ),
+                ),
+                const VerticalDivider(
+                  color: Colors.white,
+                  thickness: 1,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    showBarModalBottomSheet(
+                      context: context,
+                      expand: false,
+                      builder: (context) => ApiGraphqlProvider(
+                        child: OrderItemsTable(
+                          orderId: order.identity,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 15.0),
+                    child: Text(
+                        AppLocalizations.of(context)!
+                            .order_card_items
+                            .toUpperCase(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .button
+                            ?.copyWith(fontSize: 14)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        )
       ]),
     );
   }

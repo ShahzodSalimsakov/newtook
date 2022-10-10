@@ -55,6 +55,19 @@ class _$AppRouter extends RootStackRouter {
         child: const BrandsPage(),
       );
     },
+    OrderCustomerCommentsRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<OrderCustomerCommentsRouteArgs>(
+          orElse: () => OrderCustomerCommentsRouteArgs(
+              customerId: pathParams.getString('customerId')));
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: OrderCustomerCommentsPage(
+          key: args.key,
+          customerId: args.customerId,
+        ),
+      );
+    },
   };
 
   @override
@@ -82,6 +95,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           BrandsRoute.name,
           path: '/brands',
+        ),
+        RouteConfig(
+          OrderCustomerCommentsRoute.name,
+          path: '/order/customer-comments/:customerId',
         ),
       ];
 }
@@ -168,4 +185,40 @@ class BrandsRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'BrandsRoute';
+}
+
+/// generated route for
+/// [OrderCustomerCommentsPage]
+class OrderCustomerCommentsRoute
+    extends PageRouteInfo<OrderCustomerCommentsRouteArgs> {
+  OrderCustomerCommentsRoute({
+    Key? key,
+    required String customerId,
+  }) : super(
+          OrderCustomerCommentsRoute.name,
+          path: '/order/customer-comments/:customerId',
+          args: OrderCustomerCommentsRouteArgs(
+            key: key,
+            customerId: customerId,
+          ),
+          rawPathParams: {'customerId': customerId},
+        );
+
+  static const String name = 'OrderCustomerCommentsRoute';
+}
+
+class OrderCustomerCommentsRouteArgs {
+  const OrderCustomerCommentsRouteArgs({
+    this.key,
+    required this.customerId,
+  });
+
+  final Key? key;
+
+  final String customerId;
+
+  @override
+  String toString() {
+    return 'OrderCustomerCommentsRouteArgs{key: $key, customerId: $customerId}';
+  }
 }

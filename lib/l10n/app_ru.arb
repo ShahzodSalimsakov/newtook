@@ -23,5 +23,11 @@
     "you_are_not_courier": "Вы не курьер",
     "error_work_schedule_offline_title": "Вы не включили режим работы",
     "notice_torn_on_work_schedule_subtitle": "Включите режим работы сверху в углу, чтобы принимать заказы",
-    "logout_btn": "Выйти"
+    "logout_btn": "Выйти",
+    "order_card_comments": "Комментарии",
+    "order_card_items": "Состав заказа",
+    "customer_orders_type_comment": "Напишите комментарий",
+    "customer_name": "Имя",
+    "address": "Адрес",
+    "customer_phone": "Телефон"
 }

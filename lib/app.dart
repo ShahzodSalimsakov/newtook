@@ -58,12 +58,7 @@ class _AppViewState extends State<AppView> {
         ),
         BlocProvider<UserDataBloc>(create: (context) => UserDataBloc())
       ],
-      child: BlocConsumer<UserDataBloc, UserDataState>(
-        listener: (context, state) async {
-          if (state is UserDataEventLogout) {
-            AutoRouter.of(context).replaceAll([LoginTypePhoneRoute()]);
-          }
-        },
+      child: BlocBuilder<UserDataBloc, UserDataState>(
         builder: (context, state) {
           return ChangeNotifierProvider(
               create: (context) => LocaleProvider(),

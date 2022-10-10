@@ -255,3 +255,64 @@ class UserDataInitial extends UserDataState {
     );
   }
 }
+
+class UserDataLogout extends UserDataState {
+  const UserDataLogout({
+    required List<String> permissions,
+    required List<Role> roles,
+    required String? accessToken,
+    required String? refreshToken,
+    required String? accessTokenExpires,
+    required UserProfileModel? userProfile,
+    required bool is_online,
+    required DateTime tokenExpires,
+  }) : super(
+            permissions: permissions,
+            roles: roles,
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+            accessTokenExpires: accessTokenExpires,
+            userProfile: userProfile,
+            is_online: is_online,
+            tokenExpires: tokenExpires);
+
+  static fromJson(json) {
+    return UserDataLogout(
+      permissions: json['permissions'] as List<String>,
+      roles:
+          List<Role>.from(json['roles'].map((e) => Role.fromJson(e)).toList()),
+      accessToken: json['accessToken'] as String?,
+      refreshToken: json['refreshToken'] as String?,
+      accessTokenExpires: json['accessTokenExpires'] as String?,
+      userProfile: UserProfileModel.fromJson(json['userProfile']),
+      is_online: json['is_online'] as bool,
+      tokenExpires: DateTime.parse(json['tokenExpires']),
+    );
+  }
+
+  static toJson(UserDataState state) {
+    return {
+      'permissions': state.permissions,
+      'roles': state.roles.map((e) => e.toJson()).toList(),
+      'accessToken': state.accessToken,
+      'refreshToken': state.refreshToken,
+      'accessTokenExpires': state.accessTokenExpires,
+      'userProfile': state.userProfile?.toJson(),
+      'is_online': state.is_online,
+      'tokenExpires': state.tokenExpires.toIso8601String(),
+    };
+  }
+
+  static copyWith(UserDataState state) {
+    return UserDataLogout(
+      permissions: state.permissions,
+      roles: state.roles,
+      accessToken: state.accessToken,
+      refreshToken: state.refreshToken,
+      accessTokenExpires: state.accessTokenExpires,
+      userProfile: state.userProfile,
+      is_online: state.is_online,
+      tokenExpires: state.tokenExpires,
+    );
+  }
+}

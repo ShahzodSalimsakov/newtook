@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newtook/bloc/block_imports.dart';
+import 'package:newtook/pages/login/type_phone.dart';
 import 'package:newtook/pages/orders/orders.dart';
 import 'api_client_intro/api_client_intro.dart';
 import 'home/view/home_page.dart';
@@ -19,14 +20,22 @@ class _InitialPageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ApiClientsBloc, ApiClientsState>(
-        builder: (context, state) {
-      print(state.apiClients);
-      if (state.apiClients.isEmpty) {
-        return const ApiClientIntroPage();
-      } else {
-        return const HomePage();
-        // return const Center(child: Text('Initial Page'));
-      }
+        builder: (context, apiState) {
+      return BlocBuilder<UserDataBloc, UserDataState>(
+          builder: (context, userDataState) {
+        print(apiState.apiClients);
+        if (apiState.apiClients.isEmpty) {
+          return const ApiClientIntroPage();
+        } else {
+          var accessToken = userDataState.accessToken;
+          if (accessToken != null && accessToken.isNotEmpty) {
+            return const HomePage();
+          } else {
+            return LoginTypePhonePage();
+          }
+          // return const Center(child: Text('Initial Page'));
+        }
+      });
     });
   }
 }

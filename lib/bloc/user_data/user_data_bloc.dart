@@ -33,7 +33,7 @@ class UserDataBloc extends HydratedBloc<UserDataEvent, UserDataState> {
           tokenExpires: event.tokenExpires));
     });
     on<UserDataEventLogout>((event, emit) {
-      emit(UserDataInitial(
+      emit(UserDataLogout(
           accessToken: '',
           accessTokenExpires: '',
           permissions: [],

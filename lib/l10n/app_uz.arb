@@ -23,5 +23,11 @@
     "you_are_not_courier": "Siz kuryer emassiz",
     "error_work_schedule_offline_title": "Ish rejimini yoqishni bosishingiz kerak",
     "notice_torn_on_work_schedule_subtitle": "Buyurtmalarni qabul qilish uchun yuqoridagi ish rejimini yoqishni bosing",
-    "logout_btn": "Chiqish"
+    "logout_btn": "Chiqish",
+    "order_card_comments": "Izohlar",
+    "order_card_items": "Buyurtma tarkibi",
+    "customer_orders_type_comment": "Izoh yozing",
+    "customer_name": "Ism",
+    "address": "Manzil",
+    "customer_phone": "Telefon"
 }
