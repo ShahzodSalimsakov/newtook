@@ -16,6 +16,7 @@ import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'models/customer.dart';
 import 'models/order.dart';
+import 'models/order_next_button.dart';
 import 'models/order_status.dart';
 import 'models/terminals.dart';
 
@@ -106,7 +107,12 @@ final _entities = <ModelEntity>[
             type: 6,
             flags: 0)
       ],
-      relations: <ModelRelation>[],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(1, 7323319968490159901),
+            name: 'orderNextButton',
+            targetId: const IdUid(9, 3885740093415193842))
+      ],
       backlinks: <ModelBacklink>[]),
   ModelEntity(
       id: const IdUid(6, 9091961325872571771),
@@ -186,6 +192,56 @@ final _entities = <ModelEntity>[
             indexId: const IdUid(2, 1130095198174930973))
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(9, 3885740093415193842),
+      name: 'OrderNextButton',
+      lastPropertyId: const IdUid(9, 6087142303395005860),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 884935736184302183),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 589923553981987948),
+            name: 'identity',
+            type: 9,
+            flags: 2048,
+            indexId: const IdUid(7, 7968099699081636885)),
+        ModelProperty(
+            id: const IdUid(3, 1836023034390262135),
+            name: 'name',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 4037992427263734469),
+            name: 'color',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 3902532852745225948),
+            name: 'sort',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 2046563212734404928),
+            name: 'finish',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 950248480076907380),
+            name: 'cancel',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 1065756737884964156),
+            name: 'waiting',
+            type: 1,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -209,9 +265,9 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(8, 6192037116325498403),
-      lastIndexId: const IdUid(6, 7166992057764112272),
-      lastRelationId: const IdUid(0, 0),
+      lastEntityId: const IdUid(9, 3885740093415193842),
+      lastIndexId: const IdUid(8, 4921986240989773902),
+      lastRelationId: const IdUid(1, 7323319968490159901),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
         1863924414234841213,
@@ -219,7 +275,7 @@ ModelDefinition getObjectBoxModel() {
         135028551281165955,
         1846751678898275623
       ],
-      retiredIndexUids: const [],
+      retiredIndexUids: const [4921986240989773902],
       retiredPropertyUids: const [
         2644272314132256799,
         5195995904683270951,
@@ -247,7 +303,8 @@ ModelDefinition getObjectBoxModel() {
         8107958439781220600,
         6685362917590658499,
         1290841174320871070,
-        1643304251919963795
+        1643304251919963795,
+        6087142303395005860
       ],
       retiredRelationUids: const [],
       modelVersion: 5,
@@ -259,7 +316,8 @@ ModelDefinition getObjectBoxModel() {
         model: _entities[0],
         toOneRelations: (OrderModel object) =>
             [object.customer, object.terminal, object.orderStatus],
-        toManyRelations: (OrderModel object) => {},
+        toManyRelations: (OrderModel object) =>
+            {RelInfo<OrderModel>.toMany(1, object.id): object.orderNextButton},
         getId: (OrderModel object) => object.id,
         setId: (OrderModel object, int id) {
           object.id = id;
@@ -326,6 +384,11 @@ ModelDefinition getObjectBoxModel() {
           object.orderStatus.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 34, 0);
           object.orderStatus.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.orderNextButton,
+              store,
+              RelInfo<OrderModel>.toMany(1, object.id),
+              store.box<OrderModel>());
           return object;
         }),
     Terminals: EntityDefinition<Terminals>(
@@ -424,6 +487,53 @@ ModelDefinition getObjectBoxModel() {
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
 
           return object;
+        }),
+    OrderNextButton: EntityDefinition<OrderNextButton>(
+        model: _entities[4],
+        toOneRelations: (OrderNextButton object) => [],
+        toManyRelations: (OrderNextButton object) => {},
+        getId: (OrderNextButton object) => object.id,
+        setId: (OrderNextButton object, int id) {
+          object.id = id;
+        },
+        objectToFB: (OrderNextButton object, fb.Builder fbb) {
+          final identityOffset = fbb.writeString(object.identity);
+          final nameOffset = fbb.writeString(object.name);
+          final colorOffset =
+              object.color == null ? null : fbb.writeString(object.color!);
+          fbb.startTable(10);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, identityOffset);
+          fbb.addOffset(2, nameOffset);
+          fbb.addOffset(3, colorOffset);
+          fbb.addInt64(4, object.sort);
+          fbb.addBool(5, object.finish);
+          fbb.addBool(6, object.cancel);
+          fbb.addBool(7, object.waiting);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = OrderNextButton(
+              identity: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              name: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              color: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 10),
+              sort: const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0),
+              finish: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 14, false),
+              cancel: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 16, false),
+              waiting: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 18, false))
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+          return object;
         })
   };
 
@@ -487,6 +597,11 @@ class OrderModel_ {
   /// see [OrderModel.pre_distance]
   static final pre_distance =
       QueryIntegerProperty<OrderModel>(_entities[0].properties[13]);
+
+  /// see [OrderModel.orderNextButton]
+  static final orderNextButton =
+      QueryRelationToMany<OrderModel, OrderNextButton>(
+          _entities[0].relations[0]);
 }
 
 /// [Terminals] entity fields to define ObjectBox queries.
@@ -533,4 +648,39 @@ class Customer_ {
   /// see [Customer.identity]
   static final identity =
       QueryStringProperty<Customer>(_entities[3].properties[3]);
+}
+
+/// [OrderNextButton] entity fields to define ObjectBox queries.
+class OrderNextButton_ {
+  /// see [OrderNextButton.id]
+  static final id =
+      QueryIntegerProperty<OrderNextButton>(_entities[4].properties[0]);
+
+  /// see [OrderNextButton.identity]
+  static final identity =
+      QueryStringProperty<OrderNextButton>(_entities[4].properties[1]);
+
+  /// see [OrderNextButton.name]
+  static final name =
+      QueryStringProperty<OrderNextButton>(_entities[4].properties[2]);
+
+  /// see [OrderNextButton.color]
+  static final color =
+      QueryStringProperty<OrderNextButton>(_entities[4].properties[3]);
+
+  /// see [OrderNextButton.sort]
+  static final sort =
+      QueryIntegerProperty<OrderNextButton>(_entities[4].properties[4]);
+
+  /// see [OrderNextButton.finish]
+  static final finish =
+      QueryBooleanProperty<OrderNextButton>(_entities[4].properties[5]);
+
+  /// see [OrderNextButton.cancel]
+  static final cancel =
+      QueryBooleanProperty<OrderNextButton>(_entities[4].properties[6]);
+
+  /// see [OrderNextButton.waiting]
+  static final waiting =
+      QueryBooleanProperty<OrderNextButton>(_entities[4].properties[7]);
 }

@@ -92,18 +92,12 @@ class OrdersPage extends StatelessWidget {
                   ),
                 ),
               )),
-          body: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0),
-            child: TabBarView(
-              physics: NeverScrollableScrollPhysics(),
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(top: 10),
-                  child: MyCurrentOrdersList(),
-                ),
-                const Center(child: Text('Completed')),
-              ],
-            ),
+          body: TabBarView(
+            physics: NeverScrollableScrollPhysics(),
+            children: [
+              MyCurrentOrdersList(),
+              const Center(child: Text('Completed')),
+            ],
           ),
         ),
       ),

@@ -6,6 +6,7 @@ import 'package:newtook/models/terminals.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'customer.dart';
+import 'order_next_button.dart';
 import 'order_status.dart';
 
 @Entity()
@@ -39,6 +40,7 @@ class OrderModel {
   final customer = ToOne<Customer>();
   final terminal = ToOne<Terminals>();
   final orderStatus = ToOne<OrderStatus>();
+  final orderNextButton = ToMany<OrderNextButton>();
 
   OrderModel copyWith({
     String? identity,

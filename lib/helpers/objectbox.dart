@@ -51,4 +51,12 @@ class ObjectBox {
     query.remove();
     return Future.value();
   }
+
+  Future<void> updateCurrentOrder(String identity, OrderModel order) {
+    final query =
+        _currentOrdersBox.query(OrderModel_.identity.equals(identity)).build();
+    query.remove();
+    _currentOrdersBox.put(order);
+    return Future.value();
+  }
 }

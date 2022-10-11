@@ -20,6 +20,7 @@ dependencies:
   data_table_2: ^2.3.7
   easy_refresh: ^3.0.4+2
   equatable: ^2.0.5
+  expandable: ^5.0.1
   firebase_analytics: ^9.3.5
   firebase_core: ^1.22.0
   firebase_crashlytics: ^2.8.10
@@ -48,6 +49,8 @@ dependencies:
   intl: ^0.17.0
   intl_phone_number_input: ^0.7.1
   load_switch: ^1.1.0
+  loader_overlay: ^2.1.0
+  loading_overlay: ^0.3.0
   location: 5.0.0-dev.8
   map_launcher: ^2.4.0
   modal_bottom_sheet: ^2.1.2

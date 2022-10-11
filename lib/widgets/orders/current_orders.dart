@@ -1,6 +1,7 @@
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:newtook/bloc/block_imports.dart';
 import 'package:newtook/helpers/api_graphql_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -13,6 +14,7 @@ import 'package:newtook/widgets/orders/listen_new_current_order.dart';
 import '../../main.dart';
 import '../../models/customer.dart';
 import '../../models/order.dart';
+import '../../models/order_next_button.dart';
 import 'current_order_card.dart';
 
 class MyCurrentOrdersList extends StatelessWidget {
@@ -31,7 +33,8 @@ class MyCurrentOrderListView extends StatefulWidget {
   State<MyCurrentOrderListView> createState() => _MyCurrentOrderListViewState();
 }
 
-class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView> {
+class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
+    with AutomaticKeepAliveClientMixin<MyCurrentOrderListView> {
   late EasyRefreshController _controller;
 
   Future<void> _loadOrders() async {
@@ -63,11 +66,20 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView> {
             id
             name
           }
+          next_buttons {
+            name
+            id
+            color
+            sort
+            finish
+            waiting
+            cancel
+          }
         }
       }
     ''';
     var data = await client.query(
-      QueryOptions(document: gql(query)),
+      QueryOptions(document: gql(query), fetchPolicy: FetchPolicy.noCache),
     );
     print(data.data?['myCurrentOrders']);
     // var store = await ObjectBoxStore.getStore();
@@ -91,6 +103,12 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView> {
         orderModel.customer.target = customer;
         orderModel.terminal.target = terminals;
         orderModel.orderStatus.target = orderStatus;
+        if (order['next_buttons'] != null) {
+          order['next_buttons'].forEach((button) {
+            OrderNextButton orderNextButton = OrderNextButton.fromMap(button);
+            orderModel.orderNextButton.add(orderNextButton);
+          });
+        }
         orders.add(orderModel);
         print(orderStatus);
       });
@@ -179,8 +197,14 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView> {
                           // shrinkWrap: true,
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
-                            return CurrentOrderCard(
-                                order: snapshot.data![index]);
+                            return LoaderOverlay(
+                              useDefaultLoading: false,
+                              overlayWidget: Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                              child: CurrentOrderCard(
+                                  order: snapshot.data![index]),
+                            );
                           },
                         ),
                       );
@@ -199,4 +223,7 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView> {
       }
     });
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
