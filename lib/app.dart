@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:workmanager/workmanager.dart';
+
+import 'notifications/notification_controller.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -34,6 +37,9 @@ class App extends StatelessWidget {
 class AppView extends StatefulWidget {
   const AppView({super.key});
 
+  static const String name = 'ARRYT';
+  static final Color mainColor = Color(0xFF9D50DD);
+
   @override
   State<AppView> createState() => _AppViewState();
 }
@@ -42,6 +48,21 @@ class _AppViewState extends State<AppView> {
   final _rootRouter = AppRouter(
       // authGuard: AuthGuard(),
       );
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    // Only after at least the action method is set, the notification events are delivered
+    NotificationController.initializeNotificationListeners();
+  }
+
+  @override
+  void dispose() {
+    AwesomeNotifications().dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -29,19 +29,19 @@ class HomePage extends StatelessWidget {
           items: [
             PersistentBottomNavBarItem(
               icon: const Icon(Icons.person),
-              title: AppLocalizations.of(context)!.profile,
+              title: AppLocalizations.of(context)!.profile.toUpperCase(),
               activeColorPrimary: Theme.of(context).primaryColor,
               inactiveColorPrimary: Colors.grey,
             ),
             PersistentBottomNavBarItem(
               icon: const Icon(Icons.list),
-              title: AppLocalizations.of(context)!.orders,
+              title: AppLocalizations.of(context)!.orders.toUpperCase(),
               activeColorPrimary: Theme.of(context).primaryColor,
               inactiveColorPrimary: Colors.grey,
             ),
             PersistentBottomNavBarItem(
               icon: const Icon(Icons.settings),
-              title: AppLocalizations.of(context)!.settings,
+              title: AppLocalizations.of(context)!.settings.toUpperCase(),
               activeColorPrimary: Theme.of(context).primaryColor,
               inactiveColorPrimary: Colors.grey,
             ),
