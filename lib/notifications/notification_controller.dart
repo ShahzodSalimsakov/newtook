@@ -63,16 +63,7 @@ class NotificationController with ChangeNotifier {
         onFcmSilentDataHandle: NotificationController.mySilentDataHandle,
         onFcmTokenHandle: NotificationController.myFcmTokenHandle,
         onNativeTokenHandle: NotificationController.myNativeTokenHandle,
-        licenseKey:
-            // On this example app, the app ID / Bundle Id are different
-            // for each platform
-            Platform.isIOS
-                ? 'B3J3yxQbzzyz0KmkQR6rDlWB5N68sTWTEMV7k9HcPBroUh4RZ/Og2Fv6Wc/lE'
-                    '2YaKuVY4FUERlDaSN4WJ0lMiiVoYIRtrwJBX6/fpPCbGNkSGuhrx0Rekk'
-                    '+yUTQU3C3WCVf2D534rNF3OnYKUjshNgQN8do0KAihTK7n83eUD60='
-                : 'UzRlt+SJ7XyVgmD1WV+7dDMaRitmKCKOivKaVsNkfAQfQfechRveuKblFnCp4'
-                    'zifTPgRUGdFmJDiw1R/rfEtTIlZCBgK3Wa8MzUV4dypZZc5wQIIVsiqi0Zhaq'
-                    'YtTevjLl3/wKvK8fWaEmUxdOJfFihY8FnlrSA48FW94XWIcFY=',
+        licenseKey: null,
         debug: debug);
   }
 
@@ -183,11 +174,6 @@ class NotificationController with ChangeNotifier {
   /// Use this method to detect when a new fcm token is received
   @pragma("vm:entry-point")
   static Future<void> myFcmTokenHandle(String token) async {
-    Fluttertoast.showToast(
-        msg: 'Fcm token received',
-        backgroundColor: Colors.blueAccent,
-        textColor: Colors.white,
-        fontSize: 16);
     debugPrint('Firebase Token:"$token"');
 
     _instance._firebaseToken = token;
@@ -197,11 +183,6 @@ class NotificationController with ChangeNotifier {
   /// Use this method to detect when a new native token is received
   @pragma("vm:entry-point")
   static Future<void> myNativeTokenHandle(String token) async {
-    Fluttertoast.showToast(
-        msg: 'Native token received',
-        backgroundColor: Colors.blueAccent,
-        textColor: Colors.white,
-        fontSize: 16);
     debugPrint('Native Token:"$token"');
   }
 }
