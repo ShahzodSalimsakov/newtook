@@ -48,6 +48,7 @@ dependencies:
   hex: ^0.2.0
   http: ^0.13.5
   hydrated_bloc: ^9.0.0-dev.3
+  icons_launcher: ^2.0.5
   intl: ^0.17.0
   intl_phone_number_input: ^0.7.1
   load_switch: ^1.1.0
@@ -84,6 +85,14 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   objectbox_generator: ^1.6.2
+
+icons_launcher:
+  image_path: "assets/icons/android/ic_launcher_xxxhdpi.png"
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
 
 flutter:
   # The following line ensures that the Material Icons font is
