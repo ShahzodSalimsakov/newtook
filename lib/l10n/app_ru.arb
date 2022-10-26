@@ -33,5 +33,6 @@
     "pre_distance_label": "Примерное расстояние",
     "order_total_price": "Сумма заказа",
     "delivery_price": "Стоимость доставки",
-    "order_status_label": "Статус заказа"
+    "order_status_label": "Статус заказа",
+    "order_tab_waiting": "Ожидают"
 }

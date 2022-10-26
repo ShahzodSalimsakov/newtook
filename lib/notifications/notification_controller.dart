@@ -44,14 +44,15 @@ class NotificationController with ChangeNotifier {
         'resource://drawable/res_app_icon',
         [
           NotificationChannel(
-              channelKey: 'alerts',
-              channelName: 'Alerts',
-              channelDescription: 'Notification alerts',
-              importance: NotificationImportance.Max,
-              defaultColor: Color(0xFF9D50DD),
-              ledColor: Color.fromARGB(255, 190, 56, 56),
-              groupKey: 'alerts',
-              channelShowBadge: true)
+            channelKey: 'alerts',
+            channelName: 'Alerts',
+            channelDescription: 'Notification alerts',
+            importance: NotificationImportance.Max,
+            defaultColor: Color(0xFF9D50DD),
+            ledColor: Color.fromARGB(255, 190, 56, 56),
+            groupKey: 'alerts',
+            channelShowBadge: true,
+          )
         ],
         debug: debug);
   }

@@ -87,7 +87,10 @@ class OrdersPage extends StatelessWidget {
                           text: AppLocalizations.of(context)!
                               .order_tab_current
                               .toUpperCase()),
-                      const Tab(text: 'Completed'),
+                      Tab(
+                          text: AppLocalizations.of(context)!
+                              .order_tab_waiting
+                              .toUpperCase()),
                     ],
                   ),
                 ),

@@ -33,5 +33,6 @@
     "pre_distance_label": "Approximate distance",
     "order_total_price": "Total price",
     "delivery_price": "Delivery price",
-    "order_status_label": "Order status"
+    "order_status_label": "Order status",
+    "order_tab_waiting": "Waiting"
 }
