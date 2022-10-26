@@ -7,7 +7,6 @@ import 'package:newtook/helpers/api_graphql_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:newtook/models/order_status.dart';
 import 'package:newtook/models/terminals.dart';
-import 'package:newtook/objectbox.g.dart';
 import 'package:newtook/widgets/orders/listen_deleted_current_order.dart';
 import 'package:newtook/widgets/orders/listen_new_current_order.dart';
 
@@ -40,7 +39,8 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
   Future<void> _loadOrders() async {
     UserDataBloc userDataBloc = context.read<UserDataBloc>();
     var client = GraphQLProvider.of(context).value;
-    var query = r'''
+    var query =
+        r'''
       query {
         myCurrentOrders {
           id
@@ -197,14 +197,8 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
                           // shrinkWrap: true,
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
-                            return LoaderOverlay(
-                              useDefaultLoading: false,
-                              overlayWidget: Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                              child: CurrentOrderCard(
-                                  order: snapshot.data![index]),
-                            );
+                            return CurrentOrderCard(
+                                order: snapshot.data![index]);
                           },
                         ),
                       );

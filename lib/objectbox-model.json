@@ -230,11 +230,107 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "10:1949976709383216849",
+      "lastPropertyId": "14:7737347985296494294",
+      "name": "WaitingOrderModel",
+      "properties": [
+        {
+          "id": "1:868269279235324358",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5178099977464507097",
+          "name": "identity",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "9:6311318010321925875"
+        },
+        {
+          "id": "3:6901417536013603633",
+          "name": "to_lat",
+          "type": 8
+        },
+        {
+          "id": "4:1149308492177433937",
+          "name": "to_lon",
+          "type": 8
+        },
+        {
+          "id": "5:8808132436442961559",
+          "name": "pre_distance",
+          "type": 6
+        },
+        {
+          "id": "6:7334693274384789930",
+          "name": "order_number",
+          "type": 9
+        },
+        {
+          "id": "7:1506878761545737708",
+          "name": "order_price",
+          "type": 6
+        },
+        {
+          "id": "8:8451503649275082587",
+          "name": "delivery_price",
+          "type": 6
+        },
+        {
+          "id": "9:8400788228286204025",
+          "name": "delivery_address",
+          "type": 9
+        },
+        {
+          "id": "10:2553211143359129527",
+          "name": "delivery_comment",
+          "type": 9
+        },
+        {
+          "id": "11:3434374933585513207",
+          "name": "created_at",
+          "type": 10
+        },
+        {
+          "id": "12:7106550158358494055",
+          "name": "customerId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "10:4107127334998577976",
+          "relationTarget": "Customer"
+        },
+        {
+          "id": "13:5834073754124692378",
+          "name": "terminalId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "11:1499991988140241428",
+          "relationTarget": "Terminals"
+        },
+        {
+          "id": "14:7737347985296494294",
+          "name": "orderStatusId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "12:2319697532974640764",
+          "relationTarget": "OrderStatus"
+        }
+      ],
+      "relations": [
+        {
+          "id": "2:1296200797359606388",
+          "name": "orderNextButton",
+          "targetId": "9:3885740093415193842"
+        }
+      ]
     }
   ],
-  "lastEntityId": "9:3885740093415193842",
-  "lastIndexId": "8:4921986240989773902",
-  "lastRelationId": "1:7323319968490159901",
+  "lastEntityId": "10:1949976709383216849",
+  "lastIndexId": "12:2319697532974640764",
+  "lastRelationId": "2:1296200797359606388",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,

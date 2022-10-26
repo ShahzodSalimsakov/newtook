@@ -66,13 +66,15 @@ class UserProfileModel {
   final String? last_name;
   final String? phone;
   final bool? is_super_user;
+  final List<String>? terminal_id;
 
   UserProfileModel(
       {required this.id,
       required this.first_name,
       required this.last_name,
       required this.phone,
-      required this.is_super_user});
+      required this.is_super_user,
+      required this.terminal_id});
 
   UserProfileModel copyWith({
     String? id,
@@ -87,6 +89,7 @@ class UserProfileModel {
       last_name: this.last_name ?? '',
       phone: this.phone ?? '',
       is_super_user: this.is_super_user ?? false,
+      terminal_id: this.terminal_id ?? [],
     );
   }
 
@@ -97,6 +100,7 @@ class UserProfileModel {
       'last_name': last_name,
       'phone': phone,
       'is_super_user': is_super_user,
+      'terminal_id': terminal_id,
     };
   }
 
@@ -109,6 +113,9 @@ class UserProfileModel {
       phone: map['phone'] != null ? map['phone'] as String : null,
       is_super_user:
           map['is_super_user'] != null ? map['is_super_user'] as bool : null,
+      terminal_id: map['terminal_id'] != null
+          ? map['terminal_id'] as List<String>
+          : null,
     );
   }
 
@@ -185,6 +192,7 @@ abstract class UserDataState extends Equatable {
             phone: '',
             is_super_user: false,
             id: '',
+            terminal_id: [],
           ),
       is_online: is_online ?? false,
       tokenExpires: tokenExpires ?? DateTime.now(),

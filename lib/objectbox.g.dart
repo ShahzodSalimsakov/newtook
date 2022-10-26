@@ -19,6 +19,7 @@ import 'models/order.dart';
 import 'models/order_next_button.dart';
 import 'models/order_status.dart';
 import 'models/terminals.dart';
+import 'models/waiting_order.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -242,6 +243,97 @@ final _entities = <ModelEntity>[
             flags: 0)
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(10, 1949976709383216849),
+      name: 'WaitingOrderModel',
+      lastPropertyId: const IdUid(14, 7737347985296494294),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 868269279235324358),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 5178099977464507097),
+            name: 'identity',
+            type: 9,
+            flags: 2048,
+            indexId: const IdUid(9, 6311318010321925875)),
+        ModelProperty(
+            id: const IdUid(3, 6901417536013603633),
+            name: 'to_lat',
+            type: 8,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 1149308492177433937),
+            name: 'to_lon',
+            type: 8,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 8808132436442961559),
+            name: 'pre_distance',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 7334693274384789930),
+            name: 'order_number',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 1506878761545737708),
+            name: 'order_price',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 8451503649275082587),
+            name: 'delivery_price',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 8400788228286204025),
+            name: 'delivery_address',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 2553211143359129527),
+            name: 'delivery_comment',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 3434374933585513207),
+            name: 'created_at',
+            type: 10,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(12, 7106550158358494055),
+            name: 'customerId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(10, 4107127334998577976),
+            relationTarget: 'Customer'),
+        ModelProperty(
+            id: const IdUid(13, 5834073754124692378),
+            name: 'terminalId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(11, 1499991988140241428),
+            relationTarget: 'Terminals'),
+        ModelProperty(
+            id: const IdUid(14, 7737347985296494294),
+            name: 'orderStatusId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(12, 2319697532974640764),
+            relationTarget: 'OrderStatus')
+      ],
+      relations: <ModelRelation>[
+        ModelRelation(
+            id: const IdUid(2, 1296200797359606388),
+            name: 'orderNextButton',
+            targetId: const IdUid(9, 3885740093415193842))
+      ],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -265,9 +357,9 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(9, 3885740093415193842),
-      lastIndexId: const IdUid(8, 4921986240989773902),
-      lastRelationId: const IdUid(1, 7323319968490159901),
+      lastEntityId: const IdUid(10, 1949976709383216849),
+      lastIndexId: const IdUid(12, 2319697532974640764),
+      lastRelationId: const IdUid(2, 1296200797359606388),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
         1863924414234841213,
@@ -534,6 +626,87 @@ ModelDefinition getObjectBoxModel() {
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
+        }),
+    WaitingOrderModel: EntityDefinition<WaitingOrderModel>(
+        model: _entities[5],
+        toOneRelations: (WaitingOrderModel object) =>
+            [object.customer, object.terminal, object.orderStatus],
+        toManyRelations: (WaitingOrderModel object) => {
+              RelInfo<WaitingOrderModel>.toMany(2, object.id):
+                  object.orderNextButton
+            },
+        getId: (WaitingOrderModel object) => object.id,
+        setId: (WaitingOrderModel object, int id) {
+          object.id = id;
+        },
+        objectToFB: (WaitingOrderModel object, fb.Builder fbb) {
+          final identityOffset = fbb.writeString(object.identity);
+          final order_numberOffset = fbb.writeString(object.order_number);
+          final delivery_addressOffset = object.delivery_address == null
+              ? null
+              : fbb.writeString(object.delivery_address!);
+          final delivery_commentOffset = object.delivery_comment == null
+              ? null
+              : fbb.writeString(object.delivery_comment!);
+          fbb.startTable(15);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, identityOffset);
+          fbb.addFloat64(2, object.to_lat);
+          fbb.addFloat64(3, object.to_lon);
+          fbb.addInt64(4, object.pre_distance);
+          fbb.addOffset(5, order_numberOffset);
+          fbb.addInt64(6, object.order_price);
+          fbb.addInt64(7, object.delivery_price);
+          fbb.addOffset(8, delivery_addressOffset);
+          fbb.addOffset(9, delivery_commentOffset);
+          fbb.addInt64(10, object.created_at.millisecondsSinceEpoch);
+          fbb.addInt64(11, object.customer.targetId);
+          fbb.addInt64(12, object.terminal.targetId);
+          fbb.addInt64(13, object.orderStatus.targetId);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = WaitingOrderModel(
+              identity: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              to_lat:
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0),
+              to_lon:
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0),
+              pre_distance:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0),
+              order_number: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, ''),
+              order_price:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 16, 0),
+              delivery_price: const fb.Int64Reader()
+                  .vTableGetNullable(buffer, rootOffset, 18),
+              delivery_address: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 20),
+              delivery_comment: const fb.StringReader(asciiOptimization: true)
+                  .vTableGetNullable(buffer, rootOffset, 22),
+              created_at:
+                  DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0)))
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+          object.customer.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0);
+          object.customer.attach(store);
+          object.terminal.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 28, 0);
+          object.terminal.attach(store);
+          object.orderStatus.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
+          object.orderStatus.attach(store);
+          InternalToManyAccess.setRelInfo(
+              object.orderNextButton,
+              store,
+              RelInfo<WaitingOrderModel>.toMany(2, object.id),
+              store.box<WaitingOrderModel>());
+          return object;
         })
   };
 
@@ -683,4 +856,68 @@ class OrderNextButton_ {
   /// see [OrderNextButton.waiting]
   static final waiting =
       QueryBooleanProperty<OrderNextButton>(_entities[4].properties[7]);
+}
+
+/// [WaitingOrderModel] entity fields to define ObjectBox queries.
+class WaitingOrderModel_ {
+  /// see [WaitingOrderModel.id]
+  static final id =
+      QueryIntegerProperty<WaitingOrderModel>(_entities[5].properties[0]);
+
+  /// see [WaitingOrderModel.identity]
+  static final identity =
+      QueryStringProperty<WaitingOrderModel>(_entities[5].properties[1]);
+
+  /// see [WaitingOrderModel.to_lat]
+  static final to_lat =
+      QueryDoubleProperty<WaitingOrderModel>(_entities[5].properties[2]);
+
+  /// see [WaitingOrderModel.to_lon]
+  static final to_lon =
+      QueryDoubleProperty<WaitingOrderModel>(_entities[5].properties[3]);
+
+  /// see [WaitingOrderModel.pre_distance]
+  static final pre_distance =
+      QueryIntegerProperty<WaitingOrderModel>(_entities[5].properties[4]);
+
+  /// see [WaitingOrderModel.order_number]
+  static final order_number =
+      QueryStringProperty<WaitingOrderModel>(_entities[5].properties[5]);
+
+  /// see [WaitingOrderModel.order_price]
+  static final order_price =
+      QueryIntegerProperty<WaitingOrderModel>(_entities[5].properties[6]);
+
+  /// see [WaitingOrderModel.delivery_price]
+  static final delivery_price =
+      QueryIntegerProperty<WaitingOrderModel>(_entities[5].properties[7]);
+
+  /// see [WaitingOrderModel.delivery_address]
+  static final delivery_address =
+      QueryStringProperty<WaitingOrderModel>(_entities[5].properties[8]);
+
+  /// see [WaitingOrderModel.delivery_comment]
+  static final delivery_comment =
+      QueryStringProperty<WaitingOrderModel>(_entities[5].properties[9]);
+
+  /// see [WaitingOrderModel.created_at]
+  static final created_at =
+      QueryIntegerProperty<WaitingOrderModel>(_entities[5].properties[10]);
+
+  /// see [WaitingOrderModel.customer]
+  static final customer = QueryRelationToOne<WaitingOrderModel, Customer>(
+      _entities[5].properties[11]);
+
+  /// see [WaitingOrderModel.terminal]
+  static final terminal = QueryRelationToOne<WaitingOrderModel, Terminals>(
+      _entities[5].properties[12]);
+
+  /// see [WaitingOrderModel.orderStatus]
+  static final orderStatus = QueryRelationToOne<WaitingOrderModel, OrderStatus>(
+      _entities[5].properties[13]);
+
+  /// see [WaitingOrderModel.orderNextButton]
+  static final orderNextButton =
+      QueryRelationToMany<WaitingOrderModel, OrderNextButton>(
+          _entities[5].relations[0]);
 }

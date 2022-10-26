@@ -34,5 +34,6 @@
     "order_total_price": "Umumiy narx",
     "delivery_price": "Yetkazib berish narxi",
     "order_status_label": "Buyurtma holati",
-    "order_tab_waiting": "Kutilmoqda"
+    "order_tab_waiting": "Kutilmoqda",
+    "order_card_btn_accept": "Qabul qilish"
 }

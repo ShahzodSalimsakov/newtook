@@ -6,6 +6,7 @@ import 'package:newtook/helpers/api_graphql_provider.dart';
 import 'package:newtook/models/order.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:newtook/widgets/orders/current_orders.dart';
+import 'package:newtook/widgets/orders/waiting_orders.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 import '../home/view/work_switch.dart';
@@ -95,11 +96,11 @@ class OrdersPage extends StatelessWidget {
                   ),
                 ),
               )),
-          body: TabBarView(
+          body: const TabBarView(
             physics: NeverScrollableScrollPhysics(),
             children: [
               MyCurrentOrdersList(),
-              const Center(child: Text('Completed')),
+              MyWaitingOrdersList(),
             ],
           ),
         ),
