@@ -52,6 +52,10 @@ class NotificationController with ChangeNotifier {
             ledColor: Color.fromARGB(255, 190, 56, 56),
             groupKey: 'alerts',
             channelShowBadge: true,
+            enableVibration: true,
+            playSound: true,
+            defaultRingtoneType: DefaultRingtoneType.Ringtone,
+            soundSource: 'resource://raw/res_notification',
           )
         ],
         debug: debug);
