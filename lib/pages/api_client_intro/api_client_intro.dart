@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 import 'package:newtook/pages/qr/qr.dart';
@@ -26,19 +27,21 @@ class ApiClientIntroPage extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: Text(
+                    child: AutoSizeText(
                       AppLocalizations.of(context)!.app_clients_intro_title,
                       style: Theme.of(context).textTheme.headline4,
                       textAlign: TextAlign.center,
+                      maxLines: 1,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 15),
-                    child: Text(
+                    child: AutoSizeText(
                       AppLocalizations.of(context)!
                           .app_clients_intro_description,
                       style: Theme.of(context).textTheme.subtitle1,
                       textAlign: TextAlign.center,
+                      maxLines: 3,
                     ),
                   ),
                   const Spacer(),
