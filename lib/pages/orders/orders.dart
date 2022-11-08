@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:newtook/bloc/block_imports.dart';
-import 'package:newtook/helpers/api_graphql_provider.dart';
-import 'package:newtook/models/order.dart';
+import 'package:arryt/bloc/block_imports.dart';
+import 'package:arryt/helpers/api_graphql_provider.dart';
+import 'package:arryt/models/order.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:newtook/widgets/orders/current_orders.dart';
-import 'package:newtook/widgets/orders/waiting_orders.dart';
+import 'package:arryt/widgets/orders/current_orders.dart';
+import 'package:arryt/widgets/orders/waiting_orders.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 import '../home/view/work_switch.dart';

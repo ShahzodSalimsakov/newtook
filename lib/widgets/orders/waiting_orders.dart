@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:newtook/widgets/orders/listen_deleted_waiting_order.dart';
-import 'package:newtook/widgets/orders/waiting_order_card.dart';
+import 'package:arryt/widgets/orders/listen_deleted_waiting_order.dart';
+import 'package:arryt/widgets/orders/waiting_order_card.dart';
 
 import '../../bloc/block_imports.dart';
 import '../../helpers/api_graphql_provider.dart';

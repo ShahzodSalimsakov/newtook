@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
-import 'package:newtook/bloc/block_imports.dart';
+import 'package:arryt/bloc/block_imports.dart';
 
 part 'user_data_event.dart';
 part 'user_data_state.dart';

@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>92327347967-i90lg2brvpj5do6u2u8737phetfh5f8m.apps.googleusercontent.com</string>
+	<string>92327347967-8hahcp2160qs5ea14s0r0b11qhfir3ub.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.92327347967-i90lg2brvpj5do6u2u8737phetfh5f8m</string>
+	<string>com.googleusercontent.apps.92327347967-8hahcp2160qs5ea14s0r0b11qhfir3ub</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCab4NKp6oGydeA_J9Dk5kUNHU6RkLc16Y</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.newtook</string>
+	<string>com.arryt</string>
 	<key>PROJECT_ID</key>
 	<string>arryt-b201e</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:92327347967:ios:015a27a2b457e55216eeca</string>
+	<string>1:92327347967:ios:0852c50a364729c616eeca</string>
 </dict>
 </plist>

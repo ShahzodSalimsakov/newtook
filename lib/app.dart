@@ -8,11 +8,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:newtook/bloc/block_imports.dart';
-import 'package:newtook/bloc/user_data/user_data_bloc.dart';
-import 'package:newtook/l10n/support_locale.dart';
-import 'package:newtook/provider/locale_provider.dart';
-import 'package:newtook/router.dart';
+import 'package:arryt/bloc/block_imports.dart';
+import 'package:arryt/bloc/user_data/user_data_bloc.dart';
+import 'package:arryt/l10n/support_locale.dart';
+import 'package:arryt/provider/locale_provider.dart';
+import 'package:arryt/router.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';

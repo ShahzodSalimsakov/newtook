@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:newtook/helpers/api_graphql_provider.dart';
+import 'package:arryt/helpers/api_graphql_provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import '../../widgets/profile/logout.dart';

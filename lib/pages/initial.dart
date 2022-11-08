@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:newtook/bloc/block_imports.dart';
-import 'package:newtook/pages/login/type_phone.dart';
-import 'package:newtook/pages/orders/orders.dart';
+import 'package:arryt/bloc/block_imports.dart';
+import 'package:arryt/pages/login/type_phone.dart';
+import 'package:arryt/pages/orders/orders.dart';
 import 'api_client_intro/api_client_intro.dart';
 import 'home/view/home_page.dart';
 

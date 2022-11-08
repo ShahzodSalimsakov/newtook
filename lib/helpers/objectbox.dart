@@ -1,8 +1,8 @@
-import 'package:newtook/models/customer.dart';
-import 'package:newtook/models/order.dart';
-import 'package:newtook/models/order_status.dart';
-import 'package:newtook/models/terminals.dart';
-import 'package:newtook/objectbox.g.dart';
+import 'package:arryt/models/customer.dart';
+import 'package:arryt/models/order.dart';
+import 'package:arryt/models/order_status.dart';
+import 'package:arryt/models/terminals.dart';
+import 'package:arryt/objectbox.g.dart';
 import 'package:objectbox/objectbox.dart';
 
 import '../models/waiting_order.dart';

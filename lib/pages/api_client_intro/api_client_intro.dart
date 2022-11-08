@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
-import 'package:newtook/pages/qr/qr.dart';
+import 'package:arryt/pages/qr/qr.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ApiClientIntroPage extends StatelessWidget {

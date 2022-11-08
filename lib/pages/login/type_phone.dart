@@ -9,9 +9,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:newtook/bloc/block_imports.dart';
-import 'package:newtook/bloc/otp_phone_number/otp_phone_number_bloc.dart';
-import 'package:newtook/helpers/api_graphql_provider.dart';
+import 'package:arryt/bloc/block_imports.dart';
+import 'package:arryt/bloc/otp_phone_number/otp_phone_number_bloc.dart';
+import 'package:arryt/helpers/api_graphql_provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:http/http.dart' as http;
 

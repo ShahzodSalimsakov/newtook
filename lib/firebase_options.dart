@@ -25,7 +25,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -45,17 +48,17 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyDu4_6ZtApKGHNcl0PXORFyL42FGLHMeOQ',
-    appId: '1:92327347967:web:bfd7661dcda7e82e16eeca',
+    appId: '1:92327347967:web:751b9bd8aa59a43b16eeca',
     messagingSenderId: '92327347967',
     projectId: 'arryt-b201e',
     authDomain: 'arryt-b201e.firebaseapp.com',
     storageBucket: 'arryt-b201e.appspot.com',
-    measurementId: 'G-XS9YZJKWTP',
+    measurementId: 'G-SRRPJGQKB1',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDz5DeoDqhOQuO2e3g2rp40TYo-vSItZHE',
-    appId: '1:92327347967:android:a81e5e2848167b0816eeca',
+    appId: '1:92327347967:android:b1caa2f9cb4abaa516eeca',
     messagingSenderId: '92327347967',
     projectId: 'arryt-b201e',
     storageBucket: 'arryt-b201e.appspot.com',
@@ -63,21 +66,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCab4NKp6oGydeA_J9Dk5kUNHU6RkLc16Y',
-    appId: '1:92327347967:ios:015a27a2b457e55216eeca',
+    appId: '1:92327347967:ios:0852c50a364729c616eeca',
     messagingSenderId: '92327347967',
     projectId: 'arryt-b201e',
     storageBucket: 'arryt-b201e.appspot.com',
-    iosClientId: '92327347967-i90lg2brvpj5do6u2u8737phetfh5f8m.apps.googleusercontent.com',
-    iosBundleId: 'com.example.newtook',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCab4NKp6oGydeA_J9Dk5kUNHU6RkLc16Y',
-    appId: '1:92327347967:ios:015a27a2b457e55216eeca',
-    messagingSenderId: '92327347967',
-    projectId: 'arryt-b201e',
-    storageBucket: 'arryt-b201e.appspot.com',
-    iosClientId: '92327347967-i90lg2brvpj5do6u2u8737phetfh5f8m.apps.googleusercontent.com',
-    iosBundleId: 'com.example.newtook',
+    iosClientId: '92327347967-8hahcp2160qs5ea14s0r0b11qhfir3ub.apps.googleusercontent.com',
+    iosBundleId: 'com.arryt',
   );
 }

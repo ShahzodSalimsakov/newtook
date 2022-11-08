@@ -3,8 +3,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:newtook/login/models/password.dart';
-import 'package:newtook/login/models/username.dart';
+import 'package:arryt/login/models/password.dart';
+import 'package:arryt/login/models/username.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';

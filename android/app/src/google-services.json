@@ -7,14 +7,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:92327347967:android:a81e5e2848167b0816eeca",
+        "mobilesdk_app_id": "1:92327347967:android:b1caa2f9cb4abaa516eeca",
         "android_client_info": {
-          "package_name": "com.example.newtook"
+          "package_name": "com.arryt"
         }
       },
       "oauth_client": [
         {
-          "client_id": "92327347967-nr5o80cb2t1jg18gjh38vafsg9jn0q6r.apps.googleusercontent.com",
+          "clie t_id": "92327347967-nr5o80cb2t1jg18gjh38vafsg9jn0q6r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -31,10 +31,10 @@
               "client_type": 3
             },
             {
-              "client_id": "92327347967-i90lg2brvpj5do6u2u8737phetfh5f8m.apps.googleusercontent.com",
+              "client_id": "92327347967-8hahcp2160qs5ea14s0r0b11qhfir3ub.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.newtook"
+                "bundle_id": "com.arryt"
               }
             }
           ]

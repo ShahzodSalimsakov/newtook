@@ -2,7 +2,7 @@
 import 'dart:convert';
 import 'dart:ffi';
 
-import 'package:newtook/models/terminals.dart';
+import 'package:arryt/models/terminals.dart';
 import 'package:objectbox/objectbox.dart';
 
 import 'customer.dart';

@@ -3,7 +3,7 @@ import 'dart:ffi';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:newtook/bloc/block_imports.dart';
+import 'package:arryt/bloc/block_imports.dart';
 
 part 'api_clients_event.dart';
 part 'api_clients_state.dart';

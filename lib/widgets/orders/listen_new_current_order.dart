@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:newtook/main.dart';
+import 'package:arryt/main.dart';
 
 import '../../bloc/block_imports.dart';
 import '../../models/customer.dart';

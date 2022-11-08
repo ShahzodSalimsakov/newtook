@@ -11,10 +11,10 @@ import 'package:loading_overlay/loading_overlay.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:newtook/helpers/api_graphql_provider.dart';
-import 'package:newtook/main.dart';
-import 'package:newtook/models/order.dart';
-import 'package:newtook/widgets/orders/orders_items.dart';
+import 'package:arryt/helpers/api_graphql_provider.dart';
+import 'package:arryt/main.dart';
+import 'package:arryt/models/order.dart';
+import 'package:arryt/widgets/orders/orders_items.dart';
 
 import '../../models/customer.dart';
 import '../../models/order_next_button.dart';

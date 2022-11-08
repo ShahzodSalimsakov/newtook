@@ -5,8 +5,8 @@ import 'package:chat_bubbles/message_bars/message_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:newtook/helpers/api_graphql_provider.dart';
-import 'package:newtook/models/customer_comments.dart';
+import 'package:arryt/helpers/api_graphql_provider.dart';
+import 'package:arryt/models/customer_comments.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrderCustomerCommentsPage extends StatelessWidget {

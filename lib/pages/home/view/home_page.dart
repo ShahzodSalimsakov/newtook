@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:newtook/pages/orders/orders.dart';
-import 'package:newtook/pages/profile/profile.dart';
-import 'package:newtook/pages/qr/qr.dart';
-import 'package:newtook/pages/settings/settings.dart';
+import 'package:arryt/pages/orders/orders.dart';
+import 'package:arryt/pages/profile/profile.dart';
+import 'package:arryt/pages/qr/qr.dart';
+import 'package:arryt/pages/settings/settings.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
