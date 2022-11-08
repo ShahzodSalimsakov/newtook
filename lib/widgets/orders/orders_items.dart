@@ -44,7 +44,7 @@ class _OrderItemsTableState extends State<OrderItemsTable> {
         if (result.data!['orderItems'] != null) {
           setState(() {
             items = (result.data!['orderItems'] as List)
-                .map((e) => OrderItemsModel.fromJson(e))
+                .map((e) => OrderItemsModel.fromMap(e))
                 .toList();
           });
         }
