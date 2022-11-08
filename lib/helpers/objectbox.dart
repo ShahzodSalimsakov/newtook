@@ -52,15 +52,14 @@ class ObjectBox {
   }
 
   Stream<List<OrderModel>> getCurrentOrders() {
-    final builder = _currentOrdersBox.query()..order(OrderModel_.pre_distance);
+    final builder = _currentOrdersBox.query();
     return builder.watch(triggerImmediately: true).map((query) {
       return query.find();
     });
   }
 
   Stream<List<WaitingOrderModel>> getWaitingOrders() {
-    final builder = _waitingOrdersBox.query()
-      ..order(WaitingOrderModel_.pre_distance);
+    final builder = _waitingOrdersBox.query();
     return builder.watch(triggerImmediately: true).map((query) {
       return query.find();
     });
