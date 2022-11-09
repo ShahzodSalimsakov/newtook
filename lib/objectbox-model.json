@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "5:8938918269802989134",
-      "lastPropertyId": "17:7913170474316076287",
+      "lastPropertyId": "19:6887866108329889092",
       "name": "OrderModel",
       "properties": [
         {
@@ -89,6 +89,16 @@
           "id": "17:7913170474316076287",
           "name": "pre_distance",
           "type": 6
+        },
+        {
+          "id": "18:6400841373942310655",
+          "name": "from_lat",
+          "type": 8
+        },
+        {
+          "id": "19:6887866108329889092",
+          "name": "from_lon",
+          "type": 8
         }
       ],
       "relations": [
@@ -127,7 +137,7 @@
     },
     {
       "id": "7:8563256737949417726",
-      "lastPropertyId": "3:8962048234501600838",
+      "lastPropertyId": "5:1953990034282549854",
       "name": "OrderStatus",
       "properties": [
         {
@@ -145,6 +155,16 @@
           "id": "3:8962048234501600838",
           "name": "name",
           "type": 9
+        },
+        {
+          "id": "4:637348538912960010",
+          "name": "cancel",
+          "type": 1
+        },
+        {
+          "id": "5:1953990034282549854",
+          "name": "finish",
+          "type": 1
         }
       ],
       "relations": []
@@ -233,7 +253,7 @@
     },
     {
       "id": "10:1949976709383216849",
-      "lastPropertyId": "14:7737347985296494294",
+      "lastPropertyId": "16:6097524008689169922",
       "name": "WaitingOrderModel",
       "properties": [
         {
@@ -317,6 +337,16 @@
           "flags": 520,
           "indexId": "12:2319697532974640764",
           "relationTarget": "OrderStatus"
+        },
+        {
+          "id": "15:6854746085406089198",
+          "name": "from_lat",
+          "type": 8
+        },
+        {
+          "id": "16:6097524008689169922",
+          "name": "from_lon",
+          "type": 8
         }
       ],
       "relations": [

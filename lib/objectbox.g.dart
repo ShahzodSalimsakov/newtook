@@ -27,7 +27,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(5, 8938918269802989134),
       name: 'OrderModel',
-      lastPropertyId: const IdUid(17, 7913170474316076287),
+      lastPropertyId: const IdUid(19, 6887866108329889092),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -106,6 +106,16 @@ final _entities = <ModelEntity>[
             id: const IdUid(17, 7913170474316076287),
             name: 'pre_distance',
             type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(18, 6400841373942310655),
+            name: 'from_lat',
+            type: 8,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(19, 6887866108329889092),
+            name: 'from_lon',
+            type: 8,
             flags: 0)
       ],
       relations: <ModelRelation>[
@@ -143,7 +153,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(7, 8563256737949417726),
       name: 'OrderStatus',
-      lastPropertyId: const IdUid(3, 8962048234501600838),
+      lastPropertyId: const IdUid(5, 1953990034282549854),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -160,6 +170,16 @@ final _entities = <ModelEntity>[
             id: const IdUid(3, 8962048234501600838),
             name: 'name',
             type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 637348538912960010),
+            name: 'cancel',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 1953990034282549854),
+            name: 'finish',
+            type: 1,
             flags: 0)
       ],
       relations: <ModelRelation>[],
@@ -247,7 +267,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(10, 1949976709383216849),
       name: 'WaitingOrderModel',
-      lastPropertyId: const IdUid(14, 7737347985296494294),
+      lastPropertyId: const IdUid(16, 6097524008689169922),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -326,7 +346,17 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(12, 2319697532974640764),
-            relationTarget: 'OrderStatus')
+            relationTarget: 'OrderStatus'),
+        ModelProperty(
+            id: const IdUid(15, 6854746085406089198),
+            name: 'from_lat',
+            type: 8,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(16, 6097524008689169922),
+            name: 'from_lon',
+            type: 8,
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -423,7 +453,7 @@ ModelDefinition getObjectBoxModel() {
               ? null
               : fbb.writeString(object.delivery_comment!);
           final identityOffset = fbb.writeString(object.identity);
-          fbb.startTable(18);
+          fbb.startTable(20);
           fbb.addInt64(1, object.id);
           fbb.addFloat64(4, object.to_lat);
           fbb.addFloat64(5, object.to_lon);
@@ -438,6 +468,8 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(14, object.terminal.targetId);
           fbb.addInt64(15, object.orderStatus.targetId);
           fbb.addInt64(16, object.pre_distance);
+          fbb.addFloat64(17, object.from_lat);
+          fbb.addFloat64(18, object.from_lon);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -465,7 +497,9 @@ ModelDefinition getObjectBoxModel() {
               delivery_comment: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 24),
               created_at:
-                  DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0)))
+                  DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0)),
+              from_lat: const fb.Float64Reader().vTableGet(buffer, rootOffset, 38, 0),
+              from_lon: const fb.Float64Reader().vTableGet(buffer, rootOffset, 40, 0))
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
           object.customer.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
@@ -525,10 +559,12 @@ ModelDefinition getObjectBoxModel() {
         objectToFB: (OrderStatus object, fb.Builder fbb) {
           final identityOffset = fbb.writeString(object.identity);
           final nameOffset = fbb.writeString(object.name);
-          fbb.startTable(4);
+          fbb.startTable(6);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, identityOffset);
           fbb.addOffset(2, nameOffset);
+          fbb.addBool(3, object.cancel);
+          fbb.addBool(4, object.finish);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -540,7 +576,11 @@ ModelDefinition getObjectBoxModel() {
               identity: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 6, ''),
               name: const fb.StringReader(asciiOptimization: true)
-                  .vTableGet(buffer, rootOffset, 8, ''))
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              cancel: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 10, false),
+              finish: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 12, false))
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
@@ -648,7 +688,7 @@ ModelDefinition getObjectBoxModel() {
           final delivery_commentOffset = object.delivery_comment == null
               ? null
               : fbb.writeString(object.delivery_comment!);
-          fbb.startTable(15);
+          fbb.startTable(17);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, identityOffset);
           fbb.addFloat64(2, object.to_lat);
@@ -663,6 +703,8 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(11, object.customer.targetId);
           fbb.addInt64(12, object.terminal.targetId);
           fbb.addInt64(13, object.orderStatus.targetId);
+          fbb.addFloat64(14, object.from_lat);
+          fbb.addFloat64(15, object.from_lon);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -677,6 +719,10 @@ ModelDefinition getObjectBoxModel() {
                   const fb.Float64Reader().vTableGet(buffer, rootOffset, 8, 0),
               to_lon:
                   const fb.Float64Reader().vTableGet(buffer, rootOffset, 10, 0),
+              from_lat:
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 32, 0),
+              from_lon:
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 34, 0),
               pre_distance:
                   const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0),
               order_number: const fb.StringReader(asciiOptimization: true)
@@ -689,8 +735,7 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGetNullable(buffer, rootOffset, 20),
               delivery_comment: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 22),
-              created_at:
-                  DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0)))
+              created_at: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0)))
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           object.customer.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0);
@@ -771,6 +816,14 @@ class OrderModel_ {
   static final pre_distance =
       QueryIntegerProperty<OrderModel>(_entities[0].properties[13]);
 
+  /// see [OrderModel.from_lat]
+  static final from_lat =
+      QueryDoubleProperty<OrderModel>(_entities[0].properties[14]);
+
+  /// see [OrderModel.from_lon]
+  static final from_lon =
+      QueryDoubleProperty<OrderModel>(_entities[0].properties[15]);
+
   /// see [OrderModel.orderNextButton]
   static final orderNextButton =
       QueryRelationToMany<OrderModel, OrderNextButton>(
@@ -804,6 +857,14 @@ class OrderStatus_ {
   /// see [OrderStatus.name]
   static final name =
       QueryStringProperty<OrderStatus>(_entities[2].properties[2]);
+
+  /// see [OrderStatus.cancel]
+  static final cancel =
+      QueryBooleanProperty<OrderStatus>(_entities[2].properties[3]);
+
+  /// see [OrderStatus.finish]
+  static final finish =
+      QueryBooleanProperty<OrderStatus>(_entities[2].properties[4]);
 }
 
 /// [Customer] entity fields to define ObjectBox queries.
@@ -915,6 +976,14 @@ class WaitingOrderModel_ {
   /// see [WaitingOrderModel.orderStatus]
   static final orderStatus = QueryRelationToOne<WaitingOrderModel, OrderStatus>(
       _entities[5].properties[13]);
+
+  /// see [WaitingOrderModel.from_lat]
+  static final from_lat =
+      QueryDoubleProperty<WaitingOrderModel>(_entities[5].properties[14]);
+
+  /// see [WaitingOrderModel.from_lon]
+  static final from_lon =
+      QueryDoubleProperty<WaitingOrderModel>(_entities[5].properties[15]);
 
   /// see [WaitingOrderModel.orderNextButton]
   static final orderNextButton =

@@ -356,27 +356,31 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                             AppLocalizations.of(context)!.address,
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          Text(
-                            widget.order.delivery_address ?? '',
+                          Spacer(),
+                          Flexible(
+                            fit: FlexFit.loose,
+                            child: Text(
+                              widget.order.delivery_address ?? '',
+                            ),
                           ),
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.customer_phone,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              FlutterPhoneDirectCaller.callNumber(
-                                  widget.order.customer.target!.phone);
-                            },
-                            child: Text(widget.order.customer.target!.phone),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     Text(
+                      //       AppLocalizations.of(context)!.customer_phone,
+                      //       style: const TextStyle(fontWeight: FontWeight.bold),
+                      //     ),
+                      //     TextButton(
+                      //       onPressed: () {
+                      //         FlutterPhoneDirectCaller.callNumber(
+                      //             widget.order.customer.target!.phone);
+                      //       },
+                      //       child: Text(widget.order.customer.target!.phone),
+                      //     ),
+                      //   ],
+                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

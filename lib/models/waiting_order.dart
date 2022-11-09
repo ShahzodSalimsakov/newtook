@@ -16,6 +16,8 @@ class WaitingOrderModel {
   final String identity;
   final double to_lat;
   final double to_lon;
+  final double from_lat;
+  final double from_lon;
   final int pre_distance;
   final String order_number;
   final int order_price;
@@ -28,6 +30,8 @@ class WaitingOrderModel {
     required this.identity,
     required this.to_lat,
     required this.to_lon,
+    required this.from_lat,
+    required this.from_lon,
     required this.pre_distance,
     required this.order_number,
     required this.order_price,
@@ -46,6 +50,8 @@ class WaitingOrderModel {
     String? identity,
     double? to_lat,
     double? to_lon,
+    double? from_lat,
+    double? from_lon,
     int? pre_distance,
     String? order_number,
     int? order_price,
@@ -65,6 +71,8 @@ class WaitingOrderModel {
       delivery_address: delivery_address ?? this.delivery_address,
       delivery_comment: delivery_comment ?? this.delivery_comment,
       created_at: created_at ?? this.created_at,
+      from_lat: from_lat ?? this.from_lat,
+      from_lon: from_lon ?? this.from_lon,
     );
   }
 
@@ -73,6 +81,8 @@ class WaitingOrderModel {
       'id': identity,
       'to_lat': to_lat,
       'to_lon': to_lon,
+      'from_lat': from_lat,
+      'from_lon': from_lon,
       'pre_distance': pre_distance,
       'order_number': order_number,
       'order_price': order_price,
@@ -88,6 +98,8 @@ class WaitingOrderModel {
       identity: map['id'] as String,
       to_lat: map['to_lat'] as double,
       to_lon: map['to_lon'] as double,
+      from_lat: map['from_lat'] as double,
+      from_lon: map['from_lon'] as double,
       pre_distance: map['pre_distance'] as int,
       order_number: map['order_number'] as String,
       order_price: map['order_price'] as int,

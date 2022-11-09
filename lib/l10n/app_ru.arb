@@ -35,5 +35,6 @@
     "delivery_price": "Стоимость доставки",
     "order_status_label": "Статус заказа",
     "order_tab_waiting": "Ожидают",
-    "order_card_btn_accept": "Принять"
+    "order_card_btn_accept": "Принять",
+    "call_customer" : "Позвонить клиенту"
 }

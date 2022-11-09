@@ -45,6 +45,8 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
           id
           to_lat
           to_lon
+          from_lat
+          from_lon
           pre_distance
           order_number
           order_price
@@ -64,6 +66,8 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
           orders_order_status {
             id
             name
+            cancel
+            finish
           }
           next_buttons {
             name
@@ -88,6 +92,8 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
         OrderStatus orderStatus = OrderStatus(
           identity: order['orders_order_status']['id'],
           name: order['orders_order_status']['name'],
+          cancel: order['orders_order_status']['cancel'],
+          finish: order['orders_order_status']['finish'],
         );
         Terminals terminals = Terminals(
           identity: order['orders_terminals']['id'],

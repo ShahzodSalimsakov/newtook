@@ -52,6 +52,8 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
           id
           to_lat
           to_lon
+          from_lat
+          from_lon
           pre_distance
           order_number
           order_price
@@ -71,6 +73,8 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
           orders_order_status {
             id
             name
+            cancel
+            finish
           }
           next_buttons {
             name
@@ -104,6 +108,8 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
         OrderStatus orderStatus = OrderStatus(
           identity: order['orders_order_status']['id'],
           name: order['orders_order_status']['name'],
+          cancel: order['orders_order_status']['cancel'],
+          finish: order['orders_order_status']['finish'],
         );
         Terminals terminals = Terminals(
           identity: order['orders_terminals']['id'],
@@ -202,17 +208,93 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Icon(
-                                Icons.navigation_outlined,
-                                color: Theme.of(context).primaryColor,
+                              GestureDetector(
+                                onTap: () async {
+                                  final coords = Coords(widget.order.from_lat,
+                                      widget.order.from_lon);
+                                  final title =
+                                      widget.order.delivery_address ?? '';
+                                  final availableMaps =
+                                      await MapLauncher.installedMaps;
+                                  showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return SafeArea(
+                                        child: SingleChildScrollView(
+                                          child: Container(
+                                            child: Wrap(
+                                              children: <Widget>[
+                                                for (var map in availableMaps)
+                                                  ListTile(
+                                                    onTap: () => map.showMarker(
+                                                      coords: coords,
+                                                      title: title,
+                                                    ),
+                                                    title: Text(map.mapName),
+                                                    leading: SvgPicture.asset(
+                                                      map.icon,
+                                                      height: 30.0,
+                                                      width: 30.0,
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Icon(
+                                  Icons.navigation_outlined,
+                                  color: Theme.of(context).primaryColor,
+                                ),
                               ),
                               Icon(
                                 Icons.keyboard_control_outlined,
                                 color: Theme.of(context).primaryColor,
                               ),
-                              Icon(
-                                Icons.location_pin,
-                                color: Theme.of(context).primaryColor,
+                              GestureDetector(
+                                onTap: () async {
+                                  final coords = Coords(
+                                      widget.order.to_lat, widget.order.to_lon);
+                                  final title =
+                                      widget.order.delivery_address ?? '';
+                                  final availableMaps =
+                                      await MapLauncher.installedMaps;
+                                  showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return SafeArea(
+                                        child: SingleChildScrollView(
+                                          child: Container(
+                                            child: Wrap(
+                                              children: <Widget>[
+                                                for (var map in availableMaps)
+                                                  ListTile(
+                                                    onTap: () => map.showMarker(
+                                                      coords: coords,
+                                                      title: title,
+                                                    ),
+                                                    title: Text(map.mapName),
+                                                    leading: SvgPicture.asset(
+                                                      map.icon,
+                                                      height: 30.0,
+                                                      width: 30.0,
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                                child: Icon(
+                                  Icons.location_pin,
+                                  color: Theme.of(context).primaryColor,
+                                ),
                               ),
                             ],
                           ),
@@ -259,67 +341,42 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                     )
                   ],
                 )),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () async {
-                    final coords =
-                        Coords(widget.order.to_lat, widget.order.to_lon);
-                    final title = widget.order.delivery_address ?? '';
-                    final availableMaps = await MapLauncher.installedMaps;
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SafeArea(
-                          child: SingleChildScrollView(
-                            child: Container(
-                              child: Wrap(
-                                children: <Widget>[
-                                  for (var map in availableMaps)
-                                    ListTile(
-                                      onTap: () => map.showMarker(
-                                        coords: coords,
-                                        title: title,
-                                      ),
-                                      title: Text(map.mapName),
-                                      leading: SvgPicture.asset(
-                                        map.icon,
-                                        height: 30.0,
-                                        width: 30.0,
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                  child: const Icon(
-                    Icons.location_pin,
-                    color: Colors.deepPurple,
-                    size: 40,
-                  ),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 5),
+              decoration: BoxDecoration(
+                color: Colors.green,
+              ),
+              child: GestureDetector(
+                onTap: () async {
+                  String number =
+                      widget.order.customer.target!.phone; //set the number here
+                  bool? res = await FlutterPhoneDirectCaller.callNumber(number);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.phone_in_talk_outlined,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                        AppLocalizations.of(context)!
+                            .call_customer
+                            .toUpperCase(),
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold)),
+                  ],
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                GestureDetector(
-                  onTap: () async {
-                    String number = widget
-                        .order.customer.target!.phone; //set the number here
-                    bool? res =
-                        await FlutterPhoneDirectCaller.callNumber(number);
-                  },
-                  child: const Icon(
-                    Icons.phone_in_talk_outlined,
-                    color: Colors.green,
-                    size: 40,
-                  ),
-                )
-              ],
+              ),
+            ),
+            SizedBox(
+              height: 5,
             ),
             Container(
               color: Theme.of(context).primaryColor,
@@ -441,27 +498,31 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                             AppLocalizations.of(context)!.address,
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          Text(
-                            widget.order.delivery_address ?? '',
+                          const Spacer(),
+                          Flexible(
+                            fit: FlexFit.loose,
+                            child: Text(
+                              widget.order.delivery_address ?? '',
+                            ),
                           ),
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.customer_phone,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              FlutterPhoneDirectCaller.callNumber(
-                                  widget.order.customer.target!.phone);
-                            },
-                            child: Text(widget.order.customer.target!.phone),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     Text(
+                      //       AppLocalizations.of(context)!.customer_phone,
+                      //       style: const TextStyle(fontWeight: FontWeight.bold),
+                      //     ),
+                      //     TextButton(
+                      //       onPressed: () {
+                      //         FlutterPhoneDirectCaller.callNumber(
+                      //             widget.order.customer.target!.phone);
+                      //       },
+                      //       child: Text(widget.order.customer.target!.phone),
+                      //     ),
+                      //   ],
+                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -504,17 +565,93 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Icon(
-                              Icons.navigation_outlined,
-                              color: Theme.of(context).primaryColor,
+                            GestureDetector(
+                              onTap: () async {
+                                final coords = Coords(widget.order.from_lat,
+                                    widget.order.from_lon);
+                                final title =
+                                    widget.order.delivery_address ?? '';
+                                final availableMaps =
+                                    await MapLauncher.installedMaps;
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return SafeArea(
+                                      child: SingleChildScrollView(
+                                        child: Container(
+                                          child: Wrap(
+                                            children: <Widget>[
+                                              for (var map in availableMaps)
+                                                ListTile(
+                                                  onTap: () => map.showMarker(
+                                                    coords: coords,
+                                                    title: title,
+                                                  ),
+                                                  title: Text(map.mapName),
+                                                  leading: SvgPicture.asset(
+                                                    map.icon,
+                                                    height: 30.0,
+                                                    width: 30.0,
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              child: Icon(
+                                Icons.navigation_outlined,
+                                color: Theme.of(context).primaryColor,
+                              ),
                             ),
                             Icon(
                               Icons.keyboard_control_outlined,
                               color: Theme.of(context).primaryColor,
                             ),
-                            Icon(
-                              Icons.location_pin,
-                              color: Theme.of(context).primaryColor,
+                            GestureDetector(
+                              onTap: () async {
+                                final coords = Coords(
+                                    widget.order.to_lat, widget.order.to_lon);
+                                final title =
+                                    widget.order.delivery_address ?? '';
+                                final availableMaps =
+                                    await MapLauncher.installedMaps;
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return SafeArea(
+                                      child: SingleChildScrollView(
+                                        child: Container(
+                                          child: Wrap(
+                                            children: <Widget>[
+                                              for (var map in availableMaps)
+                                                ListTile(
+                                                  onTap: () => map.showMarker(
+                                                    coords: coords,
+                                                    title: title,
+                                                  ),
+                                                  title: Text(map.mapName),
+                                                  leading: SvgPicture.asset(
+                                                    map.icon,
+                                                    height: 30.0,
+                                                    width: 30.0,
+                                                  ),
+                                                ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              child: Icon(
+                                Icons.location_pin,
+                                color: Theme.of(context).primaryColor,
+                              ),
                             ),
                           ],
                         ),
@@ -580,70 +717,44 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                       )
                     ],
                   )),
-              Padding(
-                  padding: const EdgeInsets.all(8.0),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                ),
+                child: GestureDetector(
+                  onTap: () async {
+                    String number = widget
+                        .order.customer.target!.phone; //set the number here
+                    bool? res =
+                        await FlutterPhoneDirectCaller.callNumber(number);
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      GestureDetector(
-                        onTap: () async {
-                          final coords =
-                              Coords(widget.order.to_lat, widget.order.to_lon);
-                          final title = widget.order.delivery_address ?? '';
-                          final availableMaps = await MapLauncher.installedMaps;
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return SafeArea(
-                                child: SingleChildScrollView(
-                                  child: Container(
-                                    child: Wrap(
-                                      children: <Widget>[
-                                        for (var map in availableMaps)
-                                          ListTile(
-                                            onTap: () => map.showMarker(
-                                              coords: coords,
-                                              title: title,
-                                            ),
-                                            title: Text(map.mapName),
-                                            leading: SvgPicture.asset(
-                                              map.icon,
-                                              height: 30.0,
-                                              width: 30.0,
-                                            ),
-                                          ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        child: const Icon(
-                          Icons.location_pin,
-                          color: Colors.deepPurple,
-                          size: 40,
-                        ),
+                      const Icon(
+                        Icons.phone_in_talk_outlined,
+                        color: Colors.white,
+                        size: 40,
                       ),
                       const SizedBox(
-                        width: 10,
+                        width: 20,
                       ),
-                      GestureDetector(
-                        onTap: () async {
-                          String number = widget.order.customer.target!
-                              .phone; //set the number here
-                          bool? res =
-                              await FlutterPhoneDirectCaller.callNumber(number);
-                        },
-                        child: const Icon(
-                          Icons.phone_in_talk_outlined,
-                          color: Colors.green,
-                          size: 40,
-                        ),
-                      )
+                      Text(
+                          AppLocalizations.of(context)!
+                              .call_customer
+                              .toUpperCase(),
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold)),
                     ],
-                  )),
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 5,
+              ),
               Container(
                 color: Theme.of(context).primaryColor,
                 child: IntrinsicHeight(

@@ -16,6 +16,8 @@ class OrderModel {
   final String identity;
   final double to_lat;
   final double to_lon;
+  final double from_lat;
+  final double from_lon;
   final int pre_distance;
   final String order_number;
   final int order_price;
@@ -35,6 +37,8 @@ class OrderModel {
     this.delivery_address,
     this.delivery_comment,
     required this.created_at,
+    required this.from_lat,
+    required this.from_lon,
   });
 
   final customer = ToOne<Customer>();
@@ -53,6 +57,8 @@ class OrderModel {
     String? delivery_address,
     String? delivery_comment,
     DateTime? created_at,
+    double? from_lat,
+    double? from_lon,
   }) {
     return OrderModel(
       identity: identity ?? this.identity,
@@ -65,6 +71,8 @@ class OrderModel {
       delivery_address: delivery_address ?? this.delivery_address,
       delivery_comment: delivery_comment ?? this.delivery_comment,
       created_at: created_at ?? this.created_at,
+      from_lat: from_lat ?? this.from_lat,
+      from_lon: from_lon ?? this.from_lon,
     );
   }
 
@@ -80,6 +88,8 @@ class OrderModel {
       'delivery_address': delivery_address,
       'delivery_comment': delivery_comment,
       'created_at': created_at.millisecondsSinceEpoch,
+      'from_lat': from_lat,
+      'from_lon': from_lon,
     };
   }
 
@@ -95,6 +105,8 @@ class OrderModel {
       delivery_address: map['delivery_address'] as String?,
       delivery_comment: map['delivery_comment'] as String?,
       created_at: DateTime.parse(map['created_at'] as String),
+      from_lat: map['from_lat'] as double,
+      from_lon: map['from_lon'] as double,
     );
   }
 

@@ -35,5 +35,6 @@
     "delivery_price": "Delivery price",
     "order_status_label": "Order status",
     "order_tab_waiting": "Waiting",
-    "order_card_btn_accept": "Accept"
+    "order_card_btn_accept": "Accept",
+    "call_customer" : "Call customer"
 }

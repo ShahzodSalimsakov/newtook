@@ -52,14 +52,15 @@ class ObjectBox {
   }
 
   Stream<List<OrderModel>> getCurrentOrders() {
-    final builder = _currentOrdersBox.query();
+    final builder = _currentOrdersBox.query()..order(OrderModel_.created_at);
     return builder.watch(triggerImmediately: true).map((query) {
       return query.find();
     });
   }
 
   Stream<List<WaitingOrderModel>> getWaitingOrders() {
-    final builder = _waitingOrdersBox.query();
+    final builder = _waitingOrdersBox.query()
+      ..order(WaitingOrderModel_.created_at);
     return builder.watch(triggerImmediately: true).map((query) {
       return query.find();
     });
@@ -84,7 +85,13 @@ class ObjectBox {
     final query =
         _currentOrdersBox.query(OrderModel_.identity.equals(identity)).build();
     query.remove();
-    _currentOrdersBox.put(order);
+
+    if (order.orderStatus.target != null &&
+        (!order.orderStatus.target!.cancel &&
+            !order.orderStatus.target!.finish)) {
+      _currentOrdersBox.put(order);
+    }
+
     return Future.value();
   }
 }
