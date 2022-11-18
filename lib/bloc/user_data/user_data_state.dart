@@ -67,6 +67,7 @@ class UserProfileModel {
   final String? phone;
   final bool? is_super_user;
   final List<String>? terminal_id;
+  final int? wallet_balance;
 
   UserProfileModel(
       {required this.id,
@@ -74,7 +75,8 @@ class UserProfileModel {
       required this.last_name,
       required this.phone,
       required this.is_super_user,
-      required this.terminal_id});
+      required this.terminal_id,
+      required this.wallet_balance});
 
   UserProfileModel copyWith({
     String? id,
@@ -82,6 +84,8 @@ class UserProfileModel {
     String? last_name,
     String? phone,
     bool? is_super_user,
+    List<String>? terminal_id,
+    int? wallet_balance,
   }) {
     return UserProfileModel(
       id: id ?? this.id,
@@ -90,6 +94,7 @@ class UserProfileModel {
       phone: this.phone ?? '',
       is_super_user: this.is_super_user ?? false,
       terminal_id: this.terminal_id ?? [],
+      wallet_balance: this.wallet_balance ?? 0,
     );
   }
 
@@ -101,6 +106,7 @@ class UserProfileModel {
       'phone': phone,
       'is_super_user': is_super_user,
       'terminal_id': terminal_id,
+      'wallet_balance': wallet_balance,
     };
   }
 
@@ -116,6 +122,7 @@ class UserProfileModel {
       terminal_id: map['terminal_id'] != null
           ? map['terminal_id'] as List<String>
           : null,
+      wallet_balance: map['wallet_balance'] != null ? map['wallet_balance'] : 0,
     );
   }
 
@@ -137,7 +144,8 @@ class UserProfileModel {
         other.last_name == last_name &&
         other.phone == phone &&
         other.is_super_user == is_super_user &&
-        other.id == id;
+        other.id == id &&
+        other.wallet_balance == wallet_balance;
   }
 
   @override
@@ -146,7 +154,8 @@ class UserProfileModel {
         last_name.hashCode ^
         phone.hashCode ^
         is_super_user.hashCode ^
-        id.hashCode;
+        id.hashCode ^
+        wallet_balance.hashCode;
   }
 }
 
@@ -193,6 +202,7 @@ abstract class UserDataState extends Equatable {
             is_super_user: false,
             id: '',
             terminal_id: [],
+            wallet_balance: 0,
           ),
       is_online: is_online ?? false,
       tokenExpires: tokenExpires ?? DateTime.now(),

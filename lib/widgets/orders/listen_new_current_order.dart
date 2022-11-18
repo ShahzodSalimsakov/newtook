@@ -5,6 +5,7 @@ import 'package:arryt/main.dart';
 import '../../bloc/block_imports.dart';
 import '../../models/customer.dart';
 import '../../models/order.dart';
+import '../../models/order_next_button.dart';
 import '../../models/order_status.dart';
 import '../../models/terminals.dart';
 
@@ -15,6 +16,8 @@ final subscriptionDocument = gql(
         id
           to_lat
           to_lon
+          from_lat
+          from_lon
           pre_distance
           order_number
           order_price
@@ -34,6 +37,17 @@ final subscriptionDocument = gql(
           orders_order_status {
             id
             name
+            finish
+            cancel
+          }
+          next_buttons {
+            name
+            id
+            color
+            sort
+            finish
+            waiting
+            cancel
           }
       }
     }
@@ -89,6 +103,15 @@ class ListenNewCurrentOrder extends StatelessWidget {
                   orderModel.customer.target = customer;
                   orderModel.terminal.target = terminals;
                   orderModel.orderStatus.target = orderStatus;
+                  if (result.data?['addedNewCurrentOrder']['next_buttons'] !=
+                      null) {
+                    result.data?['addedNewCurrentOrder']['next_buttons']
+                        .forEach((button) {
+                      OrderNextButton orderNextButton =
+                          OrderNextButton.fromMap(button);
+                      orderModel.orderNextButton.add(orderNextButton);
+                    });
+                  }
                   objectBox.addCurrentOrders([orderModel]);
                 }
               }

@@ -1,3 +1,4 @@
+import 'package:arryt/helpers/api_graphql_provider.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:arryt/pages/orders/orders.dart';
@@ -75,5 +76,9 @@ class HomePage extends StatelessWidget {
 }
 
 List<Widget> _buildScreens() {
-  return [ProfilePageView(), OrdersPage(), const SettingsPage()];
+  return [
+    ApiGraphqlProvider(child: ProfilePageView()),
+    OrdersPage(),
+    const SettingsPage()
+  ];
 }

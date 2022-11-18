@@ -185,79 +185,83 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
         accuracy: LocationAccuracy.high,
         distanceFilter: 2,
       );
-      positionStream =
-          Geolocator.getPositionStream(locationSettings: locationSettings)
-              .listen((Position? currentLocation) async {
-        var accessToken = userDataState.refreshToken;
-        ApiClientsState apiClientsState =
-            BlocProvider.of<ApiClientsBloc>(context).state;
-        final apiClient = apiClientsState.apiClients.firstWhere(
-            (element) => element.isServiceDefault == true,
-            orElse: () => apiClientsState.apiClients.first);
-        if (DateTime.now().isAfter(userDataState.tokenExpires)) {
-          if (apiClient != null) {
-            try {
-              var requestBody = '''
+      try {
+        positionStream =
+            Geolocator.getPositionStream(locationSettings: locationSettings)
+                .listen((Position? currentLocation) async {
+          var accessToken = userDataState.refreshToken;
+          ApiClientsState apiClientsState =
+              BlocProvider.of<ApiClientsBloc>(context).state;
+          final apiClient = apiClientsState.apiClients.firstWhere(
+              (element) => element.isServiceDefault == true,
+              orElse: () => apiClientsState.apiClients.first);
+          if (DateTime.now().isAfter(userDataState.tokenExpires)) {
+            if (apiClient != null) {
+              try {
+                var requestBody = '''
         {
           "query": "mutation {refreshToken(refreshToken: \\"${userDataState.refreshToken}\\") {\\naccessToken\\naccessTokenExpires\\nrefreshToken\\n}}\\n",
           "variables": null
         }
         ''';
 
-              var response = await http.post(
-                Uri.parse("https://${apiClient.apiUrl}/graphql"),
-                headers: {'Content-Type': 'application/json'},
-                body: requestBody,
-              );
-              if (response.statusCode == 200) {
-                var result = jsonDecode(response.body);
-                if (result['errors'] == null) {
-                  var data = result['data']['refreshToken'];
+                var response = await http.post(
+                  Uri.parse("https://${apiClient.apiUrl}/graphql"),
+                  headers: {'Content-Type': 'application/json'},
+                  body: requestBody,
+                );
+                if (response.statusCode == 200) {
+                  var result = jsonDecode(response.body);
+                  if (result['errors'] == null) {
+                    var data = result['data']['refreshToken'];
 
-                  accessToken = data!['accessToken'];
-                  Future.delayed(Duration(microseconds: 500), () {
-                    context.read<UserDataBloc>().add(
-                          UserDataEventChange(
-                            accessToken: data!['accessToken'],
-                            accessTokenExpires: data!['accessTokenExpires'],
-                            refreshToken: data!['refreshToken'],
-                            permissions: userDataState.permissions,
-                            roles: userDataState.roles,
-                            userProfile: userDataState.userProfile,
-                            is_online: userDataState.is_online,
-                            tokenExpires: DateTime.now().add(Duration(
-                                hours: int.parse(data!['accessTokenExpires']
-                                    .split('h')[0]))),
-                          ),
-                        );
-                  });
+                    accessToken = data!['accessToken'];
+                    Future.delayed(Duration(microseconds: 500), () {
+                      context.read<UserDataBloc>().add(
+                            UserDataEventChange(
+                              accessToken: data!['accessToken'],
+                              accessTokenExpires: data!['accessTokenExpires'],
+                              refreshToken: data!['refreshToken'],
+                              permissions: userDataState.permissions,
+                              roles: userDataState.roles,
+                              userProfile: userDataState.userProfile,
+                              is_online: userDataState.is_online,
+                              tokenExpires: DateTime.now().add(Duration(
+                                  hours: int.parse(data!['accessTokenExpires']
+                                      .split('h')[0]))),
+                            ),
+                          );
+                    });
+                  }
                 }
+              } catch (e) {
+                print(e);
               }
-            } catch (e) {
-              print(e);
             }
           }
-        }
 
-        try {
-          var requestBody = '''
+          try {
+            var requestBody = '''
         {
           "query": "mutation {storeLocation(latitude: ${currentLocation!.latitude}, longitude: ${currentLocation!.longitude}) {\\nsuccess\\n}}\\n",
           "variables": null
         }
         ''';
-          var response = await http.post(
-            Uri.parse("https://${apiClient.apiUrl}/graphql"),
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ${accessToken}'
-            },
-            body: requestBody,
-          );
-        } catch (e) {
-          print(e);
-        }
-      });
+            var response = await http.post(
+              Uri.parse("https://${apiClient.apiUrl}/graphql"),
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ${accessToken}'
+              },
+              body: requestBody,
+            );
+          } catch (e) {
+            print(e);
+          }
+        });
+      } catch (e) {
+        print(e);
+      }
     }
   }
 
@@ -266,6 +270,13 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
     // TODO: implement initState
     super.initState();
     checkLocationListen();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    positionStream?.cancel();
+    super.dispose();
   }
 
   @override

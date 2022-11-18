@@ -2,6 +2,7 @@ import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:keframe/keframe.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:arryt/widgets/orders/listen_deleted_waiting_order.dart';
 import 'package:arryt/widgets/orders/waiting_order_card.dart';
@@ -60,8 +61,6 @@ class _MyWaitingOrdersListViewState extends State<MyWaitingOrdersListView>
             id
             name
             phone
-            cancel
-            finish
           }
           orders_terminals {
             id
@@ -70,6 +69,8 @@ class _MyWaitingOrdersListViewState extends State<MyWaitingOrdersListView>
           orders_order_status {
             id
             name
+            cancel
+            finish
           }
         }
       }
@@ -171,6 +172,7 @@ class _MyWaitingOrdersListViewState extends State<MyWaitingOrdersListView>
             ],
           );
         } else {
+          print('davr');
           return ApiGraphqlProvider(
               child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -192,13 +194,15 @@ class _MyWaitingOrdersListViewState extends State<MyWaitingOrdersListView>
                           _controller.finishRefresh();
                           _controller.resetFooter();
                         },
-                        child: ListView.builder(
-                          // shrinkWrap: true,
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
-                            return WaitingOrderCard(
-                                order: snapshot.data![index]);
-                          },
+                        child: SizeCacheWidget(
+                          child: ListView.builder(
+                            // shrinkWrap: true,
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              return WaitingOrderCard(
+                                  order: snapshot.data![index]);
+                            },
+                          ),
                         ),
                       );
                     } else {

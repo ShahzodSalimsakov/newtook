@@ -52,6 +52,7 @@ dependencies:
   icons_launcher: ^2.0.5
   intl: ^0.17.0
   intl_phone_number_input: ^0.7.1
+  keframe: ^3.0.0
   load_switch: ^1.1.0
   loader_overlay: ^2.1.0
   loading_overlay: ^0.3.0

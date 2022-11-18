@@ -36,5 +36,18 @@
     "order_status_label": "Статус заказа",
     "order_tab_waiting": "Ожидают",
     "order_card_btn_accept": "Принять",
-    "call_customer" : "Позвонить клиенту"
+    "call_customer" : "Позвонить клиенту",
+    "must_turn_on_location": "Включите геолокацию",
+    "permission_for_location_denied": "Разрешение на геолокацию отклонено",
+    "error_getting_location": "Ошибка получения геолокации",
+    "wallet_label": "Кошелек",
+    "wallet_balance_label": "Баланс",
+    "currency_label": "сум",
+    "orderStatToday": "Заказы на сегодня",
+    "orderStatWeek": "Заказы на неделю",
+    "orderStatMonth": "Заказы на месяц",
+    "orderStatYesterday": "Заказы на вчера",
+    "successOrderLabel": "Успешные",
+    "failedOrderLabel": "Отказы",
+    "orderStatTotalPrice": "Сумма заказов"
 }

@@ -99,30 +99,30 @@ class NotificationController with ChangeNotifier {
   @pragma("vm:entry-point")
   static Future<void> myNotificationCreatedMethod(
       ReceivedNotification receivedNotification) async {
-    Fluttertoast.showToast(
-        msg:
-            'Notification from ${AwesomeAssertUtils.toSimpleEnumString(receivedNotification.createdSource)} created',
-        backgroundColor: Colors.green);
+    // Fluttertoast.showToast(
+    //     msg:
+    //         'Notification from ${AwesomeAssertUtils.toSimpleEnumString(receivedNotification.createdSource)} created',
+    //     backgroundColor: Colors.green);
   }
 
   /// Use this method to detect every time that a new notification is displayed
   @pragma("vm:entry-point")
   static Future<void> myNotificationDisplayedMethod(
       ReceivedNotification receivedNotification) async {
-    Fluttertoast.showToast(
-        msg:
-            'Notification from ${AwesomeAssertUtils.toSimpleEnumString(receivedNotification.createdSource)} displayed',
-        backgroundColor: Colors.blue);
+    // Fluttertoast.showToast(
+    //     msg:
+    //         'Notification from ${AwesomeAssertUtils.toSimpleEnumString(receivedNotification.createdSource)} displayed',
+    //     backgroundColor: Colors.blue);
   }
 
   /// Use this method to detect if the user dismissed a notification
   @pragma("vm:entry-point")
   static Future<void> myDismissActionReceivedMethod(
       ReceivedAction receivedAction) async {
-    Fluttertoast.showToast(
-        msg:
-            'Notification from ${AwesomeAssertUtils.toSimpleEnumString(receivedAction.createdSource)} dismissed',
-        backgroundColor: Colors.orange);
+    // Fluttertoast.showToast(
+    //     msg:
+    //         'Notification from ${AwesomeAssertUtils.toSimpleEnumString(receivedAction.createdSource)} dismissed',
+    //     backgroundColor: Colors.orange);
   }
 
   /// Use this method to detect when the user taps on a notification or action button
@@ -131,8 +131,8 @@ class NotificationController with ChangeNotifier {
       ReceivedAction receivedAction) async {
     String? actionSourceText =
         AwesomeAssertUtils.toSimpleEnumString(receivedAction.actionLifeCycle);
-    Fluttertoast.showToast(
-        msg: 'Notification action captured on $actionSourceText');
+    // Fluttertoast.showToast(
+    //     msg: 'Notification action captured on $actionSourceText');
 
     // String targetPage = PAGE_NOTIFICATION_DETAILS;
 
@@ -150,11 +150,11 @@ class NotificationController with ChangeNotifier {
   /// (even while terminated)
   @pragma("vm:entry-point")
   static Future<void> mySilentDataHandle(FcmSilentData silentData) async {
-    Fluttertoast.showToast(
-        msg: 'Silent data received',
-        backgroundColor: Colors.blueAccent,
-        textColor: Colors.white,
-        fontSize: 16);
+    // Fluttertoast.showToast(
+    //     msg: 'Silent data received',
+    //     backgroundColor: Colors.blueAccent,
+    //     textColor: Colors.white,
+    //     fontSize: 16);
 
     print('"SilentData": ${silentData.toString()}');
 

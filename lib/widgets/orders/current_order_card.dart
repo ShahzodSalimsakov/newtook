@@ -5,6 +5,7 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:loading_overlay/loading_overlay.dart';
@@ -41,14 +42,75 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
 
   bool loading = false;
 
-  Future<void> _setOrderStatus(String orderStatusId) async {
+  Future<void> _setOrderStatus(OrderNextButton statusButton) async {
     setState(() {
       loading = true;
     });
+    print("requesting location");
+    var orderStatusId = statusButton.identity;
+    Position? currentPosition;
+    if (statusButton.waiting || statusButton.finish) {
+      bool serviceEnabled;
+      LocationPermission permission;
+
+      // Test if location services are enabled.
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        // Location services are not enabled don't continue
+        // accessing the position and request users of the
+        // App to enable the location services.
+        await Geolocator.openLocationSettings();
+      }
+
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          // Permissions are denied, next time you could try
+          // requesting permissions again (this is also where
+          // Android's shouldShowRequestPermissionRationale
+          // returned true. According to Android guidelines
+          // your App should show an explanatory UI now.
+          await Geolocator.requestPermission();
+
+          setState(() {
+            loading = false;
+          });
+          return AnimatedSnackBar.material(
+            AppLocalizations.of(context)!.must_turn_on_location,
+            type: AnimatedSnackBarType.error,
+          ).show(context);
+        }
+      }
+
+      if (permission == LocationPermission.deniedForever) {
+        // Permissions are denied forever, handle appropriately.
+
+        setState(() {
+          loading = false;
+        });
+        return AnimatedSnackBar.material(
+          AppLocalizations.of(context)!.permission_for_location_denied,
+          type: AnimatedSnackBarType.error,
+        ).show(context);
+      }
+      try {
+        currentPosition = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high);
+      } catch (e) {
+        setState(() {
+          loading = false;
+        });
+        return AnimatedSnackBar.material(
+          AppLocalizations.of(context)!.error_getting_location,
+          type: AnimatedSnackBarType.error,
+        ).show(context);
+      }
+    }
     var client = GraphQLProvider.of(context).value;
     var query = r'''
-      mutation($orderStatusId: String!, $orderId: String!) {
-        setOrderStatus(orderStatusId: $orderStatusId, orderId: $orderId) {
+      mutation($orderStatusId: String!, $orderId: String!, $latitude: Float, $longitude: Float) {
+        setOrderStatus(orderStatusId: $orderStatusId, orderId: $orderId, latitude: $latitude, longitude: $longitude) {
           id
           to_lat
           to_lon
@@ -93,6 +155,8 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
         variables: <String, dynamic>{
           'orderStatusId': orderStatusId,
           'orderId': widget.order.identity,
+          'latitude': currentPosition?.latitude,
+          'longitude': currentPosition?.longitude,
         },
         fetchPolicy: FetchPolicy.noCache));
     if (result.hasException) {
@@ -461,7 +525,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                             ),
                             onPressed: () async {
                               if (loading) return;
-                              _setOrderStatus(e.identity);
+                              _setOrderStatus(e);
                             },
                             child: Padding(
                               padding:
@@ -838,7 +902,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                               ),
                               onPressed: () async {
                                 if (loading) return;
-                                _setOrderStatus(e.identity);
+                                _setOrderStatus(e);
                               },
                               child: Padding(
                                 padding:

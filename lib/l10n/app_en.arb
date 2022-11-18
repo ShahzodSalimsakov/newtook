@@ -36,5 +36,18 @@
     "order_status_label": "Order status",
     "order_tab_waiting": "Waiting",
     "order_card_btn_accept": "Accept",
-    "call_customer" : "Call customer"
+    "call_customer" : "Call customer",
+    "must_turn_on_location": "You must turn on location",
+    "permission_for_location_denied": "You have not allowed location",
+    "error_getting_location": "Ошибка получения геолокации",
+    "wallet_label": "Wallet",
+    "wallet_balance_label": "Balance",
+    "currency_label": "sum",
+    "orderStatToday": "Today",
+    "orderStatWeek": "Week",
+    "orderStatMonth":  "Month",
+    "orderStatYesterday": "Yesterday",
+    "successOrderLabel": "Success",
+    "failedOrderLabel": "Failed",
+    "orderStatTotalPrice": "Total price"
 }

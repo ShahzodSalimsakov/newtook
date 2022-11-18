@@ -36,5 +36,18 @@
     "order_status_label": "Buyurtma holati",
     "order_tab_waiting": "Kutilmoqda",
     "order_card_btn_accept": "Qabul qilish",
-    "call_customer" : "Mijozga qo'ng'iroq"
+    "call_customer" : "Mijozga qo'ng'iroq",
+    "must_turn_on_location": "Siz joylashuvni yoqishingiz kerak",
+    "permission_for_location_denied": "Sizning joylashuvga ruxsat bermagansiz",
+    "error_getting_location": "Ошибка получения геолокации",
+    "wallet_label": "Hisob",
+    "wallet_balance_label": "Hisob balansi",
+    "currency_label": "So'm",
+    "orderStatToday": "Bugun",
+    "orderStatWeek": "Hafta",
+    "orderStatMonth": "Oy",
+    "orderStatYesterday": "Kecha",
+    "successOrderLabel": "Yetkazildi",
+    "failedOrderLabel": "Bekor qilindi",
+    "orderStatTotalPrice": "Umumiy narx"
 }
