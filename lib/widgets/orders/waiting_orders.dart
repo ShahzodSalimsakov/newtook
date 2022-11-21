@@ -71,6 +71,8 @@ class _MyWaitingOrdersListViewState extends State<MyWaitingOrdersListView>
             name
             cancel
             finish
+            on_way
+            in_terminal
           }
         }
       }

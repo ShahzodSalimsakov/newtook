@@ -137,6 +137,8 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
             name
             cancel
             finish
+            on_way
+            in_terminal
           }
           next_buttons {
             name
@@ -146,6 +148,8 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
             finish
             waiting
             cancel
+            on_way
+            in_terminal
           }
         }
       }
