@@ -49,5 +49,6 @@
     "orderStatYesterday": "Yesterday",
     "successOrderLabel": "Success",
     "failedOrderLabel": "Failed",
-    "orderStatTotalPrice": "Total price"
+    "orderStatTotalPrice": "Total price",
+    "orderApprovedSuccessfully": "Order is approved"
 }

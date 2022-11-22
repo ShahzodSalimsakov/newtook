@@ -278,8 +278,12 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                                       widget.order.from_lon);
                                   final title =
                                       widget.order.delivery_address ?? '';
-                                  final availableMaps =
+                                  List<AvailableMap> availableMaps =
                                       await MapLauncher.installedMaps;
+                                  availableMaps = availableMaps
+                                      .where((element) =>
+                                          element.mapType == MapType.yandexNavi)
+                                      .toList();
                                   showModalBottomSheet(
                                     context: context,
                                     builder: (BuildContext context) {
@@ -324,8 +328,12 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                                       widget.order.to_lat, widget.order.to_lon);
                                   final title =
                                       widget.order.delivery_address ?? '';
-                                  final availableMaps =
+                                  List<AvailableMap> availableMaps =
                                       await MapLauncher.installedMaps;
+                                  availableMaps = availableMaps
+                                      .where((element) =>
+                                          element.mapType == MapType.yandexNavi)
+                                      .toList();
                                   showModalBottomSheet(
                                     context: context,
                                     builder: (BuildContext context) {
@@ -635,8 +643,12 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                                     widget.order.from_lon);
                                 final title =
                                     widget.order.delivery_address ?? '';
-                                final availableMaps =
+                                List<AvailableMap> availableMaps =
                                     await MapLauncher.installedMaps;
+                                availableMaps = availableMaps
+                                    .where((element) =>
+                                        element.mapType == MapType.yandexNavi)
+                                    .toList();
                                 showModalBottomSheet(
                                   context: context,
                                   builder: (BuildContext context) {
@@ -681,8 +693,12 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                                     widget.order.to_lat, widget.order.to_lon);
                                 final title =
                                     widget.order.delivery_address ?? '';
-                                final availableMaps =
+                                List<AvailableMap> availableMaps =
                                     await MapLauncher.installedMaps;
+                                availableMaps = availableMaps
+                                    .where((element) =>
+                                        element.mapType == MapType.yandexNavi)
+                                    .toList();
                                 showModalBottomSheet(
                                   context: context,
                                   builder: (BuildContext context) {

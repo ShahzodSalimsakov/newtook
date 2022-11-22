@@ -49,5 +49,6 @@
     "orderStatYesterday": "Kecha",
     "successOrderLabel": "Yetkazildi",
     "failedOrderLabel": "Bekor qilindi",
-    "orderStatTotalPrice": "Umumiy narx"
+    "orderStatTotalPrice": "Umumiy narx",
+    "orderApprovedSuccessfully": "Buyurtma qabul qilindi"
 }

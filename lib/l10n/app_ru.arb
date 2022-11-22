@@ -49,5 +49,6 @@
     "orderStatYesterday": "Заказы на вчера",
     "successOrderLabel": "Успешные",
     "failedOrderLabel": "Отказы",
-    "orderStatTotalPrice": "Сумма заказов"
+    "orderStatTotalPrice": "Сумма заказов",
+    "orderApprovedSuccessfully": "Заказ принят успешно"
 }

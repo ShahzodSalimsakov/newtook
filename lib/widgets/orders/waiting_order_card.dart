@@ -68,6 +68,10 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
       ).show(context);
       print(result.exception);
     } else {
+      AnimatedSnackBar.material(
+        AppLocalizations.of(context)!.orderApprovedSuccessfully,
+        type: AnimatedSnackBarType.success,
+      ).show(context);
       print(result.data);
     }
 
