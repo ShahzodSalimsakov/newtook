@@ -68,6 +68,8 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
             name
             cancel
             finish
+            on_way
+            in_terminal
           }
           next_buttons {
             name
@@ -77,6 +79,8 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
             finish
             waiting
             cancel
+            on_way
+            in_terminal
           }
         }
       }

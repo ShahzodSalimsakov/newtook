@@ -39,6 +39,8 @@ final subscriptionDocument = gql(
             name
             finish
             cancel
+            on_way
+            in_terminal
           }
           next_buttons {
             name
@@ -48,6 +50,8 @@ final subscriptionDocument = gql(
             finish
             waiting
             cancel
+            on_way
+            in_terminal
           }
       }
     }
