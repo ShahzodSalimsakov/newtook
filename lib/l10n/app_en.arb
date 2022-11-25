@@ -50,5 +50,10 @@
     "successOrderLabel": "Success",
     "failedOrderLabel": "Failed",
     "orderStatTotalPrice": "Total price",
-    "orderApprovedSuccessfully": "Order is approved"
+    "orderApprovedSuccessfully": "Order is approved",
+    "cancelOrderModalLabel": "Cancel order",
+    "cancelOrderModalCause": "Type the cancel reason",
+    "cancelOrderModalSentSMSLabel": "Sent sms to the customer",
+    "courierScoreLabel": "Rating",
+    "buildOrderRouteButton": "Build route"
 }

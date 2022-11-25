@@ -50,5 +50,10 @@
     "successOrderLabel": "Yetkazildi",
     "failedOrderLabel": "Bekor qilindi",
     "orderStatTotalPrice": "Umumiy narx",
-    "orderApprovedSuccessfully": "Buyurtma qabul qilindi"
+    "orderApprovedSuccessfully": "Buyurtma qabul qilindi",
+    "cancelOrderModalLabel": "Buyurtmani bekor qilish",
+    "cancelOrderModalCause": "Bekor qilish sababini kiriting",
+    "cancelOrderModalSentSMSLabel": "Mijozga sms yuvordim",
+    "courierScoreLabel": "Reyting",
+    "buildOrderRouteButton": "Yo'nalishni tuzish"
 }

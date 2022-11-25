@@ -217,7 +217,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(9, 3885740093415193842),
       name: 'OrderNextButton',
-      lastPropertyId: const IdUid(9, 6087142303395005860),
+      lastPropertyId: const IdUid(11, 4009770236287666747),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -259,6 +259,16 @@ final _entities = <ModelEntity>[
         ModelProperty(
             id: const IdUid(8, 1065756737884964156),
             name: 'waiting',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(10, 2800772117691376491),
+            name: 'onWay',
+            type: 1,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(11, 4009770236287666747),
+            name: 'inTerminal',
             type: 1,
             flags: 0)
       ],
@@ -633,7 +643,7 @@ ModelDefinition getObjectBoxModel() {
           final nameOffset = fbb.writeString(object.name);
           final colorOffset =
               object.color == null ? null : fbb.writeString(object.color!);
-          fbb.startTable(10);
+          fbb.startTable(12);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, identityOffset);
           fbb.addOffset(2, nameOffset);
@@ -642,6 +652,8 @@ ModelDefinition getObjectBoxModel() {
           fbb.addBool(5, object.finish);
           fbb.addBool(6, object.cancel);
           fbb.addBool(7, object.waiting);
+          fbb.addBool(9, object.onWay);
+          fbb.addBool(10, object.inTerminal);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -662,7 +674,11 @@ ModelDefinition getObjectBoxModel() {
               cancel: const fb.BoolReader()
                   .vTableGet(buffer, rootOffset, 16, false),
               waiting: const fb.BoolReader()
-                  .vTableGet(buffer, rootOffset, 18, false))
+                  .vTableGet(buffer, rootOffset, 18, false),
+              onWay: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 22, false),
+              inTerminal: const fb.BoolReader()
+                  .vTableGet(buffer, rootOffset, 24, false))
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
@@ -917,6 +933,14 @@ class OrderNextButton_ {
   /// see [OrderNextButton.waiting]
   static final waiting =
       QueryBooleanProperty<OrderNextButton>(_entities[4].properties[7]);
+
+  /// see [OrderNextButton.onWay]
+  static final onWay =
+      QueryBooleanProperty<OrderNextButton>(_entities[4].properties[8]);
+
+  /// see [OrderNextButton.inTerminal]
+  static final inTerminal =
+      QueryBooleanProperty<OrderNextButton>(_entities[4].properties[9]);
 }
 
 /// [WaitingOrderModel] entity fields to define ObjectBox queries.

@@ -41,6 +41,40 @@ class _ProfilePageViewState extends State<ProfilePageView>
   );
   late EasyRefreshController _controller;
   List<OrderMobilePeriodStat> _ordersStat = [];
+  int walletBalance = 0;
+  double rating = 0;
+
+  Future<void> _loadData() async {
+    await _loadStatistics();
+    await _loadProfileNumbers();
+  }
+
+  Future<void> _loadProfileNumbers() async {
+    var client = GraphQLProvider.of(context).value;
+    var query = r'''
+      query {
+        getMyProfileNumbers {
+            score
+            wallet
+        }
+      }
+    ''';
+    var result = await client.query(
+        QueryOptions(document: gql(query), fetchPolicy: FetchPolicy.noCache));
+    if (result.hasException) {
+      print(result.exception);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(result.exception.toString()),
+        ),
+      );
+    } else {
+      setState(() {
+        walletBalance = result.data?['getMyProfileNumbers']['wallet'];
+        rating = result.data?['getMyProfileNumbers']['score'];
+      });
+    }
+  }
 
   Future<void> _loadStatistics() async {
     var client = GraphQLProvider.of(context).value;
@@ -98,7 +132,7 @@ class _ProfilePageViewState extends State<ProfilePageView>
       controlFinishLoad: true,
     );
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _loadStatistics();
+      _loadData();
     });
   }
 
@@ -133,7 +167,7 @@ class _ProfilePageViewState extends State<ProfilePageView>
                   size: 30,
                 ),
                 onPressed: () {
-                  _loadStatistics();
+                  _loadData();
                 },
               )
             ],
@@ -189,27 +223,63 @@ class _ProfilePageViewState extends State<ProfilePageView>
                     height: 10,
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Text(
-                          AppLocalizations.of(context)!
-                              .wallet_label
-                              .toUpperCase(),
-                          style: const TextStyle(
-                              fontSize: 18,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold)),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                          "${state.userProfile?.wallet_balance != null ? state.userProfile!.wallet_balance!.toString() : ''} ${AppLocalizations.of(context)!.currency_label}",
-                          style: const TextStyle(
-                              fontSize: 30,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold)),
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                  AppLocalizations.of(context)!
+                                      .wallet_label
+                                      .toUpperCase(),
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                  "${CurrencyFormatter.format(walletBalance, euroSettings)}",
+                                  style: const TextStyle(
+                                      fontSize: 30,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                  AppLocalizations.of(context)!
+                                      .courierScoreLabel
+                                      .toUpperCase(),
+                                  style: const TextStyle(
+                                      fontSize: 18,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(rating.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 30,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                        ],
+                      )
                     ],
                   ),
                   SizedBox(

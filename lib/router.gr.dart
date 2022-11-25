@@ -59,12 +59,15 @@ class _$AppRouter extends RootStackRouter {
       final pathParams = routeData.inheritedPathParams;
       final args = routeData.argsAs<OrderCustomerCommentsRouteArgs>(
           orElse: () => OrderCustomerCommentsRouteArgs(
-              customerId: pathParams.getString('customerId')));
+                customerId: pathParams.getString('customerId'),
+                orderId: pathParams.getString('orderId'),
+              ));
       return MaterialPageX<dynamic>(
         routeData: routeData,
         child: OrderCustomerCommentsPage(
           key: args.key,
           customerId: args.customerId,
+          orderId: args.orderId,
         ),
       );
     },
@@ -98,7 +101,7 @@ class _$AppRouter extends RootStackRouter {
         ),
         RouteConfig(
           OrderCustomerCommentsRoute.name,
-          path: '/order/customer-comments/:customerId',
+          path: '/order/customer-comments/:customerId/:orderId',
         ),
       ];
 }
@@ -194,14 +197,19 @@ class OrderCustomerCommentsRoute
   OrderCustomerCommentsRoute({
     Key? key,
     required String customerId,
+    required String orderId,
   }) : super(
           OrderCustomerCommentsRoute.name,
-          path: '/order/customer-comments/:customerId',
+          path: '/order/customer-comments/:customerId/:orderId',
           args: OrderCustomerCommentsRouteArgs(
             key: key,
             customerId: customerId,
+            orderId: orderId,
           ),
-          rawPathParams: {'customerId': customerId},
+          rawPathParams: {
+            'customerId': customerId,
+            'orderId': orderId,
+          },
         );
 
   static const String name = 'OrderCustomerCommentsRoute';
@@ -211,14 +219,17 @@ class OrderCustomerCommentsRouteArgs {
   const OrderCustomerCommentsRouteArgs({
     this.key,
     required this.customerId,
+    required this.orderId,
   });
 
   final Key? key;
 
   final String customerId;
 
+  final String orderId;
+
   @override
   String toString() {
-    return 'OrderCustomerCommentsRouteArgs{key: $key, customerId: $customerId}';
+    return 'OrderCustomerCommentsRouteArgs{key: $key, customerId: $customerId, orderId: $orderId}';
   }
 }

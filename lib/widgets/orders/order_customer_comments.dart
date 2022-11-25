@@ -11,19 +11,27 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrderCustomerCommentsPage extends StatelessWidget {
   const OrderCustomerCommentsPage(
-      {super.key, @PathParam('customerId') required this.customerId});
+      {super.key,
+      @PathParam('customerId') required this.customerId,
+      @PathParam('orderId') required this.orderId});
   final String customerId;
+  final String orderId;
 
   @override
   Widget build(BuildContext context) {
     return ApiGraphqlProvider(
-        child: OrderCustomerCommentsView(customerId: customerId));
+        child: OrderCustomerCommentsView(
+      customerId: customerId,
+      orderId: orderId,
+    ));
   }
 }
 
 class OrderCustomerCommentsView extends StatefulWidget {
-  const OrderCustomerCommentsView({super.key, required this.customerId});
+  const OrderCustomerCommentsView(
+      {super.key, required this.customerId, required this.orderId});
   final String customerId;
+  final String orderId;
 
   @override
   State<OrderCustomerCommentsView> createState() =>
@@ -40,7 +48,7 @@ class _OrderCustomerCommentsViewState extends State<OrderCustomerCommentsView> {
       var client = GraphQLProvider.of(context).value;
       var query = gql('''
       query {
-        customerComments(customerId: "${widget.customerId}") {
+        customerComments(customerId: "${widget.customerId}", orderId: "${widget.orderId}") {
           id
           comment
           customer_id
@@ -50,8 +58,8 @@ class _OrderCustomerCommentsViewState extends State<OrderCustomerCommentsView> {
     ''');
       QueryResult result = await client.query(QueryOptions(
           document: query,
-          cacheRereadPolicy: CacheRereadPolicy.mergeOptimistic,
-          fetchPolicy: FetchPolicy.networkOnly));
+          // cacheRereadPolicy: CacheRereadPolicy.mergeOptimistic,
+          fetchPolicy: FetchPolicy.noCache));
       if (result.hasException) {
         AnimatedSnackBar.material(
           result.exception?.graphqlErrors[0].message ?? "Error",
@@ -60,16 +68,6 @@ class _OrderCustomerCommentsViewState extends State<OrderCustomerCommentsView> {
       }
 
       if (result.data != null) {
-        print('''
-      query {
-        customerComments(customerId: "${widget.customerId}") {
-          id
-          comment
-          created_at
-        }
-      }
-    ''');
-        print(result);
         setState(() {
           comments = (result.data!['customerComments'] as List)
               .map((e) => CustomerCommentsModel.fromMap(e))
@@ -138,6 +136,48 @@ class _OrderCustomerCommentsViewState extends State<OrderCustomerCommentsView> {
     });
   }
 
+  Widget addCommentWidget() {
+    final bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
+    return Container(
+      color: Colors.grey.shade200,
+      margin: EdgeInsets.only(bottom: keyboardOpen ? 0 : 10),
+      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+      child: Row(children: [
+        Expanded(
+          child: TextField(
+            controller: _controller,
+            keyboardType: TextInputType.multiline,
+            minLines: 1,
+            maxLines: 3,
+            decoration: InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
+              hintText:
+                  AppLocalizations.of(context)!.customer_orders_type_comment,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(40.0),
+                borderSide: BorderSide.none,
+              ),
+            ),
+            onSubmitted: (value) {
+              saveCustomerComment();
+            },
+          ),
+        ),
+        IconButton(
+          icon: Icon(
+            Icons.send,
+            color: Theme.of(context).primaryColor,
+            size: 30,
+          ),
+          onPressed: () {
+            saveCustomerComment();
+          },
+        )
+      ]),
+    );
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -166,8 +206,12 @@ class _OrderCustomerCommentsViewState extends State<OrderCustomerCommentsView> {
           centerTitle: true,
           title: Text(AppLocalizations.of(context)!.order_card_comments),
         ),
-        body: const Center(
-          child: Text("No comments"),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Expanded(child: Center(child: Text("No comments"))),
+            addCommentWidget()
+          ],
         ),
       );
     } else {

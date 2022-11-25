@@ -262,7 +262,7 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                     GestureDetector(
                       onTap: () {
                         AutoRouter.of(context).pushNamed(
-                            '/order/customer-comments/${widget.order.customer.target!.identity}');
+                            '/order/customer-comments/${widget.order.customer.target!.identity}/${widget.order.identity}');
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
@@ -392,8 +392,7 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                             AppLocalizations.of(context)!.pre_distance_label,
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          Text(
-                              "${(widget.order.pre_distance / 1000).toString()} км"),
+                          Text("${(widget.order.pre_distance).toString()} км"),
                         ],
                       ),
                     ],
@@ -547,7 +546,7 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                       GestureDetector(
                         onTap: () {
                           AutoRouter.of(context).pushNamed(
-                              '/order/customer-comments/${widget.order.customer.target!.identity}');
+                              '/order/customer-comments/${widget.order.customer.target!.identity}/${widget.order.identity}');
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15.0),

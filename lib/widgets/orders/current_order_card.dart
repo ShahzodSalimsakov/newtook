@@ -1,3 +1,4 @@
+import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:currency_formatter/currency_formatter.dart';
@@ -32,6 +33,9 @@ class CurrentOrderCard extends StatefulWidget {
 }
 
 class _CurrentOrderCardState extends State<CurrentOrderCard> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _textEditingController = TextEditingController();
   CurrencyFormatterSettings euroSettings = CurrencyFormatterSettings(
     symbol: 'сум',
     symbolSide: SymbolSide.right,
@@ -41,15 +45,92 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
   );
 
   bool loading = false;
+  bool isChecked = false;
+
+  Future<void> showInformationDialog(BuildContext context) async {
+    return await showDialog(
+        context: context,
+        builder: (context) {
+          bool isChecked = false;
+          return StatefulBuilder(builder: (context, setState) {
+            return AlertDialog(
+              content: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      TextFormField(
+                        minLines: 3,
+                        maxLines: 5,
+                        controller: _textEditingController,
+                        validator: (value) {
+                          return value!.isNotEmpty ? null : "Enter any text";
+                        },
+                        decoration: InputDecoration(
+                            hintText: AppLocalizations.of(context)!
+                                .cancelOrderModalCause),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(AppLocalizations.of(context)!
+                              .cancelOrderModalSentSMSLabel),
+                          Checkbox(
+                              value: isChecked,
+                              onChanged: (checked) {
+                                setState(() {
+                                  isChecked = checked!;
+                                });
+                              })
+                        ],
+                      )
+                    ],
+                  )),
+              title: Text(AppLocalizations.of(context)!.cancelOrderModalLabel),
+              actions: <Widget>[
+                InkWell(
+                  child: Text('OK   '),
+                  onTap: () {
+                    if (_formKey.currentState!.validate()) {
+                      // Do something like updating SharedPreferences or User Settings etc.
+                      Navigator.of(context).pop();
+                    }
+                  },
+                ),
+              ],
+            );
+          });
+        });
+  }
 
   Future<void> _setOrderStatus(OrderNextButton statusButton) async {
     setState(() {
       loading = true;
     });
-    print("requesting location");
     var orderStatusId = statusButton.identity;
+    String? cancelText;
+
+    if (statusButton.cancel) {
+      await showInformationDialog(context);
+      // print(text);
+      String cancelText = _textEditingController.text;
+      if (cancelText.length == 0 && !isChecked) {
+        setState(() {
+          loading = false;
+        });
+        return;
+      } else {}
+      // if (text == null) {
+      // } else {
+      //   cancelText = text[0];
+      // }
+
+    }
+
     Position? currentPosition;
-    if (statusButton.waiting || statusButton.finish) {
+    if (statusButton.waiting ||
+        statusButton.finish ||
+        statusButton.inTerminal) {
       bool serviceEnabled;
       LocationPermission permission;
 
@@ -109,8 +190,8 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
     }
     var client = GraphQLProvider.of(context).value;
     var query = r'''
-      mutation($orderStatusId: String!, $orderId: String!, $latitude: Float, $longitude: Float) {
-        setOrderStatus(orderStatusId: $orderStatusId, orderId: $orderId, latitude: $latitude, longitude: $longitude) {
+      mutation($orderStatusId: String!, $orderId: String!, $latitude: Float, $longitude: Float, $cancelReason: String, $sentSmsToCustomer: Boolean) {
+        setOrderStatus(orderStatusId: $orderStatusId, orderId: $orderId, latitude: $latitude, longitude: $longitude, cancelReason: $cancelReason, sentSmsToCustomer: $sentSmsToCustomer) {
           id
           to_lat
           to_lon
@@ -161,6 +242,8 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
           'orderId': widget.order.identity,
           'latitude': currentPosition?.latitude,
           'longitude': currentPosition?.longitude,
+          'sentSmsToCustomer': isChecked,
+          'cancelReason': cancelText
         },
         fetchPolicy: FetchPolicy.noCache));
     if (result.hasException) {
@@ -204,6 +287,43 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
     setState(() {
       loading = false;
     });
+
+    if (statusButton.onWay) {
+      final coords = Coords(widget.order.to_lat, widget.order.to_lon);
+      final title = widget.order.delivery_address ?? '';
+      List<AvailableMap> availableMaps = await MapLauncher.installedMaps;
+      availableMaps = availableMaps
+          .where((element) => element.mapType == MapType.yandexNavi)
+          .toList();
+      showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SafeArea(
+            child: SingleChildScrollView(
+              child: Container(
+                child: Wrap(
+                  children: <Widget>[
+                    for (var map in availableMaps)
+                      ListTile(
+                        onTap: () => map.showMarker(
+                          coords: coords,
+                          title: title,
+                        ),
+                        title: Text(map.mapName),
+                        leading: SvgPicture.asset(
+                          map.icon,
+                          height: 30.0,
+                          width: 30.0,
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    }
   }
 
   @override
@@ -463,7 +583,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                     GestureDetector(
                       onTap: () {
                         AutoRouter.of(context).pushNamed(
-                            '/order/customer-comments/${widget.order.customer.target!.identity}');
+                            '/order/customer-comments/${widget.order.customer.target!.identity}/${widget.order.identity}');
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
@@ -606,8 +726,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                             AppLocalizations.of(context)!.pre_distance_label,
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          Text(
-                              "${(widget.order.pre_distance / 1000).toString()} км"),
+                          Text("${(widget.order.pre_distance).toString()} км"),
                         ],
                       ),
                       // Row(
@@ -848,7 +967,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                       GestureDetector(
                         onTap: () {
                           AutoRouter.of(context).pushNamed(
-                              '/order/customer-comments/${widget.order.customer.target!.identity}');
+                              '/order/customer-comments/${widget.order.customer.target!.identity}/${widget.order.identity}');
                         },
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 15.0),

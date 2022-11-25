@@ -14,6 +14,7 @@ import '../../main.dart';
 import '../../models/customer.dart';
 import '../../models/order.dart';
 import '../../models/order_next_button.dart';
+import 'build_route.dart';
 import 'current_order_card.dart';
 
 class MyCurrentOrdersList extends StatelessWidget {
@@ -183,40 +184,46 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
           );
         } else {
           return ApiGraphqlProvider(
-              child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+              child: Stack(
             children: [
-              ListenDeletedCurrentOrders(),
-              ListenNewCurrentOrder(),
-              Expanded(
-                child: StreamBuilder<List<OrderModel>>(
-                  stream: objectBox.getCurrentOrders(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return EasyRefresh(
-                        controller: _controller,
-                        header: const BezierCircleHeader(),
-                        onRefresh: () async {
-                          await _loadOrders();
-                          _controller.finishRefresh();
-                          _controller.resetFooter();
-                        },
-                        child: ListView.builder(
-                          // shrinkWrap: true,
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
-                            return CurrentOrderCard(
-                                order: snapshot.data![index]);
-                          },
-                        ),
-                      );
-                    } else {
-                      return const Center(child: Text('Заказов нет'));
-                    }
-                  },
-                ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListenDeletedCurrentOrders(),
+                  ListenNewCurrentOrder(),
+                  Expanded(
+                    child: StreamBuilder<List<OrderModel>>(
+                      stream: objectBox.getCurrentOrders(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return EasyRefresh(
+                            controller: _controller,
+                            header: const BezierCircleHeader(),
+                            onRefresh: () async {
+                              await _loadOrders();
+                              _controller.finishRefresh();
+                              _controller.resetFooter();
+                            },
+                            child: ListView.builder(
+                              // shrinkWrap: true,
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, index) {
+                                return CurrentOrderCard(
+                                    order: snapshot.data![index]);
+                              },
+                            ),
+                          );
+                        } else {
+                          return const Center(child: Text('Заказов нет'));
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ),
+              const Positioned(
+                  bottom: 20, left: 0, right: 0, child: BuildOrdersRoute())
             ],
           ));
         }

@@ -21,7 +21,7 @@ part 'router.gr.dart';
     AutoRoute(page: BrandsPage, path: '/brands'),
     AutoRoute(
         page: OrderCustomerCommentsPage,
-        path: '/order/customer-comments/:customerId'),
+        path: '/order/customer-comments/:customerId/:orderId'),
   ],
 )
 // extend the generated private router

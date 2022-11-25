@@ -50,5 +50,10 @@
     "successOrderLabel": "Успешные",
     "failedOrderLabel": "Отказы",
     "orderStatTotalPrice": "Сумма заказов",
-    "orderApprovedSuccessfully": "Заказ принят успешно"
+    "orderApprovedSuccessfully": "Заказ принят успешно",
+    "cancelOrderModalLabel": "Отмена заказа",
+    "cancelOrderModalCause": "Напишите причину отмены заказа",
+    "cancelOrderModalSentSMSLabel": "Отправил смс клиенту",
+    "courierScoreLabel": "Рейтинг",
+    "buildOrderRouteButton": "Построить маршрут"
 }
