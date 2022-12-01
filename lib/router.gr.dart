@@ -71,6 +71,12 @@ class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    CallCenterOrganizationsListRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const CallCenterOrganizationsListPage(),
+      );
+    },
   };
 
   @override
@@ -102,6 +108,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           OrderCustomerCommentsRoute.name,
           path: '/order/customer-comments/:customerId/:orderId',
+        ),
+        RouteConfig(
+          CallCenterOrganizationsListRoute.name,
+          path: '/organizations',
         ),
       ];
 }
@@ -232,4 +242,16 @@ class OrderCustomerCommentsRouteArgs {
   String toString() {
     return 'OrderCustomerCommentsRouteArgs{key: $key, customerId: $customerId, orderId: $orderId}';
   }
+}
+
+/// generated route for
+/// [CallCenterOrganizationsListPage]
+class CallCenterOrganizationsListRoute extends PageRouteInfo<void> {
+  const CallCenterOrganizationsListRoute()
+      : super(
+          CallCenterOrganizationsListRoute.name,
+          path: '/organizations',
+        );
+
+  static const String name = 'CallCenterOrganizationsListRoute';
 }

@@ -55,5 +55,11 @@
     "cancelOrderModalCause": "Bekor qilish sababini kiriting",
     "cancelOrderModalSentSMSLabel": "Mijozga sms yuvordim",
     "courierScoreLabel": "Reyting",
-    "buildOrderRouteButton": "Yo'nalishni tuzish"
+    "buildOrderRouteButton": "Yo'nalishni tuzish",
+    "commentFieldLabel": "Izoh qoldiring",
+    "chooseImageFromGallery": "Gallereyadan tanlang",
+    "chooseImageFromCamery": "Kamera bilan suratga oling",
+    "imageAttachmentCancelText": "Bekor qilish",
+    "setCancelReasonLabel": "Buyurtmani bekor qilish sababini ko'rsating",
+    "settingsCallCenterChatLabel": "Qo'ng'iroq markaziga yozing"
 }

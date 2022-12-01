@@ -55,5 +55,11 @@
     "cancelOrderModalCause": "Напишите причину отмены заказа",
     "cancelOrderModalSentSMSLabel": "Отправил смс клиенту",
     "courierScoreLabel": "Рейтинг",
-    "buildOrderRouteButton": "Построить маршрут"
+    "buildOrderRouteButton": "Построить маршрут",
+    "commentFieldLabel": "Оставить комментарий",
+    "chooseImageFromGallery": "Выбрать фото из галереи",
+    "chooseImageFromCamery": "Снять фото на камеру",
+    "imageAttachmentCancelText": "Отменить",
+    "setCancelReasonLabel": "Укажите причину отмены заказа",
+    "settingsCallCenterChatLabel": "Написать в колл-центр"
 }

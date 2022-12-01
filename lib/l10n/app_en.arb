@@ -55,5 +55,11 @@
     "cancelOrderModalCause": "Type the cancel reason",
     "cancelOrderModalSentSMSLabel": "Sent sms to the customer",
     "courierScoreLabel": "Rating",
-    "buildOrderRouteButton": "Build route"
+    "buildOrderRouteButton": "Build route",
+    "commentFieldLabel": "Leave a comment",
+    "chooseImageFromGallery": "Choose image from gallery",
+    "chooseImageFromCamery": "Take a photo on camera",
+    "imageAttachmentCancelText": "Cancel",
+    "setCancelReasonLabel": "Specify the reason for the cancellation of the order",
+    "settingsCallCenterChatLabel": "Write to the call center"
 }

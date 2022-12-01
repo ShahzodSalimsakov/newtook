@@ -17,11 +17,13 @@ import 'package:arryt/helpers/api_graphql_provider.dart';
 import 'package:arryt/main.dart';
 import 'package:arryt/models/order.dart';
 import 'package:arryt/widgets/orders/orders_items.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../models/customer.dart';
 import '../../models/order_next_button.dart';
 import '../../models/order_status.dart';
 import '../../models/terminals.dart';
+import 'cancel_order_modal.dart';
 import 'order_customer_comments.dart';
 
 class CurrentOrderCard extends StatefulWidget {
@@ -103,7 +105,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
         });
   }
 
-  Future<void> _setOrderStatus(OrderNextButton statusButton) async {
+  Future _setOrderStatus(OrderNextButton statusButton) async {
     setState(() {
       loading = true;
     });
@@ -111,20 +113,17 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
     String? cancelText;
 
     if (statusButton.cancel) {
-      await showInformationDialog(context);
-      // print(text);
-      String cancelText = _textEditingController.text;
-      if (cancelText.length == 0 && !isChecked) {
-        setState(() {
-          loading = false;
-        });
-        return;
-      } else {}
-      // if (text == null) {
-      // } else {
-      //   cancelText = text[0];
-      // }
-
+      setState(() {
+        loading = false;
+      });
+      return showCupertinoModalBottomSheet(
+          context: context,
+          builder: (context) => ApiGraphqlProvider(
+                child: CancelOrderModal(
+                  orderId: widget.order.identity,
+                  orderStatusId: orderStatusId,
+                ),
+              ));
     }
 
     Position? currentPosition;
@@ -289,40 +288,8 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
     });
 
     if (statusButton.onWay) {
-      final coords = Coords(widget.order.to_lat, widget.order.to_lon);
-      final title = widget.order.delivery_address ?? '';
-      List<AvailableMap> availableMaps = await MapLauncher.installedMaps;
-      availableMaps = availableMaps
-          .where((element) => element.mapType == MapType.yandexNavi)
-          .toList();
-      showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return SafeArea(
-            child: SingleChildScrollView(
-              child: Container(
-                child: Wrap(
-                  children: <Widget>[
-                    for (var map in availableMaps)
-                      ListTile(
-                        onTap: () => map.showMarker(
-                          coords: coords,
-                          title: title,
-                        ),
-                        title: Text(map.mapName),
-                        leading: SvgPicture.asset(
-                          map.icon,
-                          height: 30.0,
-                          width: 30.0,
-                        ),
-                      ),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
-      );
+      await launchUrl(Uri.parse(
+          "yandexnavi://build_route_on_map?lat_from=${widget.order.from_lat}&lon_from-${widget.order.from_lon}&lat_to=${widget.order.to_lat}&lon_to=${widget.order.to_lon}"));
     }
   }
 

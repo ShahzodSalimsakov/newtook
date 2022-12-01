@@ -37,7 +37,15 @@ class SettingsPage extends StatelessWidget {
                 context.router.pushNamed('/brands');
               },
             ),
-
+            ListTile(
+              title: Text(
+                  AppLocalizations.of(context)!.settingsCallCenterChatLabel),
+              leading: const Icon(Icons.chat_outlined),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                context.router.pushNamed('/organizations');
+              },
+            ),
             const Spacer(),
             Text(AppLocalizations.of(context)!.choose_lang.toUpperCase(),
                 style: const TextStyle(color: Colors.black)),

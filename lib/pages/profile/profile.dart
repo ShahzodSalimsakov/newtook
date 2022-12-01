@@ -71,7 +71,9 @@ class _ProfilePageViewState extends State<ProfilePageView>
     } else {
       setState(() {
         walletBalance = result.data?['getMyProfileNumbers']['wallet'];
-        rating = result.data?['getMyProfileNumbers']['score'];
+        rating = (result.data?['getMyProfileNumbers']['score'] is int
+            ? result.data!['getMyProfileNumbers']['score'].toDouble()
+            : result.data?['getMyProfileNumbers']['score']);
       });
     }
   }
