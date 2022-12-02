@@ -1,5 +1,6 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:currency_formatter/currency_formatter.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
@@ -101,6 +102,22 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                widget.order.organization.target != null &&
+                        widget.order.organization.target!.iconUrl != null
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CachedNetworkImage(
+                          height: 30,
+                          imageUrl: widget.order.organization.target!.iconUrl!,
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) =>
+                                  CircularProgressIndicator(
+                                      value: downloadProgress.progress),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        ),
+                      )
+                    : SizedBox(width: 0),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(

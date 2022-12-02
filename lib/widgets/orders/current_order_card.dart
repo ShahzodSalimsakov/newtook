@@ -1,6 +1,7 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:currency_formatter/currency_formatter.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../models/customer.dart';
 import '../../models/order_next_button.dart';
 import '../../models/order_status.dart';
+import '../../models/organizations.dart';
 import '../../models/terminals.dart';
 import 'cancel_order_modal.dart';
 import 'order_customer_comments.dart';
@@ -203,6 +205,14 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
           delivery_address
           delivery_comment
           created_at
+          orders_organization {
+            id
+            name
+            icon_url
+            active
+            external_id
+            support_chat_url
+          }
           orders_customers {
             id
             name
@@ -270,10 +280,21 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
           name: order['orders_customers']['name'],
           phone: order['orders_customers']['phone'],
         );
+        Organizations organizations = Organizations(
+            order['orders_organization']['id'],
+            order['orders_organization']['name'],
+            order['orders_organization']['active'],
+            order['orders_organization']['icon_url'],
+            order['orders_organization']['description'],
+            order['orders_organization']['max_distance'],
+            order['orders_organization']['max_active_orderCount'],
+            order['orders_organization']['max_order_close_distance'],
+            order['orders_organization']['support_chat_url']);
         OrderModel orderModel = OrderModel.fromMap(order);
         orderModel.customer.target = customer;
         orderModel.terminal.target = terminals;
         orderModel.orderStatus.target = orderStatus;
+        orderModel.organization.target = organizations;
         if (order['next_buttons'] != null) {
           order['next_buttons'].forEach((button) {
             OrderNextButton orderNextButton = OrderNextButton.fromMap(button);
@@ -314,6 +335,22 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                widget.order.organization.target != null &&
+                        widget.order.organization.target!.iconUrl != null
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: CachedNetworkImage(
+                          height: 30,
+                          imageUrl: widget.order.organization.target!.iconUrl!,
+                          progressIndicatorBuilder:
+                              (context, url, downloadProgress) =>
+                                  CircularProgressIndicator(
+                                      value: downloadProgress.progress),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        ),
+                      )
+                    : SizedBox(width: 0),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(

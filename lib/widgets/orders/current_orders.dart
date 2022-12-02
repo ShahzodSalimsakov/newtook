@@ -14,6 +14,7 @@ import '../../main.dart';
 import '../../models/customer.dart';
 import '../../models/order.dart';
 import '../../models/order_next_button.dart';
+import '../../models/organizations.dart';
 import 'build_route.dart';
 import 'current_order_card.dart';
 
@@ -55,6 +56,14 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
           delivery_address
           delivery_comment
           created_at
+          orders_organization {
+            id
+            name
+            icon_url
+            active
+            external_id
+            support_chat_url
+          }
           orders_customers {
             id
             name
@@ -109,10 +118,21 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
           name: order['orders_customers']['name'],
           phone: order['orders_customers']['phone'],
         );
+        Organizations organizations = Organizations(
+            order['orders_organization']['id'],
+            order['orders_organization']['name'],
+            order['orders_organization']['active'],
+            order['orders_organization']['icon_url'],
+            order['orders_organization']['description'],
+            order['orders_organization']['max_distance'],
+            order['orders_organization']['max_active_orderCount'],
+            order['orders_organization']['max_order_close_distance'],
+            order['orders_organization']['support_chat_url']);
         OrderModel orderModel = OrderModel.fromMap(order);
         orderModel.customer.target = customer;
         orderModel.terminal.target = terminals;
         orderModel.orderStatus.target = orderStatus;
+        orderModel.organization.target = organizations;
         if (order['next_buttons'] != null) {
           order['next_buttons'].forEach((button) {
             OrderNextButton orderNextButton = OrderNextButton.fromMap(button);

@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "5:8938918269802989134",
-      "lastPropertyId": "19:6887866108329889092",
+      "lastPropertyId": "20:8573742609611702437",
       "name": "OrderModel",
       "properties": [
         {
@@ -99,6 +99,14 @@
           "id": "19:6887866108329889092",
           "name": "from_lon",
           "type": 8
+        },
+        {
+          "id": "20:8573742609611702437",
+          "name": "organizationId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "15:4088320079207736974",
+          "relationTarget": "Organizations"
         }
       ],
       "relations": [
@@ -263,7 +271,7 @@
     },
     {
       "id": "10:1949976709383216849",
-      "lastPropertyId": "16:6097524008689169922",
+      "lastPropertyId": "17:3169785221312573997",
       "name": "WaitingOrderModel",
       "properties": [
         {
@@ -357,6 +365,14 @@
           "id": "16:6097524008689169922",
           "name": "from_lon",
           "type": 8
+        },
+        {
+          "id": "17:3169785221312573997",
+          "name": "organizationId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "14:5510076716237701865",
+          "relationTarget": "Organizations"
         }
       ],
       "relations": [
@@ -366,10 +382,71 @@
           "targetId": "9:3885740093415193842"
         }
       ]
+    },
+    {
+      "id": "11:8076618993551493134",
+      "lastPropertyId": "10:1732659299647189366",
+      "name": "Organizations",
+      "properties": [
+        {
+          "id": "1:3212550456628815415",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:4023538849320669406",
+          "name": "identity",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "13:5249122921441728128"
+        },
+        {
+          "id": "3:2868774649306464763",
+          "name": "name",
+          "type": 9
+        },
+        {
+          "id": "4:3437973949576021472",
+          "name": "active",
+          "type": 1
+        },
+        {
+          "id": "5:5068897635430290529",
+          "name": "description",
+          "type": 9
+        },
+        {
+          "id": "6:8157506104009687261",
+          "name": "maxDistance",
+          "type": 6
+        },
+        {
+          "id": "7:8885256933266866562",
+          "name": "maxActiveOrderCount",
+          "type": 6
+        },
+        {
+          "id": "8:4395138515048416723",
+          "name": "maxOrderCloseDistance",
+          "type": 6
+        },
+        {
+          "id": "9:6037131285445460449",
+          "name": "supportChatUrl",
+          "type": 9
+        },
+        {
+          "id": "10:1732659299647189366",
+          "name": "iconUrl",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "10:1949976709383216849",
-  "lastIndexId": "12:2319697532974640764",
+  "lastEntityId": "11:8076618993551493134",
+  "lastIndexId": "15:4088320079207736974",
   "lastRelationId": "2:1296200797359606388",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

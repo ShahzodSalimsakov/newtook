@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:ffi';
 
+import 'package:arryt/models/organizations.dart';
 import 'package:arryt/models/terminals.dart';
 import 'package:objectbox/objectbox.dart';
 
@@ -45,6 +46,7 @@ class WaitingOrderModel {
   final terminal = ToOne<Terminals>();
   final orderStatus = ToOne<OrderStatus>();
   final orderNextButton = ToMany<OrderNextButton>();
+  final organization = ToOne<Organizations>();
 
   WaitingOrderModel copyWith({
     String? identity,

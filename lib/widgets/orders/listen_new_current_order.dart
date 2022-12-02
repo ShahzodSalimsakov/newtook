@@ -7,6 +7,7 @@ import '../../models/customer.dart';
 import '../../models/order.dart';
 import '../../models/order_next_button.dart';
 import '../../models/order_status.dart';
+import '../../models/organizations.dart';
 import '../../models/terminals.dart';
 
 final subscriptionDocument = gql(
@@ -25,6 +26,14 @@ final subscriptionDocument = gql(
           delivery_address
           delivery_comment
           created_at
+          orders_organization {
+            id
+            name
+            icon_url
+            active
+            external_id
+            support_chat_url
+          }
           orders_customers {
             id
             name
@@ -102,11 +111,31 @@ class ListenNewCurrentOrder extends StatelessWidget {
                     phone: result.data?['addedNewCurrentOrder']
                         ['orders_customers']['phone'],
                   );
+                  Organizations organizations = Organizations(
+                      result.data?['addedNewCurrentOrder']
+                          ['orders_organization']['id'],
+                      result.data?['addedNewCurrentOrder']
+                          ['orders_organization']['name'],
+                      result.data?['addedNewCurrentOrder']
+                          ['orders_organization']['active'],
+                      result.data?['addedNewCurrentOrder']
+                          ['orders_organization']['icon_url'],
+                      result.data?['addedNewCurrentOrder']
+                          ['orders_organization']['description'],
+                      result.data?['addedNewCurrentOrder']
+                          ['orders_organization']['max_distance'],
+                      result.data?['addedNewCurrentOrder']
+                          ['orders_organization']['max_active_orderCount'],
+                      result.data?['addedNewCurrentOrder']
+                          ['orders_organization']['max_order_close_distance'],
+                      result.data?['addedNewCurrentOrder']
+                          ['orders_organization']['support_chat_url']);
                   OrderModel orderModel =
                       OrderModel.fromMap(result.data?['addedNewCurrentOrder']);
                   orderModel.customer.target = customer;
                   orderModel.terminal.target = terminals;
                   orderModel.orderStatus.target = orderStatus;
+                  orderModel.organization.target = organizations;
                   if (result.data?['addedNewCurrentOrder']['next_buttons'] !=
                       null) {
                     result.data?['addedNewCurrentOrder']['next_buttons']

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:arryt/helpers/api_graphql_provider.dart';
 import 'package:arryt/models/organizations.dart';
+import 'package:arryt/pages/callcenter/callcenter_webview.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -102,38 +103,8 @@ class _CallCenterOrganizationsListState
             onTap: () {
               showMaterialModalBottomSheet(
                 context: context,
-                builder: (context) => Stack(
-                  children: [
-                    WebView(
-                      initialUrl: organizations[index].supportChatUrl,
-                    ),
-                    Positioned(
-                      left: 0,
-                      bottom: 20,
-                      right: 0,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Container(
-                          height: 50,
-                          margin: const EdgeInsets.symmetric(horizontal: 10),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(50),
-                              color: Theme.of(context).primaryColor),
-                          child: const Center(
-                              child: Text(
-                            'ЗАКРЫТЬ',
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          )),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                builder: (context) =>
+                    CallCenterWebView(url: organizations[index].supportChatUrl),
               );
             },
           );

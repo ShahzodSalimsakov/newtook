@@ -1,6 +1,7 @@
 import 'package:arryt/models/customer.dart';
 import 'package:arryt/models/order.dart';
 import 'package:arryt/models/order_status.dart';
+import 'package:arryt/models/organizations.dart';
 import 'package:arryt/models/terminals.dart';
 import 'package:arryt/objectbox.g.dart';
 import 'package:objectbox/objectbox.dart';
@@ -15,6 +16,7 @@ class ObjectBox {
   late final Box<WaitingOrderModel> _waitingOrdersBox;
   late final Box<OrderStatus> _orderStatusesBox;
   late final Box<Terminals> _terminalsBox;
+  late final Box<Organizations> _organizationsBox;
 
   ObjectBox._init(this._store) {
     _currentOrdersBox = Box<OrderModel>(_store);
@@ -22,6 +24,7 @@ class ObjectBox {
     _customersBox = Box<Customer>(_store);
     _orderStatusesBox = Box<OrderStatus>(_store);
     _terminalsBox = Box<Terminals>(_store);
+    _organizationsBox = Box<Organizations>(_store);
   }
 
   ObjectBox._internal();
