@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:arryt/helpers/api_graphql_provider.dart';
 import 'package:arryt/models/organizations.dart';
 import 'package:arryt/pages/callcenter/callcenter_webview.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -45,6 +46,7 @@ class _CallCenterOrganizationsListState
           max_active_order_count
           max_order_close_distance
           support_chat_url
+          icon_url
         }
       }
     ''';
@@ -100,6 +102,20 @@ class _CallCenterOrganizationsListState
           return ListTile(
             title: Text(organizations[index].name),
             trailing: const Icon(Icons.arrow_forward_ios),
+            leading: organizations[index].iconUrl != null
+                ? Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: CachedNetworkImage(
+                      height: 40,
+                      imageUrl: organizations[index].iconUrl!,
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) =>
+                              CircularProgressIndicator(
+                                  value: downloadProgress.progress),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
+                  )
+                : null,
             onTap: () {
               showMaterialModalBottomSheet(
                 context: context,
