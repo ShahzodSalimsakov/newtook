@@ -61,5 +61,12 @@
     "chooseImageFromCamery": "Снять фото на камеру",
     "imageAttachmentCancelText": "Отменить",
     "setCancelReasonLabel": "Укажите причину отмены заказа",
-    "settingsCallCenterChatLabel": "Написать в колл-центр"
+    "settingsCallCenterChatLabel": "Написать в колл-центр",
+    "noRoleSet": "Роль не установлена",
+    "courierBalanceTabLabel": "Баланс курьеров",
+    "couriersListTabLabel": "Курьеры",
+    "chooseCourierForWithdraw": "Выберите курьера для выдачи денег",
+    "currentBalanceLabel": "Текущий баланс",
+    "typeWithdrawAmount": "Введите сумму для выдачи",
+    "withdrawButtonLabel": "Выдать"
 }

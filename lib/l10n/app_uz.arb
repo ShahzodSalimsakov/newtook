@@ -61,5 +61,12 @@
     "chooseImageFromCamery": "Kamera bilan suratga oling",
     "imageAttachmentCancelText": "Bekor qilish",
     "setCancelReasonLabel": "Buyurtmani bekor qilish sababini ko'rsating",
-    "settingsCallCenterChatLabel": "Qo'ng'iroq markaziga yozing"
+    "settingsCallCenterChatLabel": "Qo'ng'iroq markaziga yozing",
+    "noRoleSet": "Rol belgilanmagan",
+    "courierBalanceTabLabel": "Kuryerlar hisobi",
+    "couriersListTabLabel": "Kuryerlar",
+    "chooseCourierForWithdraw": "Pulini bermoqchi bo'lgan kuryeringizni tanlang",
+    "currentBalanceLabel": "Joriy balans",
+    "typeWithdrawAmount": "Pul miqdorini kiriting",
+    "withdrawButtonLabel": "Pulni bermoq"
 }

@@ -15,6 +15,7 @@ import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
 import 'models/customer.dart';
+import 'models/manager_couriers_model.dart';
 import 'models/order.dart';
 import 'models/order_next_button.dart';
 import 'models/order_status.dart';
@@ -449,6 +450,61 @@ final _entities = <ModelEntity>[
             flags: 0)
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(12, 5349769437952250488),
+      name: 'ManagerCouriersModel',
+      lastPropertyId: const IdUid(9, 6371879390527856676),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 7886582209767772120),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 6591988332844142606),
+            name: 'identity',
+            type: 9,
+            flags: 2048,
+            indexId: const IdUid(16, 3707077786157151456)),
+        ModelProperty(
+            id: const IdUid(3, 4180793703179948086),
+            name: 'firstName',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 79270462026450625),
+            name: 'lastName',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(5, 7946166619234932682),
+            name: 'phone',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(6, 5614485167576377256),
+            name: 'terminalId',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(7, 3413557915128308234),
+            name: 'terminalName',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(8, 5468550202241238972),
+            name: 'balance',
+            type: 6,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(9, 6371879390527856676),
+            name: 'courierId',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -472,8 +528,8 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(11, 8076618993551493134),
-      lastIndexId: const IdUid(15, 4088320079207736974),
+      lastEntityId: const IdUid(12, 5349769437952250488),
+      lastIndexId: const IdUid(16, 3707077786157151456),
       lastRelationId: const IdUid(2, 1296200797359606388),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -913,6 +969,60 @@ ModelDefinition getObjectBoxModel() {
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
+        }),
+    ManagerCouriersModel: EntityDefinition<ManagerCouriersModel>(
+        model: _entities[7],
+        toOneRelations: (ManagerCouriersModel object) => [],
+        toManyRelations: (ManagerCouriersModel object) => {},
+        getId: (ManagerCouriersModel object) => object.id,
+        setId: (ManagerCouriersModel object, int id) {
+          object.id = id;
+        },
+        objectToFB: (ManagerCouriersModel object, fb.Builder fbb) {
+          final identityOffset = fbb.writeString(object.identity);
+          final firstNameOffset = fbb.writeString(object.firstName);
+          final lastNameOffset = fbb.writeString(object.lastName);
+          final phoneOffset = fbb.writeString(object.phone);
+          final terminalIdOffset = fbb.writeString(object.terminalId);
+          final terminalNameOffset = fbb.writeString(object.terminalName);
+          final courierIdOffset = fbb.writeString(object.courierId);
+          fbb.startTable(10);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, identityOffset);
+          fbb.addOffset(2, firstNameOffset);
+          fbb.addOffset(3, lastNameOffset);
+          fbb.addOffset(4, phoneOffset);
+          fbb.addOffset(5, terminalIdOffset);
+          fbb.addOffset(6, terminalNameOffset);
+          fbb.addInt64(7, object.balance);
+          fbb.addOffset(8, courierIdOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = ManagerCouriersModel(
+              identity: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              firstName: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              lastName: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''),
+              phone: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 12, ''),
+              terminalId: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 14, ''),
+              courierId: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 20, ''),
+              terminalName: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 16, ''),
+              balance:
+                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 18, 0))
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+          return object;
         })
   };
 
@@ -1210,4 +1320,43 @@ class Organizations_ {
   /// see [Organizations.iconUrl]
   static final iconUrl =
       QueryStringProperty<Organizations>(_entities[6].properties[9]);
+}
+
+/// [ManagerCouriersModel] entity fields to define ObjectBox queries.
+class ManagerCouriersModel_ {
+  /// see [ManagerCouriersModel.id]
+  static final id =
+      QueryIntegerProperty<ManagerCouriersModel>(_entities[7].properties[0]);
+
+  /// see [ManagerCouriersModel.identity]
+  static final identity =
+      QueryStringProperty<ManagerCouriersModel>(_entities[7].properties[1]);
+
+  /// see [ManagerCouriersModel.firstName]
+  static final firstName =
+      QueryStringProperty<ManagerCouriersModel>(_entities[7].properties[2]);
+
+  /// see [ManagerCouriersModel.lastName]
+  static final lastName =
+      QueryStringProperty<ManagerCouriersModel>(_entities[7].properties[3]);
+
+  /// see [ManagerCouriersModel.phone]
+  static final phone =
+      QueryStringProperty<ManagerCouriersModel>(_entities[7].properties[4]);
+
+  /// see [ManagerCouriersModel.terminalId]
+  static final terminalId =
+      QueryStringProperty<ManagerCouriersModel>(_entities[7].properties[5]);
+
+  /// see [ManagerCouriersModel.terminalName]
+  static final terminalName =
+      QueryStringProperty<ManagerCouriersModel>(_entities[7].properties[6]);
+
+  /// see [ManagerCouriersModel.balance]
+  static final balance =
+      QueryIntegerProperty<ManagerCouriersModel>(_entities[7].properties[7]);
+
+  /// see [ManagerCouriersModel.courierId]
+  static final courierId =
+      QueryStringProperty<ManagerCouriersModel>(_entities[7].properties[8]);
 }

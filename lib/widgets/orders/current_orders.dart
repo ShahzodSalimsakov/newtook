@@ -39,7 +39,6 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
   late EasyRefreshController _controller;
 
   Future<void> _loadOrders() async {
-    UserDataBloc userDataBloc = context.read<UserDataBloc>();
     var client = GraphQLProvider.of(context).value;
     var query = r'''
       query {
@@ -98,7 +97,6 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
     var data = await client.query(
       QueryOptions(document: gql(query), fetchPolicy: FetchPolicy.noCache),
     );
-    print(data.data?['myCurrentOrders']);
     // var store = await ObjectBoxStore.getStore();
     if (data.data?['myCurrentOrders'] != null) {
       List<OrderModel> orders = [];

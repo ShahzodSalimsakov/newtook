@@ -443,10 +443,66 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "12:5349769437952250488",
+      "lastPropertyId": "9:6371879390527856676",
+      "name": "ManagerCouriersModel",
+      "properties": [
+        {
+          "id": "1:7886582209767772120",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:6591988332844142606",
+          "name": "identity",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "16:3707077786157151456"
+        },
+        {
+          "id": "3:4180793703179948086",
+          "name": "firstName",
+          "type": 9
+        },
+        {
+          "id": "4:79270462026450625",
+          "name": "lastName",
+          "type": 9
+        },
+        {
+          "id": "5:7946166619234932682",
+          "name": "phone",
+          "type": 9
+        },
+        {
+          "id": "6:5614485167576377256",
+          "name": "terminalId",
+          "type": 9
+        },
+        {
+          "id": "7:3413557915128308234",
+          "name": "terminalName",
+          "type": 9
+        },
+        {
+          "id": "8:5468550202241238972",
+          "name": "balance",
+          "type": 6
+        },
+        {
+          "id": "9:6371879390527856676",
+          "name": "courierId",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "11:8076618993551493134",
-  "lastIndexId": "15:4088320079207736974",
+  "lastEntityId": "12:5349769437952250488",
+  "lastIndexId": "16:3707077786157151456",
   "lastRelationId": "2:1296200797359606388",
   "lastSequenceId": "0:0",
   "modelVersion": 5,

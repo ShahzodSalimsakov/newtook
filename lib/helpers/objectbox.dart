@@ -6,6 +6,7 @@ import 'package:arryt/models/terminals.dart';
 import 'package:arryt/objectbox.g.dart';
 import 'package:objectbox/objectbox.dart';
 
+import '../models/manager_couriers_model.dart';
 import '../models/waiting_order.dart';
 
 class ObjectBox {
@@ -17,6 +18,7 @@ class ObjectBox {
   late final Box<OrderStatus> _orderStatusesBox;
   late final Box<Terminals> _terminalsBox;
   late final Box<Organizations> _organizationsBox;
+  late final Box<ManagerCouriersModel> _managerCouriersBox;
 
   ObjectBox._init(this._store) {
     _currentOrdersBox = Box<OrderModel>(_store);
@@ -25,6 +27,7 @@ class ObjectBox {
     _orderStatusesBox = Box<OrderStatus>(_store);
     _terminalsBox = Box<Terminals>(_store);
     _organizationsBox = Box<Organizations>(_store);
+    _managerCouriersBox = Box<ManagerCouriersModel>(_store);
   }
 
   ObjectBox._internal();
@@ -96,5 +99,18 @@ class ObjectBox {
     }
 
     return Future.value();
+  }
+
+  void addManagerCouriers(List<ManagerCouriersModel> couriers) {
+    _managerCouriersBox.removeAll();
+    _managerCouriersBox.putMany(couriers);
+  }
+
+  Stream<List<ManagerCouriersModel>> getManagerCouriers() {
+    final builder = _managerCouriersBox.query()
+      ..order(ManagerCouriersModel_.balance, flags: Order.descending);
+    return builder.watch(triggerImmediately: true).map((query) {
+      return query.find();
+    });
   }
 }

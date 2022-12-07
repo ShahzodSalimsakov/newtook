@@ -61,5 +61,12 @@
     "chooseImageFromCamery": "Take a photo on camera",
     "imageAttachmentCancelText": "Cancel",
     "setCancelReasonLabel": "Specify the reason for the cancellation of the order",
-    "settingsCallCenterChatLabel": "Write to the call center"
+    "settingsCallCenterChatLabel": "Write to the call center",
+    "noRoleSet": "No role set",
+    "courierBalanceTabLabel": "Couriers' balance",
+    "couriersListTabLabel": "Couriers",
+    "chooseCourierForWithdraw": "Choose courier for withdraw",
+    "currentBalanceLabel": "Current balance",
+    "typeWithdrawAmount": "Type withdraw amount",
+    "withdrawButtonLabel": "Withdraw"
 }

@@ -1,5 +1,6 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:arryt/bloc/block_imports.dart';
+import 'package:arryt/widgets/profile/my_balance_by_terminal.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:currency_formatter/currency_formatter.dart';
 import 'package:easy_refresh/easy_refresh.dart';
@@ -55,26 +56,43 @@ class _ProfilePageViewState extends State<ProfilePageView>
       query {
         getMyProfileNumbers {
             score
-            wallet
         }
       }
     ''';
-    var result = await client.query(
+    var ratingResult = await client.query(
         QueryOptions(document: gql(query), fetchPolicy: FetchPolicy.noCache));
-    if (result.hasException) {
-      print(result.exception);
+    if (ratingResult.hasException) {
+      print(ratingResult.exception);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text(result.exception.toString()),
+          content: Text(ratingResult.exception.toString()),
         ),
       );
     } else {
       setState(() {
-        walletBalance = result.data?['getMyProfileNumbers']['wallet'];
-        rating = (result.data?['getMyProfileNumbers']['score'] is int
-            ? result.data!['getMyProfileNumbers']['score'].toDouble()
-            : result.data?['getMyProfileNumbers']['score']);
+        rating = (ratingResult.data?['getMyProfileNumbers']['score'] is int
+            ? ratingResult.data!['getMyProfileNumbers']['score'].toDouble()
+            : ratingResult.data?['getMyProfileNumbers']['score']);
       });
+      var query = r'''
+        query {
+          getMyTotalBalance
+        }
+      ''';
+      var balanceResult = await client.query(
+          QueryOptions(document: gql(query), fetchPolicy: FetchPolicy.noCache));
+      if (balanceResult.hasException) {
+        print(balanceResult.exception);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(balanceResult.exception.toString()),
+          ),
+        );
+      } else {
+        setState(() {
+          walletBalance = balanceResult.data?['getMyTotalBalance'];
+        });
+      }
     }
   }
 
@@ -227,33 +245,50 @@ class _ProfilePageViewState extends State<ProfilePageView>
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                  AppLocalizations.of(context)!
-                                      .wallet_label
-                                      .toUpperCase(),
-                                  style: const TextStyle(
-                                      fontSize: 18,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold)),
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                  "${CurrencyFormatter.format(walletBalance, euroSettings)}",
-                                  style: const TextStyle(
-                                      fontSize: 30,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold)),
-                            ],
-                          ),
-                        ],
+                      GestureDetector(
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                    AppLocalizations.of(context)!
+                                        .wallet_label
+                                        .toUpperCase(),
+                                    style: const TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold)),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Icon(
+                                  Icons.unfold_more_sharp,
+                                  color: Theme.of(context).primaryColor,
+                                  size: 30,
+                                )
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                    "${CurrencyFormatter.format(walletBalance, euroSettings)}",
+                                    style: const TextStyle(
+                                        fontSize: 30,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold)),
+                              ],
+                            ),
+                          ],
+                        ),
+                        onTap: () {
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                return const MyBalanceByTerminal();
+                              });
+                        },
                       ),
                       Column(
                         children: [
