@@ -2,6 +2,8 @@ import 'package:arryt/helpers/api_graphql_provider.dart';
 import 'package:arryt/main.dart';
 import 'package:arryt/models/manager_couriers_model.dart';
 import 'package:arryt/pages/manager/withdraw_for_courier.dart';
+import 'package:arryt/widgets/manager/qr_scan.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:currency_formatter/currency_formatter.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
@@ -88,12 +90,29 @@ class _ManagerCouriersListViewState extends State<ManagerCouriersListView> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 120,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 15),
+            child: IconButton(
+              icon: Icon(
+                Icons.qr_code_scanner_outlined,
+                color: Theme.of(context).primaryColor,
+                size: 45,
+              ),
+              onPressed: () async {
+                showModalBottomSheet(
+                    context: context,
+                    builder: (context) => const ManagerShowQRCode());
+              },
+            ),
+          )
+        ],
         title: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          padding: const EdgeInsets.symmetric(vertical: 20),
           child:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             Text(AppLocalizations.of(context)!.courierBalanceTabLabel,
-                style: const TextStyle(color: Colors.black, fontSize: 35)),
+                style: const TextStyle(color: Colors.black, fontSize: 30)),
           ]),
         ),
         elevation: 0,
@@ -114,14 +133,14 @@ class _ManagerCouriersListViewState extends State<ManagerCouriersListView> {
               },
               child: Column(
                 children: [
-                  Flexible(
-                    child: Text(
-                        AppLocalizations.of(context)!.chooseCourierForWithdraw,
-                        style: const TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.bold)),
+                  AutoSizeText(
+                    AppLocalizations.of(context)!.chooseCourierForWithdraw,
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   Expanded(
                     child: ListView.separated(
+                      shrinkWrap: true,
                       separatorBuilder: (context, index) => const Divider(
                         height: 1,
                         color: Colors.black,
