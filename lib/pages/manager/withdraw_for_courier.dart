@@ -118,7 +118,7 @@ class _WithdrawForCourierViewState extends State<WithdrawForCourierView> {
                           : Colors.grey,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
-                      minimumSize: Size.fromHeight(55)),
+                      minimumSize: const Size.fromHeight(55)),
                   onPressed: () {
                     if (_amountController.text.isNotEmpty) {
                       var client = GraphQLProvider.of(context).value;

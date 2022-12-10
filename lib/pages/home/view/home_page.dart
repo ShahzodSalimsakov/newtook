@@ -24,7 +24,10 @@ class HomePage extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        Role? userRole = state.roles.first;
+        Role? userRole;
+        if (state.roles.length > 0) {
+          userRole = state.roles.first;
+        }
         if (userRole == null) {
           return Center(
               child: Text(

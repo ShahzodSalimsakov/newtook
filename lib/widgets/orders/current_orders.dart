@@ -223,13 +223,16 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
                               _controller.finishRefresh();
                               _controller.resetFooter();
                             },
-                            child: ListView.builder(
-                              // shrinkWrap: true,
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (context, index) {
-                                return CurrentOrderCard(
-                                    order: snapshot.data![index]);
-                              },
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 40.0),
+                              child: ListView.builder(
+                                // shrinkWrap: true,
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (context, index) {
+                                  return CurrentOrderCard(
+                                      order: snapshot.data![index]);
+                                },
+                              ),
                             ),
                           );
                         } else {

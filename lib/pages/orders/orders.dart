@@ -36,7 +36,7 @@ class OrdersPage extends StatelessWidget {
         length: 2,
         child: Scaffold(
           appBar: AppBar(
-              toolbarHeight: 120,
+              toolbarHeight: 100,
               title: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
