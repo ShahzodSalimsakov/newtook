@@ -1,4 +1,5 @@
 import 'package:arryt/helpers/api_graphql_provider.dart';
+import 'package:arryt/pages/orders_management/orders_management.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:arryt/pages/orders/orders.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../bloc/block_imports.dart';
 import '../../../router.dart';
 import '../../manager/couriers_list.dart';
+import '../../orders_history/orders_history.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -51,6 +53,13 @@ class HomePage extends StatelessWidget {
                 PersistentBottomNavBarItem(
                   icon: const Icon(Icons.list),
                   title: AppLocalizations.of(context)!.orders.toUpperCase(),
+                  activeColorPrimary: Theme.of(context).primaryColor,
+                  inactiveColorPrimary: Colors.grey,
+                ),
+                PersistentBottomNavBarItem(
+                  icon: const Icon(Icons.history_rounded),
+                  title:
+                      AppLocalizations.of(context)!.ordersHistory.toUpperCase(),
                   activeColorPrimary: Theme.of(context).primaryColor,
                   inactiveColorPrimary: Colors.grey,
                 ),
@@ -106,6 +115,21 @@ class HomePage extends StatelessWidget {
                   inactiveColorPrimary: Colors.grey,
                 ),
                 PersistentBottomNavBarItem(
+                  icon: const Icon(Icons.history_rounded),
+                  title:
+                      AppLocalizations.of(context)!.ordersHistory.toUpperCase(),
+                  activeColorPrimary: Theme.of(context).primaryColor,
+                  inactiveColorPrimary: Colors.grey,
+                ),
+                PersistentBottomNavBarItem(
+                  icon: const Icon(Icons.history_rounded),
+                  title: AppLocalizations.of(context)!
+                      .ordersManagement
+                      .toUpperCase(),
+                  activeColorPrimary: Theme.of(context).primaryColor,
+                  inactiveColorPrimary: Colors.grey,
+                ),
+                PersistentBottomNavBarItem(
                   icon: const Icon(Icons.settings),
                   title: AppLocalizations.of(context)!.settings.toUpperCase(),
                   activeColorPrimary: Theme.of(context).primaryColor,
@@ -152,12 +176,15 @@ class HomePage extends StatelessWidget {
       return [
         ApiGraphqlProvider(child: ProfilePageView()),
         OrdersPage(),
+        const OrdersHistory(),
         const SettingsPage()
       ];
     } else if (role.code == 'manager') {
       return [
         ApiGraphqlProvider(child: ProfilePageView()),
         const ManagerCouriersList(),
+        const OrdersHistory(),
+        const OrdersManagement(),
         const SettingsPage()
       ];
     } else {

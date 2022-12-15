@@ -235,24 +235,6 @@ class _QRViewWidgetState extends State<QRViewWidgetPage> {
     await controller!.pauseCamera();
     controller!.dispose();
     AutoRouter.of(context).replaceNamed('/login/type-phone');
-    // ApiClientsBloc apiClientsBloc = BlocProvider.of<ApiClientsBloc>(context);
-    // print(apiClientsBloc.state.apiClients);
-    // showDialog(
-    //     context: context,
-    //     builder: (context) {
-    //       return AlertDialog(
-    //         title: const Text('Success'),
-    //         content: Text('Service:'),
-    //         actions: [
-    //           TextButton(
-    //               onPressed: () {
-    //                 Navigator.of(context).pop();
-    //                 controller!.resumeCamera();
-    //               },
-    //               child: const Text('OK'))
-    //         ],
-    //       );
-    //     });
   }
 
   @override
