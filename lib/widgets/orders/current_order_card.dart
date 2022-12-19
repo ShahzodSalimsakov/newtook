@@ -408,7 +408,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                                       widget.order.from_lon);
 
                                   await launchUrl(Uri.parse(
-                                      "yandexnavi://build_route_on_map?lat_to=${widget.order.from_lat}&lon_to-${widget.order.from_lon}"));
+                                      "yandexnavi://build_route_on_map?lat_to=${widget.order.from_lat}&lon_to=${widget.order.from_lon}"));
                                 },
                                 child: Icon(
                                   Icons.navigation_outlined,
@@ -424,7 +424,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                                   final coords = Coords(
                                       widget.order.to_lat, widget.order.to_lon);
                                   await launchUrl(Uri.parse(
-                                      "yandexnavi://build_route_on_map?lat_to=${widget.order.to_lat}&lon_to-${widget.order.to_lon}"));
+                                      "yandexnavi://build_route_on_map?lat_to=${widget.order.to_lat}&lon_to=${widget.order.to_lon}"));
                                 },
                                 child: Icon(
                                   Icons.location_pin,
@@ -704,7 +704,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                                 final coords = Coords(widget.order.from_lat,
                                     widget.order.from_lon);
                                 await launchUrl(Uri.parse(
-                                    "yandexnavi://build_route_on_map?lat_to=${widget.order.from_lat}&lon_to-${widget.order.from_lon}"));
+                                    "yandexnavi://build_route_on_map?lat_to=${widget.order.from_lat}&lon_to=${widget.order.from_lon}"));
                               },
                               child: Icon(
                                 Icons.navigation_outlined,
@@ -720,7 +720,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                                 final coords = Coords(
                                     widget.order.to_lat, widget.order.to_lon);
                                 await launchUrl(Uri.parse(
-                                    "yandexnavi://build_route_on_map?lat_to=${widget.order.to_lat}&lon_to-${widget.order.to_lon}"));
+                                    "yandexnavi://build_route_on_map?lat_to=${widget.order.to_lat}&lon_to=${widget.order.to_lon}"));
                               },
                               child: Icon(
                                 Icons.location_pin,
