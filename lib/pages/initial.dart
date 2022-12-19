@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:arryt/bloc/block_imports.dart';
 import 'package:arryt/pages/login/type_phone.dart';
 import 'package:arryt/pages/orders/orders.dart';
+import 'api_client_intro/api_client_choose_brand.dart';
 import 'api_client_intro/api_client_intro.dart';
 import 'home/view/home_page.dart';
 
@@ -25,7 +26,7 @@ class _InitialPageView extends StatelessWidget {
           builder: (context, userDataState) {
         print(apiState.apiClients);
         if (apiState.apiClients.isEmpty) {
-          return const ApiClientIntroPage();
+          return const ApiClientChooseBrand();
         } else {
           var accessToken = userDataState.accessToken;
           if (accessToken != null && accessToken.isNotEmpty) {

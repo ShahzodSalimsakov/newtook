@@ -68,5 +68,12 @@
     "chooseCourierForWithdraw": "Pulini bermoqchi bo'lgan kuryeringizni tanlang",
     "currentBalanceLabel": "Joriy balans",
     "typeWithdrawAmount": "Pul miqdorini kiriting",
-    "withdrawButtonLabel": "Pulni bermoq"
+    "withdrawButtonLabel": "Pulni bermoq",
+    "ordersHistory": "Buyurtmalar\ntarixi",
+    "noOrders": "Buyurtmalar yo'q",
+    "courierName": "Kuryer ismi",
+    "ordersManagement": "Buyurtmalar\nboshqarish",
+    "order_card_change_courier": "Kuryerni o'zgartirish",
+    "order_card_assign_courier": "Kuryerni belgilash",
+    "chooseCourierLabel": "Kuryerni tanlang"
 }

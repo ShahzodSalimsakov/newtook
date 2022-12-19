@@ -209,7 +209,7 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ListenDeletedCurrentOrders(),
-                  ListenNewCurrentOrder(),
+                  const ListenNewCurrentOrder(),
                   Expanded(
                     child: StreamBuilder<List<OrderModel>>(
                       stream: objectBox.getCurrentOrders(),
@@ -223,16 +223,23 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
                               _controller.finishRefresh();
                               _controller.resetFooter();
                             },
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 40.0),
-                              child: ListView.builder(
-                                // shrinkWrap: true,
-                                itemCount: snapshot.data!.length,
-                                itemBuilder: (context, index) {
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (context, index) {
+                                if (index == snapshot.data!.length - 1) {
+                                  return Column(
+                                    children: [
+                                      CurrentOrderCard(
+                                          order: snapshot.data![index]),
+                                      const SizedBox(height: 100)
+                                    ],
+                                  );
+                                } else {
                                   return CurrentOrderCard(
                                       order: snapshot.data![index]);
-                                },
-                              ),
+                                }
+                              },
                             ),
                           );
                         } else {

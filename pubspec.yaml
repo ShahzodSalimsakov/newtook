@@ -29,7 +29,7 @@ dependencies:
   expandable: ^5.0.1
   firebase_analytics: ^10.0.1
   firebase_core: ^2.0.0
-  firebase_crashlytics: ^3.0.1
+  firebase_crashlytics: ^3.0.7
   firebase_performance: ^0.9.0+1
   firebase_remote_config: ^3.0.1
   flutter:
@@ -52,6 +52,7 @@ dependencies:
   graphql: 5.1.2-beta.4
   graphql_flutter: 5.1.1-beta.4
   group_button: ^5.2.2
+  grouped_list: ^5.1.2
   hex: ^0.2.0
   http: ^0.13.5
   http_parser: ^4.0.2
@@ -76,6 +77,8 @@ dependencies:
   qr_flutter: ^4.0.0
   rounded_loading_button: ^2.1.0
   sms_autofill: ^2.2.0
+  syncfusion_flutter_core: ^20.3.61
+  syncfusion_flutter_datepicker: ^20.3.61
   tab_indicator_styler: ^2.0.0
   top_snackbar_flutter: ^2.1.1
   url_launcher: ^6.1.7

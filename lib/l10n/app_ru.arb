@@ -68,5 +68,12 @@
     "chooseCourierForWithdraw": "Выберите курьера для выдачи денег",
     "currentBalanceLabel": "Текущий баланс",
     "typeWithdrawAmount": "Введите сумму для выдачи",
-    "withdrawButtonLabel": "Выдать"
+    "withdrawButtonLabel": "Выдать",
+    "ordersHistory": "История\nзаказов",
+    "noOrders": "Нет заказов",
+    "courierName": "Имя курьера",
+    "ordersManagement": "Управление\nзаказами",
+    "order_card_change_courier": "Сменить курьера",
+    "order_card_assign_courier": "Назначить курьера",
+    "chooseCourierLabel": "Выберите курьера"
 }

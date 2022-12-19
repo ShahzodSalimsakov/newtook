@@ -68,5 +68,12 @@
     "chooseCourierForWithdraw": "Choose courier for withdraw",
     "currentBalanceLabel": "Current balance",
     "typeWithdrawAmount": "Type withdraw amount",
-    "withdrawButtonLabel": "Withdraw"
+    "withdrawButtonLabel": "Withdraw",
+    "ordersHistory": "Orders\nhistory",
+    "noOrders": "No orders",
+    "courierName": "Courier name",
+    "ordersManagement": "Orders\nmanagement",
+    "order_card_change_courier": "Change courier",
+    "order_card_assign_courier": "Assign courier",
+    "chooseCourierLabel": "Choose courier"
 }

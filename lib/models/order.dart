@@ -6,6 +6,7 @@ import 'package:arryt/models/organizations.dart';
 import 'package:arryt/models/terminals.dart';
 import 'package:objectbox/objectbox.dart';
 
+import 'couriers.dart';
 import 'customer.dart';
 import 'order_next_button.dart';
 import 'order_status.dart';
@@ -47,6 +48,7 @@ class OrderModel {
   final orderStatus = ToOne<OrderStatus>();
   final orderNextButton = ToMany<OrderNextButton>();
   final organization = ToOne<Organizations>();
+  final courier = ToOne<Couriers>();
 
   OrderModel copyWith({
     String? identity,
