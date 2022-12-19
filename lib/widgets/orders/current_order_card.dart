@@ -25,6 +25,7 @@ import '../../models/order_next_button.dart';
 import '../../models/order_status.dart';
 import '../../models/organizations.dart';
 import '../../models/terminals.dart';
+import '../location_dialog.dart';
 import 'cancel_order_modal.dart';
 import 'order_customer_comments.dart';
 
@@ -138,6 +139,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
       // Test if location services are enabled.
       serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
+        await showLocationDialog(context);
         // Location services are not enabled don't continue
         // accessing the position and request users of the
         // App to enable the location services.
@@ -404,42 +406,9 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                                 onTap: () async {
                                   final coords = Coords(widget.order.from_lat,
                                       widget.order.from_lon);
-                                  final title =
-                                      widget.order.delivery_address ?? '';
-                                  List<AvailableMap> availableMaps =
-                                      await MapLauncher.installedMaps;
-                                  availableMaps = availableMaps
-                                      .where((element) =>
-                                          element.mapType == MapType.yandexNavi)
-                                      .toList();
-                                  showModalBottomSheet(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return SafeArea(
-                                        child: SingleChildScrollView(
-                                          child: Container(
-                                            child: Wrap(
-                                              children: <Widget>[
-                                                for (var map in availableMaps)
-                                                  ListTile(
-                                                    onTap: () => map.showMarker(
-                                                      coords: coords,
-                                                      title: title,
-                                                    ),
-                                                    title: Text(map.mapName),
-                                                    leading: SvgPicture.asset(
-                                                      map.icon,
-                                                      height: 30.0,
-                                                      width: 30.0,
-                                                    ),
-                                                  ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
+
+                                  await launchUrl(Uri.parse(
+                                      "yandexnavi://build_route_on_map?lat_to=${widget.order.from_lat}&lon_to-${widget.order.from_lon}"));
                                 },
                                 child: Icon(
                                   Icons.navigation_outlined,
@@ -454,42 +423,8 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                                 onTap: () async {
                                   final coords = Coords(
                                       widget.order.to_lat, widget.order.to_lon);
-                                  final title =
-                                      widget.order.delivery_address ?? '';
-                                  List<AvailableMap> availableMaps =
-                                      await MapLauncher.installedMaps;
-                                  availableMaps = availableMaps
-                                      .where((element) =>
-                                          element.mapType == MapType.yandexNavi)
-                                      .toList();
-                                  showModalBottomSheet(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return SafeArea(
-                                        child: SingleChildScrollView(
-                                          child: Container(
-                                            child: Wrap(
-                                              children: <Widget>[
-                                                for (var map in availableMaps)
-                                                  ListTile(
-                                                    onTap: () => map.showMarker(
-                                                      coords: coords,
-                                                      title: title,
-                                                    ),
-                                                    title: Text(map.mapName),
-                                                    leading: SvgPicture.asset(
-                                                      map.icon,
-                                                      height: 30.0,
-                                                      width: 30.0,
-                                                    ),
-                                                  ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
+                                  await launchUrl(Uri.parse(
+                                      "yandexnavi://build_route_on_map?lat_to=${widget.order.to_lat}&lon_to-${widget.order.to_lon}"));
                                 },
                                 child: Icon(
                                   Icons.location_pin,
@@ -768,42 +703,8 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                               onTap: () async {
                                 final coords = Coords(widget.order.from_lat,
                                     widget.order.from_lon);
-                                final title =
-                                    widget.order.delivery_address ?? '';
-                                List<AvailableMap> availableMaps =
-                                    await MapLauncher.installedMaps;
-                                availableMaps = availableMaps
-                                    .where((element) =>
-                                        element.mapType == MapType.yandexNavi)
-                                    .toList();
-                                showModalBottomSheet(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return SafeArea(
-                                      child: SingleChildScrollView(
-                                        child: Container(
-                                          child: Wrap(
-                                            children: <Widget>[
-                                              for (var map in availableMaps)
-                                                ListTile(
-                                                  onTap: () => map.showMarker(
-                                                    coords: coords,
-                                                    title: title,
-                                                  ),
-                                                  title: Text(map.mapName),
-                                                  leading: SvgPicture.asset(
-                                                    map.icon,
-                                                    height: 30.0,
-                                                    width: 30.0,
-                                                  ),
-                                                ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
+                                await launchUrl(Uri.parse(
+                                    "yandexnavi://build_route_on_map?lat_to=${widget.order.from_lat}&lon_to-${widget.order.from_lon}"));
                               },
                               child: Icon(
                                 Icons.navigation_outlined,
@@ -818,42 +719,8 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                               onTap: () async {
                                 final coords = Coords(
                                     widget.order.to_lat, widget.order.to_lon);
-                                final title =
-                                    widget.order.delivery_address ?? '';
-                                List<AvailableMap> availableMaps =
-                                    await MapLauncher.installedMaps;
-                                availableMaps = availableMaps
-                                    .where((element) =>
-                                        element.mapType == MapType.yandexNavi)
-                                    .toList();
-                                showModalBottomSheet(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return SafeArea(
-                                      child: SingleChildScrollView(
-                                        child: Container(
-                                          child: Wrap(
-                                            children: <Widget>[
-                                              for (var map in availableMaps)
-                                                ListTile(
-                                                  onTap: () => map.showMarker(
-                                                    coords: coords,
-                                                    title: title,
-                                                  ),
-                                                  title: Text(map.mapName),
-                                                  leading: SvgPicture.asset(
-                                                    map.icon,
-                                                    height: 30.0,
-                                                    width: 30.0,
-                                                  ),
-                                                ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                );
+                                await launchUrl(Uri.parse(
+                                    "yandexnavi://build_route_on_map?lat_to=${widget.order.to_lat}&lon_to-${widget.order.to_lon}"));
                               },
                               child: Icon(
                                 Icons.location_pin,

@@ -10,6 +10,8 @@ import 'package:arryt/bloc/block_imports.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../widgets/location_dialog.dart';
+
 class HomeViewWorkSwitch extends StatefulWidget {
   const HomeViewWorkSwitch({super.key});
 
@@ -32,6 +34,7 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
     // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
+      await showLocationDialog(context);
       // Location services are not enabled don't continue
       // accessing the position and request users of the
       // App to enable the location services.
@@ -162,6 +165,7 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
       // Test if location services are enabled.
       serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
+        await showLocationDialog(context);
         // Location services are not enabled don't continue
         // accessing the position and request users of the
         // App to enable the location services.
@@ -269,7 +273,9 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    checkLocationListen();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkLocationListen();
+    });
   }
 
   @override

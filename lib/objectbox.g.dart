@@ -14,6 +14,7 @@ import 'package:objectbox/internal.dart'; // generated code can access "internal
 import 'package:objectbox/objectbox.dart';
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
+import 'models/couriers.dart';
 import 'models/customer.dart';
 import 'models/manager_couriers_model.dart';
 import 'models/order.dart';
@@ -29,7 +30,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(5, 8938918269802989134),
       name: 'OrderModel',
-      lastPropertyId: const IdUid(20, 8573742609611702437),
+      lastPropertyId: const IdUid(21, 8626749551733128580),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -125,7 +126,14 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(15, 4088320079207736974),
-            relationTarget: 'Organizations')
+            relationTarget: 'Organizations'),
+        ModelProperty(
+            id: const IdUid(21, 8626749551733128580),
+            name: 'courierId',
+            type: 11,
+            flags: 520,
+            indexId: const IdUid(18, 4634025665218089564),
+            relationTarget: 'Couriers')
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -505,6 +513,36 @@ final _entities = <ModelEntity>[
             flags: 0)
       ],
       relations: <ModelRelation>[],
+      backlinks: <ModelBacklink>[]),
+  ModelEntity(
+      id: const IdUid(13, 2537530572472304200),
+      name: 'Couriers',
+      lastPropertyId: const IdUid(4, 2300257700537351364),
+      flags: 0,
+      properties: <ModelProperty>[
+        ModelProperty(
+            id: const IdUid(1, 8469239260230610635),
+            name: 'id',
+            type: 6,
+            flags: 1),
+        ModelProperty(
+            id: const IdUid(2, 1272115890219078573),
+            name: 'identity',
+            type: 9,
+            flags: 2048,
+            indexId: const IdUid(17, 4429152182772479287)),
+        ModelProperty(
+            id: const IdUid(3, 705569632956642091),
+            name: 'firstName',
+            type: 9,
+            flags: 0),
+        ModelProperty(
+            id: const IdUid(4, 2300257700537351364),
+            name: 'lastName',
+            type: 9,
+            flags: 0)
+      ],
+      relations: <ModelRelation>[],
       backlinks: <ModelBacklink>[])
 ];
 
@@ -528,8 +566,8 @@ Future<Store> openStore(
 ModelDefinition getObjectBoxModel() {
   final model = ModelInfo(
       entities: _entities,
-      lastEntityId: const IdUid(12, 5349769437952250488),
-      lastIndexId: const IdUid(16, 3707077786157151456),
+      lastEntityId: const IdUid(13, 2537530572472304200),
+      lastIndexId: const IdUid(18, 4634025665218089564),
       lastRelationId: const IdUid(2, 1296200797359606388),
       lastSequenceId: const IdUid(0, 0),
       retiredEntityUids: const [
@@ -581,7 +619,8 @@ ModelDefinition getObjectBoxModel() {
               object.customer,
               object.terminal,
               object.orderStatus,
-              object.organization
+              object.organization,
+              object.courier
             ],
         toManyRelations: (OrderModel object) =>
             {RelInfo<OrderModel>.toMany(1, object.id): object.orderNextButton},
@@ -598,7 +637,7 @@ ModelDefinition getObjectBoxModel() {
               ? null
               : fbb.writeString(object.delivery_comment!);
           final identityOffset = fbb.writeString(object.identity);
-          fbb.startTable(21);
+          fbb.startTable(22);
           fbb.addInt64(1, object.id);
           fbb.addFloat64(4, object.to_lat);
           fbb.addFloat64(5, object.to_lon);
@@ -616,6 +655,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addFloat64(17, object.from_lat);
           fbb.addFloat64(18, object.from_lon);
           fbb.addInt64(19, object.organization.targetId);
+          fbb.addInt64(20, object.courier.targetId);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -659,6 +699,9 @@ ModelDefinition getObjectBoxModel() {
           object.organization.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 42, 0);
           object.organization.attach(store);
+          object.courier.targetId =
+              const fb.Int64Reader().vTableGet(buffer, rootOffset, 44, 0);
+          object.courier.attach(store);
           InternalToManyAccess.setRelInfo(
               object.orderNextButton,
               store,
@@ -1023,6 +1066,41 @@ ModelDefinition getObjectBoxModel() {
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
 
           return object;
+        }),
+    Couriers: EntityDefinition<Couriers>(
+        model: _entities[8],
+        toOneRelations: (Couriers object) => [],
+        toManyRelations: (Couriers object) => {},
+        getId: (Couriers object) => object.id,
+        setId: (Couriers object, int id) {
+          object.id = id;
+        },
+        objectToFB: (Couriers object, fb.Builder fbb) {
+          final identityOffset = fbb.writeString(object.identity);
+          final firstNameOffset = fbb.writeString(object.firstName);
+          final lastNameOffset = fbb.writeString(object.lastName);
+          fbb.startTable(5);
+          fbb.addInt64(0, object.id);
+          fbb.addOffset(1, identityOffset);
+          fbb.addOffset(2, firstNameOffset);
+          fbb.addOffset(3, lastNameOffset);
+          fbb.finish(fbb.endTable());
+          return object.id;
+        },
+        objectFromFB: (Store store, ByteData fbData) {
+          final buffer = fb.BufferContext(fbData);
+          final rootOffset = buffer.derefObject(0);
+
+          final object = Couriers(
+              identity: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 6, ''),
+              firstName: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 8, ''),
+              lastName: const fb.StringReader(asciiOptimization: true)
+                  .vTableGet(buffer, rootOffset, 10, ''))
+            ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
+
+          return object;
         })
   };
 
@@ -1098,6 +1176,10 @@ class OrderModel_ {
   /// see [OrderModel.organization]
   static final organization = QueryRelationToOne<OrderModel, Organizations>(
       _entities[0].properties[16]);
+
+  /// see [OrderModel.courier]
+  static final courier =
+      QueryRelationToOne<OrderModel, Couriers>(_entities[0].properties[17]);
 
   /// see [OrderModel.orderNextButton]
   static final orderNextButton =
@@ -1359,4 +1441,22 @@ class ManagerCouriersModel_ {
   /// see [ManagerCouriersModel.courierId]
   static final courierId =
       QueryStringProperty<ManagerCouriersModel>(_entities[7].properties[8]);
+}
+
+/// [Couriers] entity fields to define ObjectBox queries.
+class Couriers_ {
+  /// see [Couriers.id]
+  static final id = QueryIntegerProperty<Couriers>(_entities[8].properties[0]);
+
+  /// see [Couriers.identity]
+  static final identity =
+      QueryStringProperty<Couriers>(_entities[8].properties[1]);
+
+  /// see [Couriers.firstName]
+  static final firstName =
+      QueryStringProperty<Couriers>(_entities[8].properties[2]);
+
+  /// see [Couriers.lastName]
+  static final lastName =
+      QueryStringProperty<Couriers>(_entities[8].properties[3]);
 }

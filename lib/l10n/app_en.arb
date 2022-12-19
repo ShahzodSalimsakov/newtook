@@ -75,5 +75,9 @@
     "ordersManagement": "Orders\nmanagement",
     "order_card_change_courier": "Change courier",
     "order_card_assign_courier": "Assign courier",
-    "chooseCourierLabel": "Choose courier"
+    "chooseCourierLabel": "Choose courier",
+    "locationDialogLabel": "Location permissions",
+    "locationDialogText": "To track your physical activity as part of your orders, the Arryt app collects location data even when the app is closed or not in use",
+    "locationDialogApprove": "Allow",
+    "privacyPolicy": "Privacy policy"
 }
