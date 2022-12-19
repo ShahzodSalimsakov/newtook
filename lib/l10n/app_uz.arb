@@ -75,5 +75,9 @@
     "ordersManagement": "Buyurtmalar\nboshqarish",
     "order_card_change_courier": "Kuryerni o'zgartirish",
     "order_card_assign_courier": "Kuryerni belgilash",
-    "chooseCourierLabel": "Kuryerni tanlang"
+    "chooseCourierLabel": "Kuryerni tanlang",
+    "locationDialogLabel": "Geolokasiyaga ruxsat bering",
+    "locationDialogText": "Buyurtmalar bo'yicha jismoniy faolligingizni kuzatish uchun Arret ilovasi ilova yopiq yoki ishlatilmaganda ham joylashuv ma'lumotlarini to'playdi",
+    "locationDialogApprove": "Ruxsat berish",
+    "privacyPolicy": "Maxfiylik siyosati"
 }

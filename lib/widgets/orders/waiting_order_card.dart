@@ -16,6 +16,7 @@ import 'package:arryt/helpers/api_graphql_provider.dart';
 import 'package:arryt/main.dart';
 import 'package:arryt/models/order.dart';
 import 'package:arryt/widgets/orders/orders_items.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../models/customer.dart';
 import '../../models/order_next_button.dart';
@@ -167,17 +168,29 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Icon(
-                                Icons.navigation_outlined,
-                                color: Theme.of(context).primaryColor,
+                              GestureDetector(
+                                onTap: () async {
+                                  await launchUrl(Uri.parse(
+                                      "yandexnavi://build_route_on_map?lat_to=${widget.order.from_lat}&lon_to=${widget.order.from_lon}"));
+                                },
+                                child: Icon(
+                                  Icons.navigation_outlined,
+                                  color: Theme.of(context).primaryColor,
+                                ),
                               ),
                               Icon(
                                 Icons.keyboard_control_outlined,
                                 color: Theme.of(context).primaryColor,
                               ),
-                              Icon(
-                                Icons.location_pin,
-                                color: Theme.of(context).primaryColor,
+                              GestureDetector(
+                                onTap: () async {
+                                  await launchUrl(Uri.parse(
+                                      "yandexnavi://build_route_on_map?lat_to=${widget.order.to_lat}&lon_to=${widget.order.to_lon}"));
+                                },
+                                child: Icon(
+                                  Icons.location_pin,
+                                  color: Theme.of(context).primaryColor,
+                                ),
                               ),
                             ],
                           ),
@@ -231,36 +244,8 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                   onTap: () async {
                     final coords =
                         Coords(widget.order.to_lat, widget.order.to_lon);
-                    final title = widget.order.delivery_address ?? '';
-                    final availableMaps = await MapLauncher.installedMaps;
-                    showModalBottomSheet(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return SafeArea(
-                          child: SingleChildScrollView(
-                            child: Container(
-                              child: Wrap(
-                                children: <Widget>[
-                                  for (var map in availableMaps)
-                                    ListTile(
-                                      onTap: () => map.showMarker(
-                                        coords: coords,
-                                        title: title,
-                                      ),
-                                      title: Text(map.mapName),
-                                      leading: SvgPicture.asset(
-                                        map.icon,
-                                        height: 30.0,
-                                        width: 30.0,
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    );
+                    await launchUrl(Uri.parse(
+                        "yandexnavi://build_route_on_map?lat_to=${widget.order.to_lat}&lon_to=${widget.order.to_lon}"));
                   },
                   child: const Icon(
                     Icons.location_pin,
@@ -430,17 +415,31 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Icon(
-                              Icons.navigation_outlined,
-                              color: Theme.of(context).primaryColor,
+                            GestureDetector(
+                              onTap: () async {
+                                await launchUrl(Uri.parse(
+                                    "yandexnavi://build_route_on_map?lat_to=${widget.order.from_lat}&lon_to=${widget.order.from_lon}"));
+                              },
+                              child: Icon(
+                                Icons.navigation_outlined,
+                                color: Theme.of(context).primaryColor,
+                              ),
                             ),
                             Icon(
                               Icons.keyboard_control_outlined,
                               color: Theme.of(context).primaryColor,
                             ),
-                            Icon(
-                              Icons.location_pin,
-                              color: Theme.of(context).primaryColor,
+                            GestureDetector(
+                              onTap: () async {
+                                print(
+                                    "yandexnavi://build_route_on_map?lat_to=${widget.order.to_lat}&lon_to=${widget.order.to_lon}");
+                                await launchUrl(Uri.parse(
+                                    "yandexnavi://build_route_on_map?lat_to=${widget.order.to_lat}&lon_to=${widget.order.to_lon}"));
+                              },
+                              child: Icon(
+                                Icons.location_pin,
+                                color: Theme.of(context).primaryColor,
+                              ),
                             ),
                           ],
                         ),

@@ -77,6 +77,12 @@ class _$AppRouter extends RootStackRouter {
         child: const CallCenterOrganizationsListPage(),
       );
     },
+    PrivacyPolicyRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const PrivacyPolicyPage(),
+      );
+    },
   };
 
   @override
@@ -112,6 +118,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           CallCenterOrganizationsListRoute.name,
           path: '/organizations',
+        ),
+        RouteConfig(
+          PrivacyPolicyRoute.name,
+          path: '/privacy',
         ),
       ];
 }
@@ -254,4 +264,16 @@ class CallCenterOrganizationsListRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'CallCenterOrganizationsListRoute';
+}
+
+/// generated route for
+/// [PrivacyPolicyPage]
+class PrivacyPolicyRoute extends PageRouteInfo<void> {
+  const PrivacyPolicyRoute()
+      : super(
+          PrivacyPolicyRoute.name,
+          path: '/privacy',
+        );
+
+  static const String name = 'PrivacyPolicyRoute';
 }

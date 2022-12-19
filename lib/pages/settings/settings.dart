@@ -46,6 +46,14 @@ class SettingsPage extends StatelessWidget {
                 context.router.pushNamed('/organizations');
               },
             ),
+            ListTile(
+              title: Text(AppLocalizations.of(context)!.privacyPolicy),
+              leading: const Icon(Icons.privacy_tip_outlined),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                context.router.pushNamed('/privacy');
+              },
+            ),
             const Spacer(),
             Text(AppLocalizations.of(context)!.choose_lang.toUpperCase(),
                 style: const TextStyle(color: Colors.black)),

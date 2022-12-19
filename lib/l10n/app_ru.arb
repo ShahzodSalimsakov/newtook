@@ -75,5 +75,9 @@
     "ordersManagement": "Управление\nзаказами",
     "order_card_change_courier": "Сменить курьера",
     "order_card_assign_courier": "Назначить курьера",
-    "chooseCourierLabel": "Выберите курьера"
+    "chooseCourierLabel": "Выберите курьера",
+    "locationDialogLabel": "Разрешение на геолокацию",
+    "locationDialogText": "Чтобы отслеживать вашу физическую активность в рамках заказов, приложение Arryt собирает данные о местоположении, даже когда приложение закрыто или не используется",
+    "locationDialogApprove": "Разрешить",
+    "privacyPolicy": "Политика конфиденциальности"
 }

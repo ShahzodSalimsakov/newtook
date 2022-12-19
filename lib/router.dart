@@ -1,4 +1,5 @@
 import 'package:arryt/pages/callcenter/organizations_list.dart';
+import 'package:arryt/pages/privacy/index.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:arryt/pages/brands/brands.dart';
@@ -24,6 +25,7 @@ part 'router.gr.dart';
         page: OrderCustomerCommentsPage,
         path: '/order/customer-comments/:customerId/:orderId'),
     AutoRoute(page: CallCenterOrganizationsListPage, path: '/organizations'),
+    AutoRoute(page: PrivacyPolicyPage, path: '/privacy'),
   ],
 )
 // extend the generated private router

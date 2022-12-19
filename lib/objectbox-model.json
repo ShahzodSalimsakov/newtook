@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "5:8938918269802989134",
-      "lastPropertyId": "20:8573742609611702437",
+      "lastPropertyId": "21:8626749551733128580",
       "name": "OrderModel",
       "properties": [
         {
@@ -107,6 +107,14 @@
           "flags": 520,
           "indexId": "15:4088320079207736974",
           "relationTarget": "Organizations"
+        },
+        {
+          "id": "21:8626749551733128580",
+          "name": "courierId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "18:4634025665218089564",
+          "relationTarget": "Couriers"
         }
       ],
       "relations": [
@@ -499,10 +507,41 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "13:2537530572472304200",
+      "lastPropertyId": "4:2300257700537351364",
+      "name": "Couriers",
+      "properties": [
+        {
+          "id": "1:8469239260230610635",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1272115890219078573",
+          "name": "identity",
+          "type": 9,
+          "flags": 2048,
+          "indexId": "17:4429152182772479287"
+        },
+        {
+          "id": "3:705569632956642091",
+          "name": "firstName",
+          "type": 9
+        },
+        {
+          "id": "4:2300257700537351364",
+          "name": "lastName",
+          "type": 9
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "12:5349769437952250488",
-  "lastIndexId": "16:3707077786157151456",
+  "lastEntityId": "13:2537530572472304200",
+  "lastIndexId": "18:4634025665218089564",
   "lastRelationId": "2:1296200797359606388",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
