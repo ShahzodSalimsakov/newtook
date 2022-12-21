@@ -526,6 +526,19 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
+                                          Text(
+                                            AppLocalizations.of(context)!
+                                                .customer_phone,
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Text(element.customer.target!.phone),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
                                           Flexible(
                                               child: Text(
                                             element.terminal.target!.name,
@@ -534,12 +547,13 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                                                 fontWeight: FontWeight.bold),
                                           )),
                                           Flexible(
-                                              child: Text(
-                                            element.delivery_address ?? '',
-                                            maxLines: 4,
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold),
-                                          )),
+                                            fit: FlexFit.loose,
+                                            child: Text(
+                                              element.delivery_address ?? '',
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                       Row(
@@ -682,6 +696,20 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             Text(element.customer.target!.name),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              AppLocalizations.of(context)!
+                                                  .customer_phone,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                                element.customer.target!.phone),
                                           ],
                                         ),
                                         Row(
