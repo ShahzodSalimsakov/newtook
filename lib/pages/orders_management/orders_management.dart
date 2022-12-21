@@ -405,12 +405,14 @@ class _OrdersManagementViewState extends State<OrdersManagementView> {
                                                   fontWeight: FontWeight.bold),
                                             )),
                                             Flexible(
-                                                child: Text(
-                                              element.delivery_address ?? '',
-                                              maxLines: 4,
-                                              style: const TextStyle(
-                                                  fontWeight: FontWeight.bold),
-                                            )),
+                                              fit: FlexFit.loose,
+                                              child: Text(
+                                                element.delivery_address ?? '',
+                                                style: const TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
                                           ],
                                         ),
                                         Row(

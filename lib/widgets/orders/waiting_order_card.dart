@@ -158,6 +158,16 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        Text(
+                          AppLocalizations.of(context)!.customer_phone,
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        Text(widget.order.customer.target!.phone),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
                         Flexible(
                             child: Text(
                           widget.order.terminal.target!.name,
@@ -196,11 +206,12 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                           ),
                         ),
                         Flexible(
-                            child: Text(
-                          widget.order.delivery_address ?? '',
-                          maxLines: 4,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        )),
+                          fit: FlexFit.loose,
+                          child: Text(
+                            widget.order.delivery_address ?? '',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ],
                     ),
                     Row(
@@ -353,6 +364,16 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(widget.order.customer.target!.name),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.customer_phone,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text(widget.order.customer.target!.phone),
                         ],
                       ),
                       Row(
