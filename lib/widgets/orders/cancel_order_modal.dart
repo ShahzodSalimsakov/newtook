@@ -50,6 +50,7 @@ class _CancelOrderModalState extends State<CancelOrderModal> {
                         delivery_address
                         delivery_comment
                         created_at
+                        payment_type
                         orders_organization {
                           id
                           name
@@ -230,6 +231,7 @@ class _CancelOrderModalState extends State<CancelOrderModal> {
                         delivery_address
                         delivery_comment
                         created_at
+                        payment_type
                         orders_organization {
                           id
                           name

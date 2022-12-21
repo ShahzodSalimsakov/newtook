@@ -79,5 +79,6 @@
     "locationDialogLabel": "Location permissions",
     "locationDialogText": "To track your physical activity as part of your orders, the Arryt app collects location data even when the app is closed or not in use",
     "locationDialogApprove": "Allow",
-    "privacyPolicy": "Privacy policy"
+    "privacyPolicy": "Privacy policy",
+    "payment_type": "Payment type"
 }

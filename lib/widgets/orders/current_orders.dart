@@ -55,6 +55,7 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
           delivery_address
           delivery_comment
           created_at
+          payment_type
           orders_organization {
             id
             name

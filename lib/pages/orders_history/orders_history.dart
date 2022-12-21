@@ -87,6 +87,7 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
             delivery_address
             delivery_comment
             created_at
+            payment_type
             orders_organization {
               id
               name
@@ -597,7 +598,26 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                                                 fontSize: 20),
                                           ),
                                         ],
-                                      )
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            AppLocalizations.of(context)!
+                                                .payment_type,
+                                            style:
+                                                const TextStyle(fontSize: 20),
+                                          ),
+                                          Text(
+                                            element.paymentType
+                                                    ?.toUpperCase() ??
+                                                '',
+                                            style:
+                                                const TextStyle(fontSize: 20),
+                                          ),
+                                        ],
+                                      ),
                                     ],
                                   )),
                               SizedBox(
@@ -834,7 +854,26 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                                                   fontSize: 20),
                                             ),
                                           ],
-                                        )
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              AppLocalizations.of(context)!
+                                                  .payment_type,
+                                              style:
+                                                  const TextStyle(fontSize: 20),
+                                            ),
+                                            Text(
+                                              element.paymentType
+                                                      ?.toUpperCase() ??
+                                                  '',
+                                              style:
+                                                  const TextStyle(fontSize: 20),
+                                            ),
+                                          ],
+                                        ),
                                       ],
                                     )),
                                 SizedBox(

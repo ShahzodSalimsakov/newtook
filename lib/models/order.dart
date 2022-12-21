@@ -27,6 +27,7 @@ class OrderModel {
   final String? delivery_address;
   final String? delivery_comment;
   final DateTime created_at;
+  final String? paymentType;
 
   OrderModel({
     required this.identity,
@@ -41,6 +42,7 @@ class OrderModel {
     required this.created_at,
     required this.from_lat,
     required this.from_lon,
+    this.paymentType,
   });
 
   final customer = ToOne<Customer>();
@@ -63,6 +65,7 @@ class OrderModel {
     DateTime? created_at,
     double? from_lat,
     double? from_lon,
+    String? paymentType,
   }) {
     return OrderModel(
       identity: identity ?? this.identity,
@@ -77,6 +80,7 @@ class OrderModel {
       created_at: created_at ?? this.created_at,
       from_lat: from_lat ?? this.from_lat,
       from_lon: from_lon ?? this.from_lon,
+      paymentType: paymentType ?? this.paymentType,
     );
   }
 
@@ -94,6 +98,7 @@ class OrderModel {
       'created_at': created_at.millisecondsSinceEpoch,
       'from_lat': from_lat,
       'from_lon': from_lon,
+      'payment_type': paymentType,
     };
   }
 
@@ -111,6 +116,7 @@ class OrderModel {
       created_at: DateTime.parse(map['created_at'] as String),
       from_lat: map['from_lat'] as double,
       from_lon: map['from_lon'] as double,
+      paymentType: map['payment_type'] as String?,
     );
   }
 
