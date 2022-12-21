@@ -207,6 +207,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
           delivery_address
           delivery_comment
           created_at
+          payment_type
           orders_organization {
             id
             name
@@ -484,7 +485,20 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
                       ],
-                    )
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.payment_type,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        Text(
+                          widget.order.paymentType?.toUpperCase() ?? '',
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
                   ],
                 )),
             Container(
@@ -689,19 +703,6 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                           Text("${(widget.order.pre_distance).toString()} км"),
                         ],
                       ),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //   children: [
-                      //     Text(
-                      //       AppLocalizations.of(context)!.payment_type,
-                      //       style: const TextStyle(fontSize: 20),
-                      //     ),
-                      //     Text(
-                      //       order.payment_type,
-                      //       style: const TextStyle(fontSize: 20),
-                      //     ),
-                      //   ],
-                      // ),
                     ],
                   )),
               Padding(
@@ -809,7 +810,20 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                                 fontWeight: FontWeight.bold, fontSize: 20),
                           ),
                         ],
-                      )
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.payment_type,
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            widget.order.paymentType?.toUpperCase() ?? '',
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
                     ],
                   )),
               Container(

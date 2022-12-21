@@ -245,7 +245,20 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
                       ],
-                    )
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.payment_type,
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                        Text(
+                          widget.order.paymentType?.toUpperCase() ?? '',
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                      ],
+                    ),
                   ],
                 )),
             Row(
@@ -523,7 +536,20 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                                 fontWeight: FontWeight.bold, fontSize: 20),
                           ),
                         ],
-                      )
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.payment_type,
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            widget.order.paymentType?.toUpperCase() ?? '',
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                        ],
+                      ),
                     ],
                   )),
               Padding(

@@ -58,6 +58,7 @@ class _MyWaitingOrdersListViewState extends State<MyWaitingOrdersListView>
           delivery_address
           delivery_comment
           created_at
+          payment_type
           orders_organization {
             id
             name

@@ -26,6 +26,7 @@ class WaitingOrderModel {
   final String? delivery_address;
   final String? delivery_comment;
   final DateTime created_at;
+  final String? paymentType;
 
   WaitingOrderModel({
     required this.identity,
@@ -40,6 +41,7 @@ class WaitingOrderModel {
     this.delivery_address,
     this.delivery_comment,
     required this.created_at,
+    this.paymentType,
   });
 
   final customer = ToOne<Customer>();
@@ -61,6 +63,7 @@ class WaitingOrderModel {
     String? delivery_address,
     String? delivery_comment,
     DateTime? created_at,
+    String? paymentType,
   }) {
     return WaitingOrderModel(
       identity: identity ?? this.identity,
@@ -75,6 +78,7 @@ class WaitingOrderModel {
       created_at: created_at ?? this.created_at,
       from_lat: from_lat ?? this.from_lat,
       from_lon: from_lon ?? this.from_lon,
+      paymentType: paymentType ?? this.paymentType,
     );
   }
 
@@ -92,6 +96,7 @@ class WaitingOrderModel {
       'delivery_address': delivery_address,
       'delivery_comment': delivery_comment,
       'created_at': created_at.millisecondsSinceEpoch,
+      'payment_type': paymentType,
     };
   }
 
@@ -109,6 +114,7 @@ class WaitingOrderModel {
       delivery_address: map['delivery_address'] as String?,
       delivery_comment: map['delivery_comment'] as String?,
       created_at: DateTime.parse(map['created_at'] as String),
+      paymentType: map['payment_type'] as String?,
     );
   }
 
