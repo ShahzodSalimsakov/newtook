@@ -30,7 +30,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(5, 8938918269802989134),
       name: 'OrderModel',
-      lastPropertyId: const IdUid(21, 8626749551733128580),
+      lastPropertyId: const IdUid(22, 5691642509388763970),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -133,7 +133,12 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(18, 4634025665218089564),
-            relationTarget: 'Couriers')
+            relationTarget: 'Couriers'),
+        ModelProperty(
+            id: const IdUid(22, 5691642509388763970),
+            name: 'paymentType',
+            type: 9,
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -294,7 +299,7 @@ final _entities = <ModelEntity>[
   ModelEntity(
       id: const IdUid(10, 1949976709383216849),
       name: 'WaitingOrderModel',
-      lastPropertyId: const IdUid(17, 3169785221312573997),
+      lastPropertyId: const IdUid(18, 8744202764868180277),
       flags: 0,
       properties: <ModelProperty>[
         ModelProperty(
@@ -390,7 +395,12 @@ final _entities = <ModelEntity>[
             type: 11,
             flags: 520,
             indexId: const IdUid(14, 5510076716237701865),
-            relationTarget: 'Organizations')
+            relationTarget: 'Organizations'),
+        ModelProperty(
+            id: const IdUid(18, 8744202764868180277),
+            name: 'paymentType',
+            type: 9,
+            flags: 0)
       ],
       relations: <ModelRelation>[
         ModelRelation(
@@ -637,7 +647,10 @@ ModelDefinition getObjectBoxModel() {
               ? null
               : fbb.writeString(object.delivery_comment!);
           final identityOffset = fbb.writeString(object.identity);
-          fbb.startTable(22);
+          final paymentTypeOffset = object.paymentType == null
+              ? null
+              : fbb.writeString(object.paymentType!);
+          fbb.startTable(23);
           fbb.addInt64(1, object.id);
           fbb.addFloat64(4, object.to_lat);
           fbb.addFloat64(5, object.to_lon);
@@ -656,6 +669,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addFloat64(18, object.from_lon);
           fbb.addInt64(19, object.organization.targetId);
           fbb.addInt64(20, object.courier.targetId);
+          fbb.addOffset(21, paymentTypeOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -685,7 +699,8 @@ ModelDefinition getObjectBoxModel() {
               created_at:
                   DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0)),
               from_lat: const fb.Float64Reader().vTableGet(buffer, rootOffset, 38, 0),
-              from_lon: const fb.Float64Reader().vTableGet(buffer, rootOffset, 40, 0))
+              from_lon: const fb.Float64Reader().vTableGet(buffer, rootOffset, 40, 0),
+              paymentType: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 46))
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 6, 0);
           object.customer.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 30, 0);
@@ -890,7 +905,10 @@ ModelDefinition getObjectBoxModel() {
           final delivery_commentOffset = object.delivery_comment == null
               ? null
               : fbb.writeString(object.delivery_comment!);
-          fbb.startTable(18);
+          final paymentTypeOffset = object.paymentType == null
+              ? null
+              : fbb.writeString(object.paymentType!);
+          fbb.startTable(19);
           fbb.addInt64(0, object.id);
           fbb.addOffset(1, identityOffset);
           fbb.addFloat64(2, object.to_lat);
@@ -908,6 +926,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addFloat64(14, object.from_lat);
           fbb.addFloat64(15, object.from_lon);
           fbb.addInt64(16, object.organization.targetId);
+          fbb.addOffset(17, paymentTypeOffset);
           fbb.finish(fbb.endTable());
           return object.id;
         },
@@ -938,7 +957,8 @@ ModelDefinition getObjectBoxModel() {
                   .vTableGetNullable(buffer, rootOffset, 20),
               delivery_comment: const fb.StringReader(asciiOptimization: true)
                   .vTableGetNullable(buffer, rootOffset, 22),
-              created_at: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0)))
+              created_at: DateTime.fromMillisecondsSinceEpoch(const fb.Int64Reader().vTableGet(buffer, rootOffset, 24, 0)),
+              paymentType: const fb.StringReader(asciiOptimization: true).vTableGetNullable(buffer, rootOffset, 38))
             ..id = const fb.Int64Reader().vTableGet(buffer, rootOffset, 4, 0);
           object.customer.targetId =
               const fb.Int64Reader().vTableGet(buffer, rootOffset, 26, 0);
@@ -1181,6 +1201,10 @@ class OrderModel_ {
   static final courier =
       QueryRelationToOne<OrderModel, Couriers>(_entities[0].properties[17]);
 
+  /// see [OrderModel.paymentType]
+  static final paymentType =
+      QueryStringProperty<OrderModel>(_entities[0].properties[18]);
+
   /// see [OrderModel.orderNextButton]
   static final orderNextButton =
       QueryRelationToMany<OrderModel, OrderNextButton>(
@@ -1354,6 +1378,10 @@ class WaitingOrderModel_ {
   static final organization =
       QueryRelationToOne<WaitingOrderModel, Organizations>(
           _entities[5].properties[16]);
+
+  /// see [WaitingOrderModel.paymentType]
+  static final paymentType =
+      QueryStringProperty<WaitingOrderModel>(_entities[5].properties[17]);
 
   /// see [WaitingOrderModel.orderNextButton]
   static final orderNextButton =

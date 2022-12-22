@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "5:8938918269802989134",
-      "lastPropertyId": "21:8626749551733128580",
+      "lastPropertyId": "22:5691642509388763970",
       "name": "OrderModel",
       "properties": [
         {
@@ -115,6 +115,11 @@
           "flags": 520,
           "indexId": "18:4634025665218089564",
           "relationTarget": "Couriers"
+        },
+        {
+          "id": "22:5691642509388763970",
+          "name": "paymentType",
+          "type": 9
         }
       ],
       "relations": [
@@ -279,7 +284,7 @@
     },
     {
       "id": "10:1949976709383216849",
-      "lastPropertyId": "17:3169785221312573997",
+      "lastPropertyId": "18:8744202764868180277",
       "name": "WaitingOrderModel",
       "properties": [
         {
@@ -381,6 +386,11 @@
           "flags": 520,
           "indexId": "14:5510076716237701865",
           "relationTarget": "Organizations"
+        },
+        {
+          "id": "18:8744202764868180277",
+          "name": "paymentType",
+          "type": 9
         }
       ],
       "relations": [
