@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -46,19 +49,9 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDu4_6ZtApKGHNcl0PXORFyL42FGLHMeOQ',
-    appId: '1:92327347967:web:751b9bd8aa59a43b16eeca',
-    messagingSenderId: '92327347967',
-    projectId: 'arryt-b201e',
-    authDomain: 'arryt-b201e.firebaseapp.com',
-    storageBucket: 'arryt-b201e.appspot.com',
-    measurementId: 'G-SRRPJGQKB1',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDz5DeoDqhOQuO2e3g2rp40TYo-vSItZHE',
-    appId: '1:92327347967:android:b1caa2f9cb4abaa516eeca',
+    appId: '1:92327347967:android:be126bad9edb558d16eeca',
     messagingSenderId: '92327347967',
     projectId: 'arryt-b201e',
     storageBucket: 'arryt-b201e.appspot.com',
@@ -66,11 +59,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCab4NKp6oGydeA_J9Dk5kUNHU6RkLc16Y',
-    appId: '1:92327347967:ios:0852c50a364729c616eeca',
+    appId: '1:92327347967:ios:63147a1d1cc0a41a16eeca',
     messagingSenderId: '92327347967',
     projectId: 'arryt-b201e',
     storageBucket: 'arryt-b201e.appspot.com',
-    iosClientId: '92327347967-8hahcp2160qs5ea14s0r0b11qhfir3ub.apps.googleusercontent.com',
-    iosBundleId: 'com.arryt',
+    iosClientId: '92327347967-ev804mi6b0j9r1gnqpq94fu23n1qs940.apps.googleusercontent.com',
+    iosBundleId: 'com.arryt.arryt',
   );
 }
