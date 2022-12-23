@@ -7,14 +7,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:92327347967:android:b1caa2f9cb4abaa516eeca",
+        "mobilesdk_app_id": "1:92327347967:android:be126bad9edb558d16eeca",
         "android_client_info": {
-          "package_name": "com.arryt"
+          "package_name": "com.arryt.arryt"
         }
       },
       "oauth_client": [
         {
-          "clie t_id": "92327347967-nr5o80cb2t1jg18gjh38vafsg9jn0q6r.apps.googleusercontent.com",
+          "client_id": "92327347967-nr5o80cb2t1jg18gjh38vafsg9jn0q6r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
