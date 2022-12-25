@@ -187,7 +187,7 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
 
       final LocationSettings locationSettings = LocationSettings(
         accuracy: LocationAccuracy.high,
-        distanceFilter: 2,
+        distanceFilter: 3,
       );
       try {
         positionStream =
@@ -196,6 +196,17 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
           var accessToken = userDataState.refreshToken;
           ApiClientsState apiClientsState =
               BlocProvider.of<ApiClientsBloc>(context).state;
+          Position? position = await Geolocator.getLastKnownPosition();
+          if (position != null) {
+            double distanceInMeters = Geolocator.distanceBetween(
+                position.latitude,
+                position.longitude,
+                currentLocation!.latitude,
+                currentLocation!.longitude);
+            if (distanceInMeters < 3) {
+              return;
+            }
+          }
           final apiClient = apiClientsState.apiClients.firstWhere(
               (element) => element.isServiceDefault == true,
               orElse: () => apiClientsState.apiClients.first);
