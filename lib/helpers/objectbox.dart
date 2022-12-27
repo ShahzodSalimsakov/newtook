@@ -50,6 +50,12 @@ class ObjectBox {
   }
 
   void addCurrentOrders(List<OrderModel> orders) {
+    orders.forEach((element) {
+      final query = _currentOrdersBox
+          .query(OrderModel_.identity.equals(element.identity))
+          .build();
+      query.remove();
+    });
     _currentOrdersBox.putMany(orders);
   }
 

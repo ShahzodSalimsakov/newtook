@@ -311,10 +311,10 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
       loading = false;
     });
 
-    if (statusButton.onWay) {
-      await launchUrl(Uri.parse(
-          "yandexnavi://build_route_on_map?lat_from=${widget.order.from_lat}&lon_from-${widget.order.from_lon}&lat_to=${widget.order.to_lat}&lon_to=${widget.order.to_lon}"));
-    }
+    // if (statusButton.onWay) {
+    //   await launchUrl(Uri.parse(
+    //       "yandexnavi://build_route_on_map?lat_from=${widget.order.from_lat}&lon_from-${widget.order.from_lon}&lat_to=${widget.order.to_lat}&lon_to=${widget.order.to_lon}"));
+    // }
   }
 
   @override

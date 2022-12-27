@@ -1,4 +1,4 @@
-package com.arryt.arryt
+package com.arryt
 
 import io.flutter.embedding.android.FlutterActivity
 

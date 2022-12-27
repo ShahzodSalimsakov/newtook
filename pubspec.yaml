@@ -3,7 +3,11 @@ description: A new Flutter project.
 
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
+<<<<<<< HEAD
 version: 1.0.8+8
+=======
+version: 1.0.10
+>>>>>>> 39f3b4f1b335f489596f8dd062aea071fe7727a1
 
 environment:
   sdk: ">=2.17.5 <3.0.0"
@@ -22,6 +26,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   currency_formatter: ^2.0.0
   data_table_2: ^2.3.7
+  device_info_plus: ^8.0.0
   easy_refresh: ^3.0.4+2
   equatable: ^2.0.5
   expandable: ^5.0.1
@@ -33,6 +38,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_awesome_buttons: ^1.1.0
+  flutter_background_service: ^2.4.6
+  flutter_background_service_android: ^3.0.3
   flutter_bloc: ^8.1.1
   flutter_hooks: ^0.18.5+1
   flutter_inappwebview: 6.0.0-beta.19
@@ -67,6 +74,7 @@ dependencies:
   modal_bottom_sheet: ^2.1.2
   objectbox: ^1.6.2
   objectbox_flutter_libs: ^1.6.2
+  package_info_plus: ^3.0.2
   path_provider: ^2.0.11
   persistent_bottom_nav_bar: ^5.0.2
   pin_code_fields: ^7.4.0
