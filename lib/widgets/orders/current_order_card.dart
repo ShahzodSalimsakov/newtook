@@ -180,7 +180,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
       }
       try {
         currentPosition = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high);
+            desiredAccuracy: LocationAccuracy.bestForNavigation);
       } catch (e) {
         setState(() {
           loading = false;

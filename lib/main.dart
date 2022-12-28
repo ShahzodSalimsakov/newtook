@@ -257,7 +257,8 @@ void onStart(ServiceInstance service) async {
           }
 
           Position? position = await Geolocator.getLastKnownPosition();
-          Position currentPosition = await Geolocator.getCurrentPosition();
+          Position currentPosition = await Geolocator.getCurrentPosition(
+              desiredAccuracy: LocationAccuracy.bestForNavigation);
           if (position != null) {
             double distanceInMeters = Geolocator.distanceBetween(
                 position.latitude,

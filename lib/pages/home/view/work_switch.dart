@@ -134,7 +134,7 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
               tokenExpires: userDataBloc.state.tokenExpires,
             ));
         final LocationSettings locationSettings = LocationSettings(
-          accuracy: LocationAccuracy.high,
+          accuracy: LocationAccuracy.bestForNavigation,
           distanceFilter: 2,
         );
 
@@ -186,7 +186,7 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
       }
 
       final LocationSettings locationSettings = LocationSettings(
-        accuracy: LocationAccuracy.high,
+        accuracy: LocationAccuracy.bestForNavigation,
         distanceFilter: 3,
       );
       try {
