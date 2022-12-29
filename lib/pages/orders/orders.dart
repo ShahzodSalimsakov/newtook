@@ -9,6 +9,9 @@ import 'package:arryt/widgets/orders/current_orders.dart';
 import 'package:arryt/widgets/orders/waiting_orders.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
+import '../../widgets/orders/listen_deleted_current_order.dart';
+import '../../widgets/orders/listen_deleted_waiting_order.dart';
+import '../../widgets/orders/listen_new_current_order.dart';
 import '../home/view/work_switch.dart';
 
 class OrdersPage extends StatelessWidget {
@@ -96,11 +99,20 @@ class OrdersPage extends StatelessWidget {
                   ),
                 ),
               )),
-          body: const TabBarView(
-            physics: NeverScrollableScrollPhysics(),
+          body: Column(
             children: [
-              MyCurrentOrdersList(),
-              MyWaitingOrdersList(),
+              ListenDeletedCurrentOrders(),
+              const ListenNewCurrentOrder(),
+              ListenDeletedWaitingOrders(),
+              Expanded(
+                child: TabBarView(
+                  physics: NeverScrollableScrollPhysics(),
+                  children: [
+                    MyCurrentOrdersList(),
+                    MyWaitingOrdersList(),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

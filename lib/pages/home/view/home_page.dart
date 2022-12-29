@@ -175,7 +175,7 @@ class HomePage extends StatelessWidget {
     if (role.code == 'courier') {
       return [
         ApiGraphqlProvider(child: ProfilePageView()),
-        OrdersPage(),
+        ApiGraphqlProvider(child: OrdersPage()),
         const OrdersHistory(),
         const SettingsPage()
       ];

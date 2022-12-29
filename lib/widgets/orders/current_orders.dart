@@ -205,52 +205,41 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
           return ApiGraphqlProvider(
               child: Stack(
             children: [
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListenDeletedCurrentOrders(),
-                  const ListenNewCurrentOrder(),
-                  Expanded(
-                    child: StreamBuilder<List<OrderModel>>(
-                      stream: objectBox.getCurrentOrders(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return EasyRefresh(
-                            controller: _controller,
-                            header: const BezierCircleHeader(),
-                            onRefresh: () async {
-                              await _loadOrders();
-                              _controller.finishRefresh();
-                              _controller.resetFooter();
-                            },
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (context, index) {
-                                if (index == snapshot.data!.length - 1) {
-                                  return Column(
-                                    children: [
-                                      CurrentOrderCard(
-                                          order: snapshot.data![index]),
-                                      const SizedBox(height: 100)
-                                    ],
-                                  );
-                                } else {
-                                  return CurrentOrderCard(
-                                      order: snapshot.data![index]);
-                                }
-                              },
-                            ),
-                          );
-                        } else {
-                          return const Center(child: Text('Заказов нет'));
-                        }
+              StreamBuilder<List<OrderModel>>(
+                stream: objectBox.getCurrentOrders(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return EasyRefresh(
+                      controller: _controller,
+                      header: const BezierCircleHeader(),
+                      onRefresh: () async {
+                        await _loadOrders();
+                        _controller.finishRefresh();
+                        _controller.resetFooter();
                       },
-                    ),
-                  ),
-                ],
-              ),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: snapshot.data!.length,
+                        itemBuilder: (context, index) {
+                          if (index == snapshot.data!.length - 1) {
+                            return Column(
+                              children: [
+                                CurrentOrderCard(order: snapshot.data![index]),
+                                const SizedBox(height: 100)
+                              ],
+                            );
+                          } else {
+                            return CurrentOrderCard(
+                                order: snapshot.data![index]);
+                          }
+                        },
+                      ),
+                    );
+                  } else {
+                    return const Center(child: Text('Заказов нет'));
+                  }
+                },
+              )
               // const Positioned(
               //     bottom: 20, left: 0, right: 0, child: BuildOrdersRoute())
             ],

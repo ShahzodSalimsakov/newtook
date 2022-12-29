@@ -36,8 +36,7 @@ class MyWaitingOrdersListView extends StatefulWidget {
       _MyWaitingOrdersListViewState();
 }
 
-class _MyWaitingOrdersListViewState extends State<MyWaitingOrdersListView>
-    with AutomaticKeepAliveClientMixin<MyWaitingOrdersListView> {
+class _MyWaitingOrdersListViewState extends State<MyWaitingOrdersListView> {
   late EasyRefreshController _controller;
 
   Future<void> _loadOrders() async {
@@ -197,44 +196,32 @@ class _MyWaitingOrdersListViewState extends State<MyWaitingOrdersListView>
         } else {
           print('davr');
           return ApiGraphqlProvider(
-              child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // ListenDeletedCurrentOrders(),
-              // ListenNewCurrentOrder(),
-              ListenDeletedWaitingOrders(),
-              Expanded(
-                child: StreamBuilder<List<WaitingOrderModel>>(
-                  stream: objectBox.getWaitingOrders(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return EasyRefresh(
-                        controller: _controller,
-                        header: const BezierCircleHeader(),
-                        onRefresh: () async {
-                          await _loadOrders();
-                          _controller.finishRefresh();
-                          _controller.resetFooter();
-                        },
-                        child: SizeCacheWidget(
-                          child: ListView.builder(
-                            // shrinkWrap: true,
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (context, index) {
-                              return WaitingOrderCard(
-                                  order: snapshot.data![index]);
-                            },
-                          ),
-                        ),
-                      );
-                    } else {
-                      return const Center(child: Text('Заказов нет'));
-                    }
+              child: StreamBuilder<List<WaitingOrderModel>>(
+            stream: objectBox.getWaitingOrders(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return EasyRefresh(
+                  controller: _controller,
+                  header: const BezierCircleHeader(),
+                  onRefresh: () async {
+                    await _loadOrders();
+                    _controller.finishRefresh();
+                    _controller.resetFooter();
                   },
-                ),
-              ),
-            ],
+                  child: SizeCacheWidget(
+                    child: ListView.builder(
+                      // shrinkWrap: true,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        return WaitingOrderCard(order: snapshot.data![index]);
+                      },
+                    ),
+                  ),
+                );
+              } else {
+                return const Center(child: Text('Заказов нет'));
+              }
+            },
           ));
         }
       } else {
@@ -243,7 +230,4 @@ class _MyWaitingOrdersListViewState extends State<MyWaitingOrdersListView>
       }
     });
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
