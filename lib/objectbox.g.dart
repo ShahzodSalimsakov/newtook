@@ -108,7 +108,7 @@ final _entities = <ModelEntity>[
         ModelProperty(
             id: const IdUid(17, 7913170474316076287),
             name: 'pre_distance',
-            type: 6,
+            type: 8,
             flags: 0),
         ModelProperty(
             id: const IdUid(18, 6400841373942310655),
@@ -326,7 +326,7 @@ final _entities = <ModelEntity>[
         ModelProperty(
             id: const IdUid(5, 8808132436442961559),
             name: 'pre_distance',
-            type: 6,
+            type: 8,
             flags: 0),
         ModelProperty(
             id: const IdUid(6, 7334693274384789930),
@@ -664,7 +664,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addInt64(13, object.customer.targetId);
           fbb.addInt64(14, object.terminal.targetId);
           fbb.addInt64(15, object.orderStatus.targetId);
-          fbb.addInt64(16, object.pre_distance);
+          fbb.addFloat64(16, object.pre_distance);
           fbb.addFloat64(17, object.from_lat);
           fbb.addFloat64(18, object.from_lon);
           fbb.addInt64(19, object.organization.targetId);
@@ -685,7 +685,7 @@ ModelDefinition getObjectBoxModel() {
               to_lon:
                   const fb.Float64Reader().vTableGet(buffer, rootOffset, 14, 0),
               pre_distance:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 36, 0),
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 36, 0),
               order_number: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 16, ''),
               order_price:
@@ -913,7 +913,7 @@ ModelDefinition getObjectBoxModel() {
           fbb.addOffset(1, identityOffset);
           fbb.addFloat64(2, object.to_lat);
           fbb.addFloat64(3, object.to_lon);
-          fbb.addInt64(4, object.pre_distance);
+          fbb.addFloat64(4, object.pre_distance);
           fbb.addOffset(5, order_numberOffset);
           fbb.addInt64(6, object.order_price);
           fbb.addInt64(7, object.delivery_price);
@@ -946,7 +946,7 @@ ModelDefinition getObjectBoxModel() {
               from_lon:
                   const fb.Float64Reader().vTableGet(buffer, rootOffset, 34, 0),
               pre_distance:
-                  const fb.Int64Reader().vTableGet(buffer, rootOffset, 12, 0),
+                  const fb.Float64Reader().vTableGet(buffer, rootOffset, 12, 0),
               order_number: const fb.StringReader(asciiOptimization: true)
                   .vTableGet(buffer, rootOffset, 14, ''),
               order_price:
@@ -1183,7 +1183,7 @@ class OrderModel_ {
 
   /// see [OrderModel.pre_distance]
   static final pre_distance =
-      QueryIntegerProperty<OrderModel>(_entities[0].properties[13]);
+      QueryDoubleProperty<OrderModel>(_entities[0].properties[13]);
 
   /// see [OrderModel.from_lat]
   static final from_lat =
@@ -1328,7 +1328,7 @@ class WaitingOrderModel_ {
 
   /// see [WaitingOrderModel.pre_distance]
   static final pre_distance =
-      QueryIntegerProperty<WaitingOrderModel>(_entities[5].properties[4]);
+      QueryDoubleProperty<WaitingOrderModel>(_entities[5].properties[4]);
 
   /// see [WaitingOrderModel.order_number]
   static final order_number =

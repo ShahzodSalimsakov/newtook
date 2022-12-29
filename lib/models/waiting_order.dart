@@ -19,7 +19,7 @@ class WaitingOrderModel {
   final double to_lon;
   final double from_lat;
   final double from_lon;
-  final int pre_distance;
+  final double pre_distance;
   final String order_number;
   final int order_price;
   final int? delivery_price;
@@ -56,7 +56,7 @@ class WaitingOrderModel {
     double? to_lon,
     double? from_lat,
     double? from_lon,
-    int? pre_distance,
+    double? pre_distance,
     String? order_number,
     int? order_price,
     int? delivery_price,
@@ -107,7 +107,7 @@ class WaitingOrderModel {
       to_lon: map['to_lon'] as double,
       from_lat: map['from_lat'] as double,
       from_lon: map['from_lon'] as double,
-      pre_distance: map['pre_distance'] as int,
+      pre_distance: map['pre_distance'].toDouble() as double,
       order_number: map['order_number'] as String,
       order_price: map['order_price'] as int,
       delivery_price: map['delivery_price'] as int?,
