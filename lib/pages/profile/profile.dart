@@ -426,21 +426,17 @@ class _ProfilePageViewState extends State<ProfilePageView>
                           ))
                       .toList(),
                   SizedBox(
-                    height: 60,
+                    height: 50,
+                  ),
+                  ProfileLogoutButton(),
+                  SizedBox(
+                    height: 20,
                   ),
                 ]);
               });
             }, childCount: 1),
           )
         ]),
-        Positioned(
-          left: 0,
-          bottom: 20,
-          right: 0,
-          child: ApiGraphqlProvider(
-            child: ProfileLogoutButton(),
-          ),
-        )
       ],
     ));
   }

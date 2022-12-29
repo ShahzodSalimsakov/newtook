@@ -80,5 +80,6 @@
     "locationDialogText": "Buyurtmalar bo'yicha jismoniy faolligingizni kuzatish uchun Arret ilovasi ilova yopiq yoki ishlatilmaganda ham joylashuv ma'lumotlarini to'playdi",
     "locationDialogApprove": "Ruxsat berish",
     "privacyPolicy": "Maxfiylik siyosati",
-    "payment_type": "To'lov turi"
+    "payment_type": "To'lov turi",
+    "call_the_call_center": "Operator bilan aloqa"
 }

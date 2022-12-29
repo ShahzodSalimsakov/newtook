@@ -251,8 +251,8 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
                   ),
                 ],
               ),
-              const Positioned(
-                  bottom: 20, left: 0, right: 0, child: BuildOrdersRoute())
+              // const Positioned(
+              //     bottom: 20, left: 0, right: 0, child: BuildOrdersRoute())
             ],
           ));
         }

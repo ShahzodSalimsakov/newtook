@@ -3,9 +3,38 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:arryt/provider/locale_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
-class SettingsPage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
+
+  @override
+  State<SettingsPage> createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  PackageInfo _packageInfo = PackageInfo(
+    appName: 'Unknown',
+    packageName: 'Unknown',
+    version: 'Unknown',
+    buildNumber: 'Unknown',
+    buildSignature: 'Unknown',
+    installerStore: 'Unknown',
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    _initPackageInfo();
+  }
+
+  Future<void> _initPackageInfo() async {
+    final info = await PackageInfo.fromPlatform();
+    setState(() {
+      _packageInfo = info;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +59,13 @@ class SettingsPage extends StatelessWidget {
         child: Column(
           children: [
             //choose brands  and route to brands page
-            ListTile(
-              title: Text(AppLocalizations.of(context)!.choose_brand),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                context.router.pushNamed('/brands');
-              },
-            ),
+            // ListTile(
+            //   title: Text(AppLocalizations.of(context)!.choose_brand),
+            //   trailing: const Icon(Icons.arrow_forward_ios),
+            //   onTap: () {
+            //     context.router.pushNamed('/brands');
+            //   },
+            // ),
             ListTile(
               title: Text(
                   AppLocalizations.of(context)!.settingsCallCenterChatLabel),
@@ -54,7 +83,16 @@ class SettingsPage extends StatelessWidget {
                 context.router.pushNamed('/privacy');
               },
             ),
+            ListTile(
+              title: Text(AppLocalizations.of(context)!.call_the_call_center),
+              leading: const Icon(Icons.phone),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                UrlLauncher.launch("tel://712051111");
+              },
+            ),
             const Spacer(),
+            Text("V${_packageInfo.version}"),
             Text(AppLocalizations.of(context)!.choose_lang.toUpperCase(),
                 style: const TextStyle(color: Colors.black)),
             const SizedBox(height: 16),
