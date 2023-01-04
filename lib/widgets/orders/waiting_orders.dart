@@ -89,7 +89,6 @@ class _MyWaitingOrdersListViewState extends State<MyWaitingOrdersListView> {
     var data = await client.query(
       QueryOptions(document: gql(query), fetchPolicy: FetchPolicy.noCache),
     );
-    print(data.data?['myNewOrders']);
     // var store = await ObjectBoxStore.getStore();
     if (data.data?['myNewOrders'] != null) {
       List<WaitingOrderModel> orders = [];

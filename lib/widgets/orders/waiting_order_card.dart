@@ -21,6 +21,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../models/customer.dart';
 import '../../models/order_next_button.dart';
 import '../../models/order_status.dart';
+import '../../models/organizations.dart';
 import '../../models/terminals.dart';
 import '../../models/waiting_order.dart';
 import 'order_customer_comments.dart';
@@ -54,6 +55,54 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
       mutation($orderId: String!) {
         approveOrder(orderId: $orderId) {
           id
+          to_lat
+          to_lon
+          from_lat
+          from_lon
+          pre_distance
+          order_number
+          order_price
+          delivery_price
+          delivery_address
+          delivery_comment
+          created_at
+          payment_type
+          orders_organization {
+            id
+            name
+            icon_url
+            active
+            external_id
+            support_chat_url
+          }
+          orders_customers {
+            id
+            name
+            phone
+          }
+          orders_terminals {
+            id
+            name
+          }
+          orders_order_status {
+            id
+            name
+            cancel
+            finish
+            on_way
+            in_terminal
+          }
+          next_buttons {
+            name
+            id
+            color
+            sort
+            finish
+            waiting
+            cancel
+            on_way
+            in_terminal
+          }
         }
       }
     ''';
@@ -67,14 +116,56 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
       AnimatedSnackBar.material(
         result.exception?.graphqlErrors[0].message ?? "Error",
         type: AnimatedSnackBarType.error,
+        mobileSnackBarPosition: MobileSnackBarPosition.bottom,
       ).show(context);
       print(result.exception);
     } else {
       AnimatedSnackBar.material(
         AppLocalizations.of(context)!.orderApprovedSuccessfully,
         type: AnimatedSnackBarType.success,
+        mobileSnackBarPosition: MobileSnackBarPosition.bottom,
       ).show(context);
       print(result.data);
+      if (result.data != null) {
+        var order = result.data!['approveOrder'];
+        OrderStatus orderStatus = OrderStatus(
+          identity: order['orders_order_status']['id'],
+          name: order['orders_order_status']['name'],
+          cancel: order['orders_order_status']['cancel'],
+          finish: order['orders_order_status']['finish'],
+        );
+        Terminals terminals = Terminals(
+          identity: order['orders_terminals']['id'],
+          name: order['orders_terminals']['name'],
+        );
+        Customer customer = Customer(
+          identity: order['orders_customers']['id'],
+          name: order['orders_customers']['name'],
+          phone: order['orders_customers']['phone'],
+        );
+        Organizations organizations = Organizations(
+            order['orders_organization']['id'],
+            order['orders_organization']['name'],
+            order['orders_organization']['active'],
+            order['orders_organization']['icon_url'],
+            order['orders_organization']['description'],
+            order['orders_organization']['max_distance'],
+            order['orders_organization']['max_active_orderCount'],
+            order['orders_organization']['max_order_close_distance'],
+            order['orders_organization']['support_chat_url']);
+        OrderModel orderModel = OrderModel.fromMap(order);
+        orderModel.customer.target = customer;
+        orderModel.terminal.target = terminals;
+        orderModel.orderStatus.target = orderStatus;
+        orderModel.organization.target = organizations;
+        if (order['next_buttons'] != null) {
+          order['next_buttons'].forEach((button) {
+            OrderNextButton orderNextButton = OrderNextButton.fromMap(button);
+            orderModel.orderNextButton.add(orderNextButton);
+          });
+        }
+        objectBox.updateCurrentOrder(widget.order.identity, orderModel);
+      }
     }
 
     setState(() {

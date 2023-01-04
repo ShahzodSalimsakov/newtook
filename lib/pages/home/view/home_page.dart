@@ -11,6 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../bloc/block_imports.dart';
 import '../../../router.dart';
+import '../../../widgets/no_role_set.dart';
 import '../../manager/couriers_list.dart';
 import '../../orders_history/orders_history.dart';
 
@@ -31,11 +32,7 @@ class HomePage extends StatelessWidget {
           userRole = state.roles.first;
         }
         if (userRole == null) {
-          return Center(
-              child: Text(
-            AppLocalizations.of(context)!.noRoleSet.toUpperCase(),
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ));
+          return const NoRoleSet();
         }
         switch (userRole.code) {
           case 'courier':
@@ -161,11 +158,7 @@ class HomePage extends StatelessWidget {
             );
             break;
           default:
-            return Center(
-                child: Text(
-              AppLocalizations.of(context)!.noRoleSet.toUpperCase(),
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ));
+            return const NoRoleSet();
         }
       },
     );

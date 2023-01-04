@@ -102,7 +102,7 @@ class OrdersPage extends StatelessWidget {
           body: Column(
             children: [
               ListenDeletedCurrentOrders(),
-              const ListenNewCurrentOrder(),
+              // const ListenNewCurrentOrder(),
               ListenDeletedWaitingOrders(),
               Expanded(
                 child: TabBarView(

@@ -304,7 +304,13 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
             orderModel.orderNextButton.add(orderNextButton);
           });
         }
-        objectBox.updateCurrentOrder(widget.order.identity, orderModel);
+
+        if (orderModel.orderStatus.target!.finish ||
+            orderModel.orderStatus.target!.cancel) {
+          objectBox.deleteCurrentOrder(widget.order.identity);
+        } else {
+          objectBox.updateCurrentOrder(widget.order.identity, orderModel);
+        }
       }
     }
     setState(() {

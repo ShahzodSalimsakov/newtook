@@ -81,5 +81,7 @@
     "locationDialogApprove": "Ruxsat berish",
     "privacyPolicy": "Maxfiylik siyosati",
     "payment_type": "To'lov turi",
-    "call_the_call_center": "Operator bilan aloqa"
+    "call_the_call_center": "Operator bilan aloqa",
+    "refresh": "Yangilash",
+    "changeNumber": "Telefon raqamini o'zgartirish"
 }

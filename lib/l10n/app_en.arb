@@ -81,5 +81,7 @@
     "locationDialogApprove": "Allow",
     "privacyPolicy": "Privacy policy",
     "payment_type": "Payment type",
-    "call_the_call_center": "Call the call center"
+    "call_the_call_center": "Call the call center",
+    "refresh": "Refresh",
+    "changeNumber": "Change number"
 }
