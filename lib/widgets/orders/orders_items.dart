@@ -73,18 +73,18 @@ class _OrderItemsTableState extends State<OrderItemsTable> {
       child: DataTable2(
         columnSpacing: 12,
         // minWidth: 600,
-        columns: [
-          const DataColumn2(
+        columns: const [
+          DataColumn2(
             label: Text("Товар"),
             size: ColumnSize.L,
           ),
-          const DataColumn(
+          DataColumn(
             label: Text("Цена"),
           ),
-          const DataColumn(
+          DataColumn(
             label: Text("Кол-во"),
           ),
-          const DataColumn(
+          DataColumn(
             label: Text("Всего"),
           ),
         ],

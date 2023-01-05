@@ -7,7 +7,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:load_switch/load_switch.dart';
 import 'package:arryt/bloc/block_imports.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../widgets/location_dialog.dart';
@@ -133,7 +132,7 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
               userProfile: userDataBloc.state.userProfile,
               tokenExpires: userDataBloc.state.tokenExpires,
             ));
-        final LocationSettings locationSettings = LocationSettings(
+        const LocationSettings locationSettings = LocationSettings(
           accuracy: LocationAccuracy.bestForNavigation,
           distanceFilter: 2,
         );
@@ -142,7 +141,7 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
             Geolocator.getPositionStream(locationSettings: locationSettings)
                 .listen((Position? position) async {
           var query = gql('''mutation {
-            storeLocation(latitude: ${position!.latitude}, longitude: ${position!.longitude}) {
+            storeLocation(latitude: ${position!.latitude}, longitude: ${position.longitude}) {
               success
               }
               },''');
@@ -185,7 +184,7 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
         }
       }
 
-      final LocationSettings locationSettings = LocationSettings(
+      const LocationSettings locationSettings = LocationSettings(
         accuracy: LocationAccuracy.bestForNavigation,
         distanceFilter: 3,
       );
@@ -202,7 +201,7 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
                 position.latitude,
                 position.longitude,
                 currentLocation!.latitude,
-                currentLocation!.longitude);
+                currentLocation.longitude);
             if (distanceInMeters < 3) {
               return;
             }
@@ -211,54 +210,52 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
               (element) => element.isServiceDefault == true,
               orElse: () => apiClientsState.apiClients.first);
           if (DateTime.now().isAfter(userDataState.tokenExpires)) {
-            if (apiClient != null) {
-              try {
-                var requestBody = '''
-        {
-          "query": "mutation {refreshToken(refreshToken: \\"${userDataState.refreshToken}\\") {\\naccessToken\\naccessTokenExpires\\nrefreshToken\\n}}\\n",
-          "variables": null
-        }
-        ''';
+            try {
+              var requestBody = '''
+      {
+        "query": "mutation {refreshToken(refreshToken: \\"${userDataState.refreshToken}\\") {\\naccessToken\\naccessTokenExpires\\nrefreshToken\\n}}\\n",
+        "variables": null
+      }
+      ''';
 
-                var response = await http.post(
-                  Uri.parse("https://${apiClient.apiUrl}/graphql"),
-                  headers: {'Content-Type': 'application/json'},
-                  body: requestBody,
-                );
-                if (response.statusCode == 200) {
-                  var result = jsonDecode(response.body);
-                  if (result['errors'] == null) {
-                    var data = result['data']['refreshToken'];
+              var response = await http.post(
+                Uri.parse("https://${apiClient.apiUrl}/graphql"),
+                headers: {'Content-Type': 'application/json'},
+                body: requestBody,
+              );
+              if (response.statusCode == 200) {
+                var result = jsonDecode(response.body);
+                if (result['errors'] == null) {
+                  var data = result['data']['refreshToken'];
 
-                    accessToken = data!['accessToken'];
-                    Future.delayed(Duration(microseconds: 500), () {
-                      context.read<UserDataBloc>().add(
-                            UserDataEventChange(
-                              accessToken: data!['accessToken'],
-                              accessTokenExpires: data!['accessTokenExpires'],
-                              refreshToken: data!['refreshToken'],
-                              permissions: userDataState.permissions,
-                              roles: userDataState.roles,
-                              userProfile: userDataState.userProfile,
-                              is_online: userDataState.is_online,
-                              tokenExpires: DateTime.now().add(Duration(
-                                  hours: int.parse(data!['accessTokenExpires']
-                                      .split('h')[0]))),
-                            ),
-                          );
-                    });
-                  }
+                  accessToken = data!['accessToken'];
+                  Future.delayed(const Duration(microseconds: 500), () {
+                    context.read<UserDataBloc>().add(
+                          UserDataEventChange(
+                            accessToken: data!['accessToken'],
+                            accessTokenExpires: data!['accessTokenExpires'],
+                            refreshToken: data!['refreshToken'],
+                            permissions: userDataState.permissions,
+                            roles: userDataState.roles,
+                            userProfile: userDataState.userProfile,
+                            is_online: userDataState.is_online,
+                            tokenExpires: DateTime.now().add(Duration(
+                                hours: int.parse(data!['accessTokenExpires']
+                                    .split('h')[0]))),
+                          ),
+                        );
+                  });
                 }
-              } catch (e) {
-                print(e);
               }
+            } catch (e) {
+              print(e);
             }
           }
 
           try {
             var requestBody = '''
         {
-          "query": "mutation {storeLocation(latitude: ${currentLocation!.latitude}, longitude: ${currentLocation!.longitude}) {\\nsuccess\\n}}\\n",
+          "query": "mutation {storeLocation(latitude: ${currentLocation!.latitude}, longitude: ${currentLocation.longitude}) {\\nsuccess\\n}}\\n",
           "variables": null
         }
         ''';
@@ -266,7 +263,7 @@ class _HomeViewWorkSwitchState extends State<HomeViewWorkSwitch> {
               Uri.parse("https://${apiClient.apiUrl}/graphql"),
               headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ${accessToken}'
+                'Authorization': 'Bearer $accessToken'
               },
               body: requestBody,
             );

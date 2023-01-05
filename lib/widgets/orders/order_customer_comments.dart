@@ -1,7 +1,5 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:chat_bubbles/bubbles/bubble_special_three.dart';
-import 'package:chat_bubbles/message_bars/message_bar.dart';
 import 'package:chat_package/chat_package.dart';
 import 'package:chat_package/models/chat_message.dart';
 import 'package:flutter/material.dart';
@@ -203,7 +201,7 @@ class _OrderCustomerCommentsViewState extends State<OrderCustomerCommentsView> {
     return Container(
       color: Colors.grey.shade200,
       margin: EdgeInsets.only(bottom: keyboardOpen ? 0 : 10),
-      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       child: Row(children: [
         Expanded(
           child: TextField(
@@ -290,7 +288,7 @@ class _OrderCustomerCommentsViewState extends State<OrderCustomerCommentsView> {
                 }
                 """;
             var bytes = p0.readAsBytes();
-            var multipartFile = await MultipartFile.fromBytes(
+            var multipartFile = MultipartFile.fromBytes(
                 'file', await bytes,
                 filename: p0.name);
             var opts = MutationOptions(
@@ -363,7 +361,7 @@ class _OrderCustomerCommentsViewState extends State<OrderCustomerCommentsView> {
                 }
                 """;
               var bytes = p0.readAsBytes();
-              var multipartFile = await MultipartFile.fromBytes(
+              var multipartFile = MultipartFile.fromBytes(
                   'file', await bytes,
                   filename: p0.name);
               var opts = MutationOptions(

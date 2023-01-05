@@ -1,21 +1,17 @@
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:loader_overlay/loader_overlay.dart';
 import 'package:arryt/bloc/block_imports.dart';
 import 'package:arryt/helpers/api_graphql_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:arryt/models/order_status.dart';
 import 'package:arryt/models/terminals.dart';
-import 'package:arryt/widgets/orders/listen_deleted_current_order.dart';
-import 'package:arryt/widgets/orders/listen_new_current_order.dart';
 
 import '../../main.dart';
 import '../../models/customer.dart';
 import '../../models/order.dart';
 import '../../models/order_next_button.dart';
 import '../../models/organizations.dart';
-import 'build_route.dart';
 import 'current_order_card.dart';
 
 class MyCurrentOrdersList extends StatelessWidget {
@@ -168,9 +164,7 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserDataBloc, UserDataState>(builder: (context, state) {
-      if (state.roles != null &&
-          state.roles!
-              .any((element) => element.code == 'courier' && element.active)) {
+      if (state.roles.any((element) => element.code == 'courier' && element.active)) {
         if (!state.is_online) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,

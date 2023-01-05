@@ -6,7 +6,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:currency_formatter/currency_formatter.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
@@ -16,15 +15,8 @@ import 'package:loading_overlay/loading_overlay.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 
-/// Core import
 // ignore: depend_on_referenced_packages
-import 'package:syncfusion_flutter_core/core.dart';
-// ignore: depend_on_referenced_packages
-import 'package:syncfusion_flutter_core/localizations.dart';
 
-///Date picker imports
-import 'package:syncfusion_flutter_datepicker/datepicker.dart' as picker;
-import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 
 import '../../models/customer.dart';
 import '../../models/order.dart';
@@ -147,7 +139,7 @@ class _OrdersManagementViewState extends State<OrdersManagementView> {
         });
       }
       List<OrderModel> tempOrders = [];
-      orders.forEach((order) {
+      for (var order in orders) {
         OrderStatus orderStatus = OrderStatus(
           identity: order['orders_order_status']['id'],
           name: order['orders_order_status']['name'],
@@ -187,7 +179,7 @@ class _OrdersManagementViewState extends State<OrdersManagementView> {
           orderModel.courier.target = courier;
         }
         tempOrders.add(orderModel);
-      });
+      }
       setState(() {
         if (reload) {
           _posts = tempOrders;
@@ -257,7 +249,7 @@ class _OrdersManagementViewState extends State<OrdersManagementView> {
           child: Padding(
             padding: const EdgeInsets.only(top: 10, left: 10, right: 10),
             child: Column(children: [
-              _posts.length == 0
+              _posts.isEmpty
                   ? Expanded(
                       child: Center(
                           child: Text(AppLocalizations.of(context)!.noOrders)))
@@ -330,10 +322,10 @@ class _OrdersManagementViewState extends State<OrdersManagementView> {
                                                                   .progress),
                                               errorWidget:
                                                   (context, url, error) =>
-                                                      Icon(Icons.error),
+                                                      const Icon(Icons.error),
                                             ),
                                           )
-                                        : SizedBox(width: 0),
+                                        : const SizedBox(width: 0),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
@@ -641,7 +633,7 @@ class _OrdersManagementViewState extends State<OrdersManagementView> {
                                                         "${element.courier.target!.firstName} ${element.courier.target!.lastName}"),
                                                   ],
                                                 )
-                                              : SizedBox(),
+                                              : const SizedBox(),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
@@ -820,7 +812,7 @@ class _OrdersManagementViewState extends State<OrdersManagementView> {
                                           ),
                                         ],
                                       )),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 5,
                                   ),
                                   Container(

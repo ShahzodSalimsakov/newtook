@@ -3,15 +3,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:arryt/bloc/block_imports.dart';
 import 'package:arryt/helpers/api_graphql_provider.dart';
-import 'package:arryt/models/order.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:arryt/widgets/orders/current_orders.dart';
 import 'package:arryt/widgets/orders/waiting_orders.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 import '../../widgets/orders/listen_deleted_current_order.dart';
 import '../../widgets/orders/listen_deleted_waiting_order.dart';
-import '../../widgets/orders/listen_new_current_order.dart';
 import '../home/view/work_switch.dart';
 
 class OrdersPage extends StatelessWidget {
@@ -53,8 +50,7 @@ class OrdersPage extends StatelessWidget {
                         builder: (context, state) {
                           // if roles exist and courier role exists
                           // find role with code = courier
-                          if (state.roles != null &&
-                              state.roles!.any((element) =>
+                          if (state.roles.any((element) =>
                                   element.code == 'courier' &&
                                   element.active)) {
                             return ApiGraphqlProvider(
@@ -104,7 +100,7 @@ class OrdersPage extends StatelessWidget {
               ListenDeletedCurrentOrders(),
               // const ListenNewCurrentOrder(),
               ListenDeletedWaitingOrders(),
-              Expanded(
+              const Expanded(
                 child: TabBarView(
                   physics: NeverScrollableScrollPhysics(),
                   children: [

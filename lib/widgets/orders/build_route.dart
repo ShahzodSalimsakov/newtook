@@ -5,7 +5,6 @@ import 'package:arryt/models/terminals.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:loader_overlay/loader_overlay.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
@@ -24,7 +23,7 @@ class BuildOrdersRoute extends StatelessWidget {
         stream: objectBox.getCurrentOrders(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            if (snapshot.data!.length > 0) {
+            if (snapshot.data!.isNotEmpty) {
               return BuildOrderRouteButton(orders: snapshot.data!);
             } else {
               return const SizedBox(height: 0);
@@ -109,7 +108,7 @@ class _BuildOrderRouteButtonState extends State<BuildOrderRouteButton> {
               _btnController.reset();
 
               List<Terminals> terminals =
-                  widget.orders.map((e) => e.terminal!.target!).toList();
+                  widget.orders.map((e) => e.terminal.target!).toList();
 
               // convert each item to a string by using JSON encoding
               final jsonList =
@@ -135,10 +134,11 @@ class _BuildOrderRouteButtonState extends State<BuildOrderRouteButton> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 10, horizontal: 10),
                           child: ListView(
+                            shrinkWrap: true,
                             children: [
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
+                                children: const [
                                   Flexible(
                                     child: AutoSizeText(
                                       'Выберите филиал, с которого построить маршрут',
@@ -158,7 +158,6 @@ class _BuildOrderRouteButtonState extends State<BuildOrderRouteButton> {
                                       ))
                                   .toList()
                             ],
-                            shrinkWrap: true,
                           ),
                         ),
                       )),

@@ -4,11 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:currency_formatter/currency_formatter.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:loading_overlay/loading_overlay.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -24,7 +22,6 @@ import '../../models/order_status.dart';
 import '../../models/organizations.dart';
 import '../../models/terminals.dart';
 import '../../models/waiting_order.dart';
-import 'order_customer_comments.dart';
 
 class WaitingOrderCard extends StatefulWidget {
   final WaitingOrderModel order;
@@ -184,7 +181,7 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                 color: Colors.grey,
                 spreadRadius: 1,
                 blurRadius: 15,
-                offset: const Offset(0, 5))
+                offset: Offset(0, 5))
           ],
           color: Colors.white),
       clipBehavior: Clip.antiAlias,
@@ -206,10 +203,10 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                                   CircularProgressIndicator(
                                       value: downloadProgress.progress),
                           errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
+                              const Icon(Icons.error),
                         ),
                       )
-                    : SizedBox(width: 0),
+                    : const SizedBox(width: 0),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
@@ -427,7 +424,7 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Row(
@@ -487,7 +484,7 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                             AppLocalizations.of(context)!.address,
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          Spacer(),
+                          const Spacer(),
                           Flexible(
                             fit: FlexFit.loose,
                             child: Text(
@@ -748,7 +745,7 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Row(

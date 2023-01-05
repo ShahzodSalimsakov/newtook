@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:arryt/bloc/block_imports.dart';
 import 'package:arryt/pages/login/type_phone.dart';
-import 'package:arryt/pages/orders/orders.dart';
 import 'api_client_intro/api_client_choose_brand.dart';
-import 'api_client_intro/api_client_intro.dart';
 import 'home/view/home_page.dart';
 
 class InitialPage extends StatelessWidget {
@@ -32,7 +30,7 @@ class _InitialPageView extends StatelessWidget {
           if (accessToken != null && accessToken.isNotEmpty) {
             return const HomePage();
           } else {
-            return LoginTypePhonePage();
+            return const LoginTypePhonePage();
           }
           // return const Center(child: Text('Initial Page'));
         }

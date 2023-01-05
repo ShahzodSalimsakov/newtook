@@ -22,12 +22,9 @@ class NotificationUtils {
             id: id,
             channelKey: channelKey,
             title: 'Local alert',
-            body: 'This notification was created locally on ' +
-                AwesomeDateUtils.parseDateToString(DateTime.now())! +
-                (dateTime == null
+            body: 'This notification was created locally on ${AwesomeDateUtils.parseDateToString(DateTime.now())!}${dateTime == null
                     ? ''
-                    : (' to be displayed at ' +
-                        AwesomeDateUtils.parseDateToString(dateTime)!)),
+                    : (' to be displayed at ${AwesomeDateUtils.parseDateToString(dateTime)!}')}',
             payload: {
               "topic": "test",
               "articleId": "1234567890",
@@ -64,7 +61,7 @@ class NotificationUtils {
           content: Text('${activeSchedules.length} schedules founded'),
           actions: [
             TextButton(
-              child: Text('OK'),
+              child: const Text('OK'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -151,8 +148,8 @@ class NotificationUtils {
     return showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        backgroundColor: Color(0xfffbfbfb),
-        title: Text('Get Notified!',
+        backgroundColor: const Color(0xfffbfbfb),
+        title: const Text('Get Notified!',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 22.0, fontWeight: FontWeight.w600)),
         content: Column(
@@ -163,7 +160,7 @@ class NotificationUtils {
               height: 200,
               fit: BoxFit.fitWidth,
             ),
-            Text(
+            const Text(
               'Allow Awesome Notifications to send you beautiful notifications!',
               textAlign: TextAlign.center,
             ),
@@ -175,7 +172,7 @@ class NotificationUtils {
             onPressed: () async {
               Navigator.of(context).pop();
             },
-            child: Text('Later', style: TextStyle(color: Colors.white)),
+            child: const Text('Later', style: TextStyle(color: Colors.white)),
           ),
           TextButton(
             style: TextButton.styleFrom(backgroundColor: Colors.deepPurple),
@@ -184,7 +181,7 @@ class NotificationUtils {
                   .requestPermissionToSendNotifications(channelKey: channelKey);
               Navigator.of(context).pop();
             },
-            child: Text('Allow', style: TextStyle(color: Colors.white)),
+            child: const Text('Allow', style: TextStyle(color: Colors.white)),
           )
         ],
       ),

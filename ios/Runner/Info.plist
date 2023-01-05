@@ -6,9 +6,9 @@
 		<string>$(MARKETING_VERSION)</string>
 		<key>CFBundleName</key>
 		<string>Arryt</string>
-		<key> CADisableMinimumFrameDurationOnPhone</key>
+		<key>CADisableMinimumFrameDurationOnPhone</key>
 		<true />
-		<key> LSApplicationQueriesSchemes</key>
+		<key>LSApplicationQueriesSchemes</key>
 		<array>
 			<string>tel</string>
 		</array>
@@ -45,9 +45,6 @@
 			customer&apos;s order is going</string>
 		<key>NSLocationWhenInUseUsageDescription</key>
 		<string>This app requires geolocation permission to check where the courier with the
-			customer&apos;s order is going</string>
-		<key>NSUserTrackingUsageDescription</key>
-		<string>This app requires tracking permission to check where the courier with the
 			customer&apos;s order is going</string>
 		<key>NSMicrophoneUsageDescription</key>
 		<string>microphone</string>

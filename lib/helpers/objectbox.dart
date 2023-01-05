@@ -4,7 +4,6 @@ import 'package:arryt/models/order_status.dart';
 import 'package:arryt/models/organizations.dart';
 import 'package:arryt/models/terminals.dart';
 import 'package:arryt/objectbox.g.dart';
-import 'package:objectbox/objectbox.dart';
 
 import '../models/manager_couriers_model.dart';
 import '../models/waiting_order.dart';
@@ -50,12 +49,12 @@ class ObjectBox {
   }
 
   void addCurrentOrders(List<OrderModel> orders) {
-    orders.forEach((element) {
+    for (var element in orders) {
       final query = _currentOrdersBox
           .query(OrderModel_.identity.equals(element.identity))
           .build();
       query.remove();
-    });
+    }
     _currentOrdersBox.putMany(orders);
   }
 

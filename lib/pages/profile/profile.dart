@@ -1,31 +1,27 @@
-import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:arryt/bloc/block_imports.dart';
 import 'package:arryt/widgets/profile/my_balance_by_terminal.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:currency_formatter/currency_formatter.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:arryt/helpers/api_graphql_provider.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 import '../../models/orderMobilePeriodStat.dart';
 import '../../widgets/profile/logout.dart';
-import '../home/view/work_switch.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ApiGraphqlProvider(child: ProfilePageView());
+    return ApiGraphqlProvider(child: const ProfilePageView());
   }
 }
 
 class ProfilePageView extends StatefulWidget {
-  ProfilePageView({super.key});
+  const ProfilePageView({super.key});
 
   @override
   State<ProfilePageView> createState() => _ProfilePageViewState();
@@ -200,7 +196,7 @@ class _ProfilePageViewState extends State<ProfilePageView>
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 20,
                         ),
                         state.userProfile?.last_name != null
@@ -239,7 +235,7 @@ class _ProfilePageViewState extends State<ProfilePageView>
               return BlocBuilder<UserDataBloc, UserDataState>(
                   builder: (context, state) {
                 return Column(children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -259,7 +255,7 @@ class _ProfilePageViewState extends State<ProfilePageView>
                                         fontSize: 18,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold)),
-                                SizedBox(
+                                const SizedBox(
                                   width: 5,
                                 ),
                                 Icon(
@@ -273,7 +269,7 @@ class _ProfilePageViewState extends State<ProfilePageView>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                    "${CurrencyFormatter.format(walletBalance, euroSettings)}",
+                                    CurrencyFormatter.format(walletBalance, euroSettings),
                                     style: const TextStyle(
                                         fontSize: 30,
                                         color: Colors.black,
@@ -319,12 +315,12 @@ class _ProfilePageViewState extends State<ProfilePageView>
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   ..._ordersStat
                       .map((e) => Container(
-                            margin: EdgeInsets.symmetric(
+                            margin: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 5),
                             child: Card(
                               elevation: 6,
@@ -425,11 +421,11 @@ class _ProfilePageViewState extends State<ProfilePageView>
                             ),
                           ))
                       .toList(),
-                  SizedBox(
+                  const SizedBox(
                     height: 50,
                   ),
-                  ProfileLogoutButton(),
-                  SizedBox(
+                  const ProfileLogoutButton(),
+                  const SizedBox(
                     height: 20,
                   ),
                 ]);

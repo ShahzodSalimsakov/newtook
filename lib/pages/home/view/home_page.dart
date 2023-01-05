@@ -4,7 +4,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:arryt/pages/orders/orders.dart';
 import 'package:arryt/pages/profile/profile.dart';
-import 'package:arryt/pages/qr/qr.dart';
 import 'package:arryt/pages/settings/settings.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -28,7 +27,7 @@ class HomePage extends StatelessWidget {
       },
       builder: (context, state) {
         Role? userRole;
-        if (state.roles.length > 0) {
+        if (state.roles.isNotEmpty) {
           userRole = state.roles.first;
         }
         if (userRole == null) {
@@ -167,14 +166,14 @@ class HomePage extends StatelessWidget {
   List<Widget> _buildScreens(Role role) {
     if (role.code == 'courier') {
       return [
-        ApiGraphqlProvider(child: ProfilePageView()),
+        ApiGraphqlProvider(child: const ProfilePageView()),
         ApiGraphqlProvider(child: OrdersPage()),
         const OrdersHistory(),
         const SettingsPage()
       ];
     } else if (role.code == 'manager') {
       return [
-        ApiGraphqlProvider(child: ProfilePageView()),
+        ApiGraphqlProvider(child: const ProfilePageView()),
         const ManagerCouriersList(),
         const OrdersHistory(),
         const OrdersManagement(),

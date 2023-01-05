@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../bloc/block_imports.dart';
 
 class ProfileLogoutButton extends StatefulWidget {
-  ProfileLogoutButton({super.key});
+  const ProfileLogoutButton({super.key});
 
   @override
   State<ProfileLogoutButton> createState() => _ProfileLogoutButtonState();
@@ -37,7 +37,7 @@ class _ProfileLogoutButtonState extends State<ProfileLogoutButton> {
           type: AnimatedSnackBarType.error,
         ).show(context);
 
-        Future.delayed(Duration(milliseconds: 1000)).then((value) {
+        Future.delayed(const Duration(milliseconds: 1000)).then((value) {
           _btnController.reset();
         });
         return;
@@ -51,7 +51,7 @@ class _ProfileLogoutButtonState extends State<ProfileLogoutButton> {
         type: AnimatedSnackBarType.error,
       ).show(context);
 
-      Future.delayed(Duration(milliseconds: 1000)).then((value) {
+      Future.delayed(const Duration(milliseconds: 1000)).then((value) {
         _btnController.reset();
       });
       return;

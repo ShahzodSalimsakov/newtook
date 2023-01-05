@@ -3,21 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:keframe/keframe.dart';
-import 'package:loader_overlay/loader_overlay.dart';
-import 'package:arryt/widgets/orders/listen_deleted_waiting_order.dart';
 import 'package:arryt/widgets/orders/waiting_order_card.dart';
 
 import '../../bloc/block_imports.dart';
 import '../../helpers/api_graphql_provider.dart';
 import '../../main.dart';
 import '../../models/customer.dart';
-import '../../models/order.dart';
-import '../../models/order_next_button.dart';
 import '../../models/order_status.dart';
 import '../../models/organizations.dart';
 import '../../models/terminals.dart';
 import '../../models/waiting_order.dart';
-import 'current_order_card.dart';
 
 class MyWaitingOrdersList extends StatelessWidget {
   const MyWaitingOrdersList({super.key});
@@ -160,9 +155,7 @@ class _MyWaitingOrdersListViewState extends State<MyWaitingOrdersListView> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserDataBloc, UserDataState>(builder: (context, state) {
-      if (state.roles != null &&
-          state.roles!
-              .any((element) => element.code == 'courier' && element.active)) {
+      if (state.roles.any((element) => element.code == 'courier' && element.active)) {
         if (!state.is_online) {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,

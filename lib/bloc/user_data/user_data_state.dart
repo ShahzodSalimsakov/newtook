@@ -122,7 +122,7 @@ class UserProfileModel {
       terminal_id: map['terminal_id'] != null
           ? map['terminal_id'] as List<String>
           : null,
-      wallet_balance: map['wallet_balance'] != null ? map['wallet_balance'] : 0,
+      wallet_balance: map['wallet_balance'] ?? 0,
     );
   }
 

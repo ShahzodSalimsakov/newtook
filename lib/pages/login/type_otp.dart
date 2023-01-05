@@ -5,11 +5,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:awesome_notifications_fcm/awesome_notifications_fcm.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:arryt/bloc/block_imports.dart';
-import 'package:arryt/bloc/user_data/user_data_bloc.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -40,7 +37,7 @@ class _LoginTypeOtpPageState extends State<LoginTypeOtpPage> {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final bool keyboardOpen = MediaQuery.of(context).viewInsets.bottom > 0;
-    String _code = "";
+    String code = "";
     String signature = "{{ app signature }}";
 
     Future<void> _verifyOtpCode() async {
@@ -63,7 +60,7 @@ class _LoginTypeOtpPageState extends State<LoginTypeOtpPage> {
         setState(() {
           isLoading = false;
         });
-        Future.delayed(Duration(milliseconds: 1000)).then((value) {
+        Future.delayed(const Duration(milliseconds: 1000)).then((value) {
           _btnController.reset();
         });
         return;
@@ -79,94 +76,92 @@ class _LoginTypeOtpPageState extends State<LoginTypeOtpPage> {
       // get first isServiceDefault client
       ApiClients? apiClient = apiClientsBloc.state.apiClients
           .firstWhere((element) => element.isServiceDefault == true);
-      if (apiClient != null) {
-        var fcmToken;
+      String? fcmToken;
 
-        try {
-          fcmToken = await AwesomeNotificationsFcm().requestFirebaseAppToken();
-        } catch (e) {
-          fcmToken = null;
-        }
+      try {
+        fcmToken = await AwesomeNotificationsFcm().requestFirebaseAppToken();
+      } catch (e) {
+        fcmToken = null;
+      }
 
-        // send phone number to server
-        var requestBody;
-        if (fcmToken != null) {
-          requestBody = '''
-        {
-          "query": "mutation {verifyOtp(phone: \\"$phoneNumber\\", otp: \\"$code\\", verificationKey: \\"$otpToken\\", deviceToken: \\"$fcmToken\\") {\\n access {\\nadditionalPermissions\\nroles {\\nname\\ncode\\nactive\\n}\\n}\\ntoken {\\naccessToken\\naccessTokenExpires\\nrefreshToken\\ntokenType\\n}\\nuser {\\nfirst_name\\nid\\nis_super_user\\nlast_name\\nis_online\\npermissions {\\nactive\\nslug\\nid\\n}\\nphone\\n}\\n}}\\n",
-          "variables": null
-        }
-        ''';
-        } else {
-          requestBody = '''
-        {
-          "query": "mutation {verifyOtp(phone: \\"$phoneNumber\\", otp: \\"$code\\", verificationKey: \\"$otpToken\\") {\\n access {\\nadditionalPermissions\\nroles {\\nname\\ncode\\nactive\\n}\\n}\\ntoken {\\naccessToken\\naccessTokenExpires\\nrefreshToken\\ntokenType\\n}\\nuser {\\nfirst_name\\nid\\nis_super_user\\nlast_name\\nis_online\\npermissions {\\nactive\\nslug\\nid\\n}\\nphone\\n}\\n}}\\n",
-          "variables": null
-        }
-        ''';
-        }
+      // send phone number to server
+      String requestBody;
+      if (fcmToken != null) {
+        requestBody = '''
+      {
+        "query": "mutation {verifyOtp(phone: \\"$phoneNumber\\", otp: \\"$code\\", verificationKey: \\"$otpToken\\", deviceToken: \\"$fcmToken\\") {\\n access {\\nadditionalPermissions\\nroles {\\nname\\ncode\\nactive\\n}\\n}\\ntoken {\\naccessToken\\naccessTokenExpires\\nrefreshToken\\ntokenType\\n}\\nuser {\\nfirst_name\\nid\\nis_super_user\\nlast_name\\nis_online\\npermissions {\\nactive\\nslug\\nid\\n}\\nphone\\n}\\n}}\\n",
+        "variables": null
+      }
+      ''';
+      } else {
+        requestBody = '''
+      {
+        "query": "mutation {verifyOtp(phone: \\"$phoneNumber\\", otp: \\"$code\\", verificationKey: \\"$otpToken\\") {\\n access {\\nadditionalPermissions\\nroles {\\nname\\ncode\\nactive\\n}\\n}\\ntoken {\\naccessToken\\naccessTokenExpires\\nrefreshToken\\ntokenType\\n}\\nuser {\\nfirst_name\\nid\\nis_super_user\\nlast_name\\nis_online\\npermissions {\\nactive\\nslug\\nid\\n}\\nphone\\n}\\n}}\\n",
+        "variables": null
+      }
+      ''';
+      }
 
-        var response = await http.post(
-          Uri.parse("https://${apiClient.apiUrl}/graphql"),
-          headers: {'Content-Type': 'application/json'},
-          body: requestBody,
-        );
-        if (response.statusCode == 200) {
-          var result = jsonDecode(response.body);
+      var response = await http.post(
+        Uri.parse("https://${apiClient.apiUrl}/graphql"),
+        headers: {'Content-Type': 'application/json'},
+        body: requestBody,
+      );
+      if (response.statusCode == 200) {
+        var result = jsonDecode(response.body);
 
-          if (result['errors'] != null) {
-            setState(() {
-              isLoading = false;
-            });
-            _btnController.error();
-            AnimatedSnackBar.material(
-              AppLocalizations.of(context)!.otpCodeError,
-              type: AnimatedSnackBarType.error,
-            ).show(context);
-            Future.delayed(Duration(milliseconds: 1000)).then((value) {
-              _btnController.reset();
-            });
-            return;
-          }
-
-          setState(() {
-            isLoading = false;
-          });
-          _btnController.success();
-          UserDataBloc userDataBloc = BlocProvider.of<UserDataBloc>(context);
-          userDataBloc.add(UserDataEventChange(
-            accessToken: result['data']['verifyOtp']['token']['accessToken'],
-            refreshToken: result['data']['verifyOtp']['token']['refreshToken'],
-            accessTokenExpires: result['data']['verifyOtp']['token']
-                ['accessTokenExpires'],
-            userProfile:
-                UserProfileModel.fromMap(result['data']['verifyOtp']['user']),
-            permissions: List.from(
-                result['data']['verifyOtp']['access']['additionalPermissions']),
-            roles: List<Role>.from(result['data']['verifyOtp']['access']
-                    ['roles']
-                .map((x) => Role.fromMap(x))
-                .toList()),
-            is_online: result['data']['verifyOtp']['user']['is_online'],
-            // parse 1h to duration
-            tokenExpires: DateTime.now().add(Duration(
-                hours: int.parse(result['data']['verifyOtp']['token']
-                        ['accessTokenExpires']
-                    .split('h')[0]))),
-          ));
-          Future.delayed(Duration(milliseconds: 200)).then((value) {
-            _btnController.reset();
-          });
-          AutoRouter.of(context).pushNamed('/home');
-        } else {
+        if (result['errors'] != null) {
           setState(() {
             isLoading = false;
           });
           _btnController.error();
-          Future.delayed(Duration(milliseconds: 200)).then((value) {
+          AnimatedSnackBar.material(
+            AppLocalizations.of(context)!.otpCodeError,
+            type: AnimatedSnackBarType.error,
+          ).show(context);
+          Future.delayed(const Duration(milliseconds: 1000)).then((value) {
             _btnController.reset();
           });
+          return;
         }
+
+        setState(() {
+          isLoading = false;
+        });
+        _btnController.success();
+        UserDataBloc userDataBloc = BlocProvider.of<UserDataBloc>(context);
+        userDataBloc.add(UserDataEventChange(
+          accessToken: result['data']['verifyOtp']['token']['accessToken'],
+          refreshToken: result['data']['verifyOtp']['token']['refreshToken'],
+          accessTokenExpires: result['data']['verifyOtp']['token']
+              ['accessTokenExpires'],
+          userProfile:
+              UserProfileModel.fromMap(result['data']['verifyOtp']['user']),
+          permissions: List.from(
+              result['data']['verifyOtp']['access']['additionalPermissions']),
+          roles: List<Role>.from(result['data']['verifyOtp']['access']
+                  ['roles']
+              .map((x) => Role.fromMap(x))
+              .toList()),
+          is_online: result['data']['verifyOtp']['user']['is_online'],
+          // parse 1h to duration
+          tokenExpires: DateTime.now().add(Duration(
+              hours: int.parse(result['data']['verifyOtp']['token']
+                      ['accessTokenExpires']
+                  .split('h')[0]))),
+        ));
+        Future.delayed(const Duration(milliseconds: 200)).then((value) {
+          _btnController.reset();
+        });
+        AutoRouter.of(context).pushNamed('/home');
+      } else {
+        setState(() {
+          isLoading = false;
+        });
+        _btnController.error();
+        Future.delayed(const Duration(milliseconds: 200)).then((value) {
+          _btnController.reset();
+        });
       }
     }
 
@@ -191,7 +186,7 @@ class _LoginTypeOtpPageState extends State<LoginTypeOtpPage> {
             color: Theme.of(context).primaryColor,
           ),
           AnimatedPositioned(
-            duration: Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 500),
             curve: Curves.easeOutQuad,
             top: keyboardOpen ? -size.height / 6 : 0.0,
             child: WaveWidget(
@@ -213,7 +208,7 @@ class _LoginTypeOtpPageState extends State<LoginTypeOtpPage> {
                 ),
               )),
           Padding(
-            padding: EdgeInsets.only(top: 130),
+            padding: const EdgeInsets.only(top: 130),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text('arryt',
                   style: GoogleFonts.comfortaa(
@@ -241,7 +236,7 @@ class _LoginTypeOtpPageState extends State<LoginTypeOtpPage> {
                     selectedColor: Theme.of(context).primaryColor,
                     inactiveColor: Theme.of(context).primaryColor,
                   ),
-                  animationDuration: Duration(milliseconds: 300),
+                  animationDuration: const Duration(milliseconds: 300),
                   keyboardType: TextInputType.number,
                   obscuringCharacter: '*',
                   // enableActiveFill: true,

@@ -150,7 +150,7 @@ class ListenNewCurrentOrder extends StatelessWidget {
               }
               // ResultAccumulator is a provided helper widget for collating subscription results.
               // careful though! It is stateful and will discard your results if the state is disposed
-              return SizedBox();
+              return const SizedBox();
             });
       },
     );

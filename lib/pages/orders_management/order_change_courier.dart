@@ -110,13 +110,13 @@ class _OrderChangeCourierViewState extends State<OrderChangeCourierView> {
           children: [
             AppBar(
               centerTitle: true,
-              leading: SizedBox(),
+              leading: const SizedBox(),
               actions: [
                 IconButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(Icons.close))
+                    icon: const Icon(Icons.close))
               ],
               foregroundColor: Colors.black,
               backgroundColor: Colors.white,
@@ -131,9 +131,7 @@ class _OrderChangeCourierViewState extends State<OrderChangeCourierView> {
                     itemCount: couriers.length,
                     itemBuilder: (context, index) {
                       return ListTile(
-                          title: Text(couriers[index].firstName +
-                              ' ' +
-                              couriers[index].lastName),
+                          title: Text('${couriers[index].firstName} ${couriers[index].lastName}'),
                           onTap: () {
                             _setCourier(couriers[index].identity);
                           });

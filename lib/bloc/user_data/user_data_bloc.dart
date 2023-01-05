@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
@@ -12,9 +11,9 @@ class UserDataBloc extends HydratedBloc<UserDataEvent, UserDataState> {
       : super(UserDataInitial(
             accessToken: '',
             accessTokenExpires: '',
-            permissions: [],
+            permissions: const [],
             refreshToken: '',
-            roles: [],
+            roles: const [],
             userProfile: null,
             is_online: false,
             tokenExpires: DateTime.now())) {
@@ -36,9 +35,9 @@ class UserDataBloc extends HydratedBloc<UserDataEvent, UserDataState> {
       emit(UserDataLogout(
           accessToken: '',
           accessTokenExpires: '',
-          permissions: [],
+          permissions: const [],
           refreshToken: '',
-          roles: [],
+          roles: const [],
           userProfile: null,
           is_online: false,
           tokenExpires: DateTime.now()));

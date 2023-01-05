@@ -34,42 +34,40 @@ class _ApiGraphqlProviderView extends StatelessWidget {
           (element) => element.isServiceDefault == true,
           orElse: () => apiClientsState.apiClients.first);
 
-      if (apiClient != null) {
-        var requestBody = '''
-        {
-          "query": "mutation {refreshToken(refreshToken: \\"${userDataBloc.state.refreshToken}\\") {\\naccessToken\\naccessTokenExpires\\nrefreshToken\\n}}\\n",
-          "variables": null
-        }
-        ''';
+      var requestBody = '''
+      {
+        "query": "mutation {refreshToken(refreshToken: \\"${userDataBloc.state.refreshToken}\\") {\\naccessToken\\naccessTokenExpires\\nrefreshToken\\n}}\\n",
+        "variables": null
+      }
+      ''';
 
-        var response = await http.post(
-          Uri.parse("https://${apiClient.apiUrl}/graphql"),
-          headers: {'Content-Type': 'application/json'},
-          body: requestBody,
-        );
-        if (response.statusCode == 200) {
-          var result = jsonDecode(response.body);
-          if (result['errors'] == null) {
-            var data = result['data']['refreshToken'];
+      var response = await http.post(
+        Uri.parse("https://${apiClient.apiUrl}/graphql"),
+        headers: {'Content-Type': 'application/json'},
+        body: requestBody,
+      );
+      if (response.statusCode == 200) {
+        var result = jsonDecode(response.body);
+        if (result['errors'] == null) {
+          var data = result['data']['refreshToken'];
 
-            Future.delayed(Duration(microseconds: 500), () {
-              context.read<UserDataBloc>().add(
-                    UserDataEventChange(
-                      accessToken: data!['accessToken'],
-                      accessTokenExpires: data!['accessTokenExpires'],
-                      refreshToken: data!['refreshToken'],
-                      permissions: userDataBloc.state.permissions,
-                      roles: userDataBloc.state.roles,
-                      userProfile: userDataBloc.state.userProfile,
-                      is_online: userDataBloc.state.is_online,
-                      tokenExpires: DateTime.now().add(Duration(
-                          hours: int.parse(
-                              data!['accessTokenExpires'].split('h')[0]))),
-                    ),
-                  );
-            });
-            return 'Bearer ${data!['accessToken']}';
-          }
+          Future.delayed(const Duration(microseconds: 500), () {
+            context.read<UserDataBloc>().add(
+                  UserDataEventChange(
+                    accessToken: data!['accessToken'],
+                    accessTokenExpires: data!['accessTokenExpires'],
+                    refreshToken: data!['refreshToken'],
+                    permissions: userDataBloc.state.permissions,
+                    roles: userDataBloc.state.roles,
+                    userProfile: userDataBloc.state.userProfile,
+                    is_online: userDataBloc.state.is_online,
+                    tokenExpires: DateTime.now().add(Duration(
+                        hours: int.parse(
+                            data!['accessTokenExpires'].split('h')[0]))),
+                  ),
+                );
+          });
+          return 'Bearer ${data!['accessToken']}';
         }
       }
     }
@@ -99,7 +97,7 @@ class _ApiGraphqlProviderView extends StatelessWidget {
 
           final WebSocketLink wsLink = WebSocketLink(
             'wss://${apiClient.apiUrl}/ws',
-            config: SocketClientConfig(
+            config: const SocketClientConfig(
               autoReconnect: true,
               inactivityTimeout: Duration(seconds: 30),
             ),
