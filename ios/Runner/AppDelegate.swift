@@ -1,7 +1,7 @@
 import UIKit
 import Flutter
 import workmanager
-import AppTrackingTransparency
+// import AppTrackingTransparency
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {

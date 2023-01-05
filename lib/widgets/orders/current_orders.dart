@@ -34,8 +34,7 @@ class MyCurrentOrderListView extends StatefulWidget {
   State<MyCurrentOrderListView> createState() => _MyCurrentOrderListViewState();
 }
 
-class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
-    with AutomaticKeepAliveClientMixin<MyCurrentOrderListView> {
+class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView> {
   late EasyRefreshController _controller;
 
   Future<void> _loadOrders() async {
@@ -251,7 +250,4 @@ class _MyCurrentOrderListViewState extends State<MyCurrentOrderListView>
       }
     });
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }

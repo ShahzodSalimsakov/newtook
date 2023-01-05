@@ -398,6 +398,20 @@ class _OrdersManagementViewState extends State<OrdersManagementView> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
+                                            Text(
+                                              AppLocalizations.of(context)!
+                                                  .customer_phone,
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Text(
+                                                element.customer.target!.phone),
+                                          ],
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
                                             Flexible(
                                                 child: Text(
                                               element.terminal.target!.name,
@@ -641,6 +655,21 @@ class _OrdersManagementViewState extends State<OrdersManagementView> {
                                               ),
                                               Text(element
                                                   .customer.target!.name),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                AppLocalizations.of(context)!
+                                                    .customer_phone,
+                                                style: const TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(element
+                                                  .customer.target!.phone),
                                             ],
                                           ),
                                           Row(
