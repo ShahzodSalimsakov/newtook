@@ -253,55 +253,55 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                         Text(widget.order.customer.target!.phone),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                            child: Text(
-                          widget.order.terminal.target!.name,
-                          maxLines: 4,
-                          style: const TextStyle(fontWeight: FontWeight.bold),
-                        )),
-                        Expanded(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              GestureDetector(
-                                onTap: () async {
-                                  await launchUrl(Uri.parse(
-                                      "yandexnavi://build_route_on_map?lat_to=${widget.order.from_lat}&lon_to=${widget.order.from_lon}"));
-                                },
-                                child: Icon(
-                                  Icons.navigation_outlined,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              ),
-                              Icon(
-                                Icons.keyboard_control_outlined,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                              GestureDetector(
-                                onTap: () async {
-                                  await launchUrl(Uri.parse(
-                                      "yandexnavi://build_route_on_map?lat_to=${widget.order.to_lat}&lon_to=${widget.order.to_lon}"));
-                                },
-                                child: Icon(
-                                  Icons.location_pin,
-                                  color: Theme.of(context).primaryColor,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Flexible(
-                          fit: FlexFit.loose,
-                          child: Text(
-                            widget.order.delivery_address ?? '',
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Flexible(
+                    //         child: Text(
+                    //       widget.order.terminal.target!.name,
+                    //       maxLines: 4,
+                    //       style: const TextStyle(fontWeight: FontWeight.bold),
+                    //     )),
+                    //     Expanded(
+                    //       child: Row(
+                    //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    //         children: [
+                    //           GestureDetector(
+                    //             onTap: () async {
+                    //               await launchUrl(Uri.parse(
+                    //                   "yandexnavi://build_route_on_map?lat_to=${widget.order.from_lat}&lon_to=${widget.order.from_lon}"));
+                    //             },
+                    //             child: Icon(
+                    //               Icons.navigation_outlined,
+                    //               color: Theme.of(context).primaryColor,
+                    //             ),
+                    //           ),
+                    //           Icon(
+                    //             Icons.keyboard_control_outlined,
+                    //             color: Theme.of(context).primaryColor,
+                    //           ),
+                    //           GestureDetector(
+                    //             onTap: () async {
+                    //               await launchUrl(Uri.parse(
+                    //                   "yandexnavi://build_route_on_map?lat_to=${widget.order.to_lat}&lon_to=${widget.order.to_lon}"));
+                    //             },
+                    //             child: Icon(
+                    //               Icons.location_pin,
+                    //               color: Theme.of(context).primaryColor,
+                    //             ),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //     Flexible(
+                    //       fit: FlexFit.loose,
+                    //       child: Text(
+                    //         widget.order.delivery_address ?? '',
+                    //         style: const TextStyle(fontWeight: FontWeight.bold),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -349,24 +349,24 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                     ),
                   ],
                 )),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                GestureDetector(
-                  onTap: () async {
-                    final coords =
-                        Coords(widget.order.to_lat, widget.order.to_lon);
-                    await launchUrl(Uri.parse(
-                        "yandexnavi://build_route_on_map?lat_to=${widget.order.to_lat}&lon_to=${widget.order.to_lon}"));
-                  },
-                  child: const Icon(
-                    Icons.location_pin,
-                    color: Colors.deepPurple,
-                    size: 40,
-                  ),
-                ),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     GestureDetector(
+            //       onTap: () async {
+            //         final coords =
+            //             Coords(widget.order.to_lat, widget.order.to_lon);
+            //         await launchUrl(Uri.parse(
+            //             "yandexnavi://build_route_on_map?lat_to=${widget.order.to_lat}&lon_to=${widget.order.to_lon}"));
+            //       },
+            //       child: const Icon(
+            //         Icons.location_pin,
+            //         color: Colors.deepPurple,
+            //         size: 40,
+            //       ),
+            //     ),
+            //   ],
+            // ),
             Container(
               color: Theme.of(context).primaryColor,
               child: IntrinsicHeight(
@@ -477,22 +477,22 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                           Text(widget.order.customer.target!.phone),
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.address,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          const Spacer(),
-                          Flexible(
-                            fit: FlexFit.loose,
-                            child: Text(
-                              widget.order.delivery_address ?? '',
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //   children: [
+                      //     Text(
+                      //       AppLocalizations.of(context)!.address,
+                      //       style: const TextStyle(fontWeight: FontWeight.bold),
+                      //     ),
+                      //     const Spacer(),
+                      //     Flexible(
+                      //       fit: FlexFit.loose,
+                      //       child: Text(
+                      //         widget.order.delivery_address ?? '',
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       // Row(
                       //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       //   children: [
@@ -533,39 +533,39 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                         maxLines: 4,
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       )),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            GestureDetector(
-                              onTap: () async {
-                                await launchUrl(Uri.parse(
-                                    "yandexnavi://build_route_on_map?lat_to=${widget.order.from_lat}&lon_to=${widget.order.from_lon}"));
-                              },
-                              child: Icon(
-                                Icons.navigation_outlined,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                            Icon(
-                              Icons.keyboard_control_outlined,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                print(
-                                    "yandexnavi://build_route_on_map?lat_to=${widget.order.to_lat}&lon_to=${widget.order.to_lon}");
-                                await launchUrl(Uri.parse(
-                                    "yandexnavi://build_route_on_map?lat_to=${widget.order.to_lat}&lon_to=${widget.order.to_lon}"));
-                              },
-                              child: Icon(
-                                Icons.location_pin,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Expanded(
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      //     children: [
+                      //       GestureDetector(
+                      //         onTap: () async {
+                      //           await launchUrl(Uri.parse(
+                      //               "yandexnavi://build_route_on_map?lat_to=${widget.order.from_lat}&lon_to=${widget.order.from_lon}"));
+                      //         },
+                      //         child: Icon(
+                      //           Icons.navigation_outlined,
+                      //           color: Theme.of(context).primaryColor,
+                      //         ),
+                      //       ),
+                      //       Icon(
+                      //         Icons.keyboard_control_outlined,
+                      //         color: Theme.of(context).primaryColor,
+                      //       ),
+                      //       GestureDetector(
+                      //         onTap: () async {
+                      //           print(
+                      //               "yandexnavi://build_route_on_map?lat_to=${widget.order.to_lat}&lon_to=${widget.order.to_lon}");
+                      //           await launchUrl(Uri.parse(
+                      //               "yandexnavi://build_route_on_map?lat_to=${widget.order.to_lat}&lon_to=${widget.order.to_lon}"));
+                      //         },
+                      //         child: Icon(
+                      //           Icons.location_pin,
+                      //           color: Theme.of(context).primaryColor,
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       Flexible(
                           child: Text(
                         widget.order.delivery_address ?? '',
@@ -640,54 +640,54 @@ class _WaitingOrderCardState extends State<WaitingOrderCard> {
                       ),
                     ],
                   )),
-              Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () async {
-                          final coords =
-                              Coords(widget.order.to_lat, widget.order.to_lon);
-                          final title = widget.order.delivery_address ?? '';
-                          final availableMaps = await MapLauncher.installedMaps;
-                          showModalBottomSheet(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return SafeArea(
-                                child: SingleChildScrollView(
-                                  child: Container(
-                                    child: Wrap(
-                                      children: <Widget>[
-                                        for (var map in availableMaps)
-                                          ListTile(
-                                            onTap: () => map.showMarker(
-                                              coords: coords,
-                                              title: title,
-                                            ),
-                                            title: Text(map.mapName),
-                                            leading: SvgPicture.asset(
-                                              map.icon,
-                                              height: 30.0,
-                                              width: 30.0,
-                                            ),
-                                          ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        child: const Icon(
-                          Icons.location_pin,
-                          color: Colors.deepPurple,
-                          size: 40,
-                        ),
-                      ),
-                    ],
-                  )),
+              // Padding(
+              //     padding: const EdgeInsets.all(8.0),
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         GestureDetector(
+              //           onTap: () async {
+              //             final coords =
+              //                 Coords(widget.order.to_lat, widget.order.to_lon);
+              //             final title = widget.order.delivery_address ?? '';
+              //             final availableMaps = await MapLauncher.installedMaps;
+              //             showModalBottomSheet(
+              //               context: context,
+              //               builder: (BuildContext context) {
+              //                 return SafeArea(
+              //                   child: SingleChildScrollView(
+              //                     child: Container(
+              //                       child: Wrap(
+              //                         children: <Widget>[
+              //                           for (var map in availableMaps)
+              //                             ListTile(
+              //                               onTap: () => map.showMarker(
+              //                                 coords: coords,
+              //                                 title: title,
+              //                               ),
+              //                               title: Text(map.mapName),
+              //                               leading: SvgPicture.asset(
+              //                                 map.icon,
+              //                                 height: 30.0,
+              //                                 width: 30.0,
+              //                               ),
+              //                             ),
+              //                         ],
+              //                       ),
+              //                     ),
+              //                   ),
+              //                 );
+              //               },
+              //             );
+              //           },
+              //           child: const Icon(
+              //             Icons.location_pin,
+              //             color: Colors.deepPurple,
+              //             size: 40,
+              //           ),
+              //         ),
+              //       ],
+              //     )),
               Container(
                 color: Theme.of(context).primaryColor,
                 child: IntrinsicHeight(
