@@ -1,13 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:hex/hex.dart';
 import 'package:arryt/bloc/block_imports.dart';
-import 'package:arryt/pages/login/type_phone.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:http/http.dart' as http;
@@ -45,10 +41,10 @@ class _QRViewWidgetState extends State<QRViewWidgetPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(microseconds: 200), () {
+    Future.delayed(const Duration(microseconds: 200), () {
       print("resuming camera");
       controller?.resumeCamera();
-      Future.delayed(Duration(microseconds: 100), () {
+      Future.delayed(const Duration(microseconds: 100), () {
         controller?.resumeCamera();
       });
     });
@@ -107,7 +103,7 @@ class _QRViewWidgetState extends State<QRViewWidgetPage> {
                       color: Colors.white.withOpacity(0.8),
                       width: double.infinity,
                       height: double.infinity,
-                      child: Center(child: const CircularProgressIndicator())))
+                      child: const Center(child: CircularProgressIndicator())))
               : const SizedBox(),
         ],
       ),
@@ -163,7 +159,7 @@ class _QRViewWidgetState extends State<QRViewWidgetPage> {
       });
       try {
         var response = await http.post(
-          Uri.parse('https://${apiUrl}/graphql'),
+          Uri.parse('https://$apiUrl/graphql'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },

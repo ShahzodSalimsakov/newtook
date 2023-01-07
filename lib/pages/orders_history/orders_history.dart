@@ -14,9 +14,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-/// Core import
-// ignore: depend_on_referenced_packages
-import 'package:syncfusion_flutter_core/core.dart';
 // ignore: depend_on_referenced_packages
 import 'package:syncfusion_flutter_core/localizations.dart';
 
@@ -57,7 +54,7 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
   );
   DateTime _startDate = DateTime.now();
   DateTime _endDate = DateTime.now().add(const Duration(days: 1));
-  int _value = 1;
+  final int _value = 1;
   late bool _isLastPage;
   late int _pageNumber;
   late bool _error;
@@ -152,7 +149,7 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
         });
       }
       List<OrderModel> tempOrders = [];
-      orders.forEach((order) {
+      for (var order in orders) {
         OrderStatus orderStatus = OrderStatus(
           identity: order['orders_order_status']['id'],
           name: order['orders_order_status']['name'],
@@ -191,7 +188,7 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
         orderModel.courier.target = courier;
         tempOrders.add(orderModel);
         print(orderStatus);
-      });
+      }
       setState(() {
         if (reload) {
           _posts = tempOrders;
@@ -206,7 +203,7 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
   /// Update the selected date for the date range picker based on the date selected,
   /// when the trip mode set one way.
   void _onSelectedDateChanged(DateTime date) {
-    if (date == null || date == _startDate) {
+    if (date == _startDate) {
       return;
     }
 
@@ -394,7 +391,7 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                                   ],
                           ))))
             ]),
-            _posts.length == 0
+            _posts.isEmpty
                 ? Expanded(
                     child: Center(
                         child: Text(AppLocalizations.of(context)!.noOrders)))
@@ -464,10 +461,10 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                                                         .progress),
                                             errorWidget:
                                                 (context, url, error) =>
-                                                    Icon(Icons.error),
+                                                    const Icon(Icons.error),
                                           ),
                                         )
-                                      : SizedBox(width: 0),
+                                      : const SizedBox(width: 0),
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
@@ -620,7 +617,7 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                                       ),
                                     ],
                                   )),
-                              SizedBox(
+                              const SizedBox(
                                 height: 5,
                               ),
                               Container(
@@ -876,7 +873,7 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                                         ),
                                       ],
                                     )),
-                                SizedBox(
+                                const SizedBox(
                                   height: 5,
                                 ),
                                 Container(
@@ -1049,7 +1046,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
                         ? _date
                         : (_range.startDate ?? _range.endDate)),
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
                   )
                 : Row(
                     children: <Widget>[
@@ -1063,7 +1060,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.w600),
                         ),
                       ),
@@ -1080,7 +1077,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.w600),
                         ),
                       ),

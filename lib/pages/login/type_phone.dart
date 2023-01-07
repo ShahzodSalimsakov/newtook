@@ -3,22 +3,17 @@ import 'dart:convert';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:arryt/bloc/block_imports.dart';
-import 'package:arryt/bloc/otp_phone_number/otp_phone_number_bloc.dart';
-import 'package:arryt/helpers/api_graphql_provider.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:http/http.dart' as http;
 
 import '../../widgets/wave/wave_widget.dart';
 
 class LoginTypePhonePage extends StatefulWidget {
-  LoginTypePhonePage({Key? key}) : super(key: key);
+  const LoginTypePhonePage({Key? key}) : super(key: key);
 
   @override
   State<LoginTypePhonePage> createState() => _LoginTypePhonePageState();
@@ -50,39 +45,36 @@ class _LoginTypePhonePageState extends State<LoginTypePhonePage> {
       // get first isServiceDefault client
       ApiClients? apiClient = apiClientsBloc.state.apiClients
           .firstWhere((element) => element.isServiceDefault == true);
-      if (apiClient != null) {
-        // send phone number to server
-        var requestBody = '''
-        {
-          "query": "mutation {sendOtp(phone: \\"$phoneNumber\\") {\\n details}}\\n",
-          "variables": null
-        }
-        ''';
-        var response = await http.post(
-          Uri.parse('https://${apiClient.apiUrl}/graphql'),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: requestBody,
-        );
-        var result = jsonDecode(response.body);
-        if (result['errors'] != null) {
-          // show snackbar with error
-          AnimatedSnackBar.material(
-            AppLocalizations.of(context)!.error_label,
-            type: AnimatedSnackBarType.error,
-          ).show(context);
-        } else {
-          var details = result['data']['sendOtp']['details'];
-          OtpTokenBloc otpTokenBloc = BlocProvider.of<OtpTokenBloc>(context);
-          otpTokenBloc.add(OtpTokenChanged(token: details));
-          _btnController.success();
-          _btnController.reset();
-          // zero delayed
-          Future.delayed(Duration(milliseconds: 200), () {
-            AutoRouter.of(context).pushNamed('/login/type-otp');
-          });
-        }
+      var requestBody = '''
+      {
+        "query": "mutation {sendOtp(phone: \\"$phoneNumber\\") {\\n details}}\\n",
+        "variables": null
+      }
+      ''';
+      var response = await http.post(
+        Uri.parse('https://${apiClient.apiUrl}/graphql'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: requestBody,
+      );
+      var result = jsonDecode(response.body);
+      if (result['errors'] != null) {
+        // show snackbar with error
+        AnimatedSnackBar.material(
+          AppLocalizations.of(context)!.error_label,
+          type: AnimatedSnackBarType.error,
+        ).show(context);
+      } else {
+        var details = result['data']['sendOtp']['details'];
+        OtpTokenBloc otpTokenBloc = BlocProvider.of<OtpTokenBloc>(context);
+        otpTokenBloc.add(OtpTokenChanged(token: details));
+        _btnController.success();
+        _btnController.reset();
+        // zero delayed
+        Future.delayed(const Duration(milliseconds: 200), () {
+          AutoRouter.of(context).pushNamed('/login/type-otp');
+        });
       }
 
       _btnController.success();
@@ -115,7 +107,7 @@ class _LoginTypePhonePageState extends State<LoginTypePhonePage> {
             color: Theme.of(context).primaryColor,
           ),
           AnimatedPositioned(
-            duration: Duration(milliseconds: 500),
+            duration: const Duration(milliseconds: 500),
             curve: Curves.easeOutQuad,
             top: keyboardOpen ? -size.height / 6 : 0.0,
             child: WaveWidget(
@@ -130,7 +122,7 @@ class _LoginTypePhonePageState extends State<LoginTypePhonePage> {
                 onTap: () {
                   ApiClientsBloc apiClientsBloc =
                       BlocProvider.of<ApiClientsBloc>(context);
-                  apiClientsBloc.add(ApiClientsRemoveAllIsServiceDefault());
+                  apiClientsBloc.add(const ApiClientsRemoveAllIsServiceDefault());
                   AutoRouter.of(context).pop();
                 },
                 child: const Icon(
@@ -140,7 +132,7 @@ class _LoginTypePhonePageState extends State<LoginTypePhonePage> {
                 ),
               )),
           Padding(
-            padding: EdgeInsets.only(top: 130),
+            padding: const EdgeInsets.only(top: 130),
             child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               Text('arryt',
                   style: GoogleFonts.comfortaa(
@@ -150,7 +142,7 @@ class _LoginTypePhonePageState extends State<LoginTypePhonePage> {
             ]),
           ),
           Padding(
-              padding: EdgeInsets.all(30.0),
+              padding: const EdgeInsets.all(30.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -191,7 +183,7 @@ class _LoginTypePhonePageState extends State<LoginTypePhonePage> {
                     inputBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(40)),
                     onSaved: (PhoneNumber number) {},
-                    countries: ['UZ'],
+                    countries: const ['UZ'],
                     countrySelectorScrollControlled: false,
                   ),
                   const SizedBox(

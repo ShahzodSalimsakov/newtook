@@ -1,30 +1,21 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'dart:ui';
 
 // import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:arryt/bloc/block_imports.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_services_binding/flutter_services_binding.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:arryt/helpers/objectbox.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:workmanager/workmanager.dart';
-import 'firebase_options.dart';
 import 'package:http/http.dart' as http;
 import 'app.dart';
 import 'notifications/notification_controller.dart';
@@ -147,7 +138,7 @@ Future<void> main() async {
   await initializeService();
 
   runApp(
-    App(),
+    const App(),
   );
 }
 
@@ -218,9 +209,9 @@ void onStart(ServiceInstance service) async {
     );
 
     try {
-      var userBlocData = await HydratedBloc.storage!.read('UserDataBloc');
+      var userBlocData = await HydratedBloc.storage.read('UserDataBloc');
       var apiClientBlocData =
-          await HydratedBloc.storage!.read('ApiClientsBloc');
+          await HydratedBloc.storage.read('ApiClientsBloc');
       UserDataState userBloc = UserDataInitial.fromJson(userBlocData['value']);
       // ApiClientsState apiClientBloc =
       //     ApiClientsInitial.fromJson(apiClientBlocData['value']);
@@ -236,56 +227,54 @@ void onStart(ServiceInstance service) async {
             (element) => element.isServiceDefault == true,
             orElse: () => apiClients.first);
 
-        if (apiClient != null) {
-          bool serviceEnabled;
-          LocationPermission permission;
+        bool serviceEnabled;
+        LocationPermission permission;
 
-          // Test if location services are enabled.
-          serviceEnabled = await Geolocator.isLocationServiceEnabled();
-          if (!serviceEnabled) {
-            return;
-          }
-
-          permission = await Geolocator.checkPermission();
-          if (permission == LocationPermission.denied) {
-            return;
-          }
-
-          if (permission == LocationPermission.deniedForever) {
-            // Permissions are denied forever, handle appropriately.
-            return;
-          }
-
-          Position? position = await Geolocator.getLastKnownPosition();
-          Position currentPosition = await Geolocator.getCurrentPosition(
-              desiredAccuracy: LocationAccuracy.bestForNavigation);
-          if (position != null) {
-            double distanceInMeters = Geolocator.distanceBetween(
-                position.latitude,
-                position.longitude,
-                currentPosition!.latitude,
-                currentPosition!.longitude);
-            if (distanceInMeters < 3) {
-              return;
-            }
-            PackageInfo packageInfo = await PackageInfo.fromPlatform();
-            var accessToken = userBloc.refreshToken;
-            var requestBody = '''
-        {
-          "query": "mutation {storeLocation(latitude: ${currentPosition!.latitude}, longitude: ${currentPosition!.longitude}, appVersion: \\"${packageInfo.version}\\") {\\nsuccess\\n}}\\n",
-          "variables": null
+        // Test if location services are enabled.
+        serviceEnabled = await Geolocator.isLocationServiceEnabled();
+        if (!serviceEnabled) {
+          return;
         }
-        ''';
 
-            var response = await http.post(
-              Uri.parse("https://${apiClient.apiUrl}/graphql"),
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ${accessToken}'
-              },
-              body: requestBody,
-            );
+        permission = await Geolocator.checkPermission();
+        if (permission == LocationPermission.denied) {
+          return;
+        }
+
+        if (permission == LocationPermission.deniedForever) {
+          // Permissions are denied forever, handle appropriately.
+          return;
+        }
+
+        Position? position = await Geolocator.getLastKnownPosition();
+        Position currentPosition = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.bestForNavigation);
+        if (position != null) {
+          double distanceInMeters = Geolocator.distanceBetween(
+              position.latitude,
+              position.longitude,
+              currentPosition.latitude,
+              currentPosition.longitude);
+          if (distanceInMeters < 3) {
+            return;
           }
+          PackageInfo packageInfo = await PackageInfo.fromPlatform();
+          var accessToken = userBloc.refreshToken;
+          var requestBody = '''
+      {
+        "query": "mutation {storeLocation(latitude: ${currentPosition.latitude}, longitude: ${currentPosition.longitude}, appVersion: \\"${packageInfo.version}\\") {\\nsuccess\\n}}\\n",
+        "variables": null
+      }
+      ''';
+
+          var response = await http.post(
+            Uri.parse("https://${apiClient.apiUrl}/graphql"),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $accessToken'
+            },
+            body: requestBody,
+          );
         }
       }
     } catch (e) {

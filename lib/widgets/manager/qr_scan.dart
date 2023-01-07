@@ -1,7 +1,5 @@
 import 'package:arryt/helpers/api_graphql_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 

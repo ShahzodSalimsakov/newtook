@@ -7,8 +7,6 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:currency_formatter/currency_formatter.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -151,7 +149,7 @@ class _ManagerCouriersListViewState extends State<ManagerCouriersListView> {
                         ManagerCouriersModel item = snapshot.data![index];
                         return GestureDetector(
                           child: ListTile(
-                            title: Text(item.firstName + ' ' + item.lastName),
+                            title: Text('${item.firstName} ${item.lastName}'),
                             subtitle: Text(item.terminalName),
                             trailing: Text(
                                 CurrencyFormatter.format(

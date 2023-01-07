@@ -31,7 +31,9 @@ class ListenDeletedWaitingOrders extends HookWidget {
       }
     }
 
-    useEffect(() {}, []);
+    useEffect(() {
+      return null;
+    }, []);
 
     return const SizedBox();
   }

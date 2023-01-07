@@ -8,7 +8,7 @@ class WaveWidget extends StatefulWidget {
   final double yOffset;
   final Color color;
 
-  WaveWidget({
+  const WaveWidget({
     required this.size,
     required this.yOffset,
     required this.color,
@@ -27,15 +27,15 @@ class _WaveWidgetState extends State<WaveWidget> with TickerProviderStateMixin {
     super.initState();
 
     animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 5000))
+        AnimationController(vsync: this, duration: const Duration(milliseconds: 5000))
           ..addListener(() {
             wavePoints.clear();
 
             final double waveSpeed = animationController.value * 1080;
             final double fullSphere = animationController.value * Math.pi * 2;
             final double normalizer = Math.cos(fullSphere);
-            final double waveWidth = Math.pi / 270;
-            final double waveHeight = 20.0;
+            const double waveWidth = Math.pi / 270;
+            const double waveHeight = 20.0;
 
             for (int i = 0; i <= widget.size.width.toInt(); ++i) {
               double calc = Math.sin((waveSpeed - i) * waveWidth);

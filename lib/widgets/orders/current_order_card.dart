@@ -1,4 +1,3 @@
-import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -6,11 +5,9 @@ import 'package:currency_formatter/currency_formatter.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:loading_overlay/loading_overlay.dart';
 import 'package:map_launcher/map_launcher.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -27,7 +24,6 @@ import '../../models/organizations.dart';
 import '../../models/terminals.dart';
 import '../location_dialog.dart';
 import 'cancel_order_modal.dart';
-import 'order_customer_comments.dart';
 
 class CurrentOrderCard extends StatefulWidget {
   final OrderModel order;
@@ -94,7 +90,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
               title: Text(AppLocalizations.of(context)!.cancelOrderModalLabel),
               actions: <Widget>[
                 InkWell(
-                  child: Text('OK   '),
+                  child: const Text('OK   '),
                   onTap: () {
                     if (_formKey.currentState!.validate()) {
                       // Do something like updating SharedPreferences or User Settings etc.
@@ -334,7 +330,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                 color: Colors.grey,
                 spreadRadius: 1,
                 blurRadius: 15,
-                offset: const Offset(0, 5))
+                offset: Offset(0, 5))
           ],
           color: Colors.white),
       clipBehavior: Clip.antiAlias,
@@ -356,10 +352,10 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                                   CircularProgressIndicator(
                                       value: downloadProgress.progress),
                           errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
+                              const Icon(Icons.error),
                         ),
                       )
-                    : SizedBox(width: 0),
+                    : const SizedBox(width: 0),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
@@ -509,7 +505,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                 )),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 5),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.green,
               ),
               child: GestureDetector(
@@ -541,7 +537,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
             Container(
@@ -601,15 +597,14 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            widget.order.orderNextButton != null &&
-                    widget.order.orderNextButton!.isNotEmpty
+            widget.order.orderNextButton.isNotEmpty
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ...widget.order.orderNextButton!.map((e) {
+                      ...widget.order.orderNextButton.map((e) {
                         Color color = Theme.of(context).primaryColor;
                         if (e.cancel) {
                           color = Colors.red.shade500;
@@ -639,7 +634,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                       })
                     ],
                   )
-                : SizedBox(),
+                : const SizedBox(),
           ]),
           expanded: Column(
             children: [
@@ -834,7 +829,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                   )),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 5),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.green,
                 ),
                 child: GestureDetector(
@@ -867,7 +862,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Container(
@@ -927,15 +922,14 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
-              widget.order.orderNextButton != null &&
-                      widget.order.orderNextButton!.isNotEmpty
+              widget.order.orderNextButton.isNotEmpty
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        ...widget.order.orderNextButton!.map((e) {
+                        ...widget.order.orderNextButton.map((e) {
                           Color color = Theme.of(context).primaryColor;
                           if (e.cancel) {
                             color = Colors.red.shade500;
@@ -965,7 +959,7 @@ class _CurrentOrderCardState extends State<CurrentOrderCard> {
                         })
                       ],
                     )
-                  : SizedBox(),
+                  : const SizedBox(),
             ],
           )),
     );

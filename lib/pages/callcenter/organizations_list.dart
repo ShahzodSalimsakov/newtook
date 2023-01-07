@@ -94,7 +94,7 @@ class _CallCenterOrganizationsListState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Выберите организацию'),
+        title: const Text('Выберите организацию'),
         centerTitle: true,
       ),
       body: ListView.builder(
@@ -112,7 +112,7 @@ class _CallCenterOrganizationsListState
                           (context, url, downloadProgress) =>
                               CircularProgressIndicator(
                                   value: downloadProgress.progress),
-                      errorWidget: (context, url, error) => Icon(Icons.error),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
                   )
                 : null,

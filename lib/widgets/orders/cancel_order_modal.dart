@@ -3,7 +3,6 @@ import 'package:arryt/models/organizations.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:chat_package/views/componants/chat_input_feild.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
@@ -272,7 +271,7 @@ class _CancelOrderModalState extends State<CancelOrderModal> {
                     }
                   ''';
                   var multipartFile = await MultipartFile.fromPath(
-                      'file', source!,
+                      'file', source,
                       contentType: MediaType("audio", "m4a"));
                   var opts = MutationOptions(
                     document: gql(query),

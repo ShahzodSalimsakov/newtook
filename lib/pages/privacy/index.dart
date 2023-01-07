@@ -127,7 +127,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
               }
               setState(() {
                 this.progress = progress / 100;
-                urlController.text = this.url;
+                urlController.text = url;
               });
             },
             onUpdateVisitedHistory: (controller, url, androidIsReload) {

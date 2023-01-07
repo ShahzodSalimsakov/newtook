@@ -5,7 +5,7 @@ part 'otp_token_event.dart';
 part 'otp_token_state.dart';
 
 class OtpTokenBloc extends Bloc<OtpTokenEvent, OtpTokenState> {
-  OtpTokenBloc() : super(OtpTokenInitial(token: '')) {
+  OtpTokenBloc() : super(const OtpTokenInitial(token: '')) {
     on<OtpTokenEvent>((event, emit) {
       // TODO: implement event handler
     });

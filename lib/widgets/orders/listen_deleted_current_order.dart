@@ -31,7 +31,9 @@ class ListenDeletedCurrentOrders extends HookWidget {
       }
     }
 
-    useEffect(() {}, []);
+    useEffect(() {
+      return null;
+    }, []);
 
     return const SizedBox();
   }

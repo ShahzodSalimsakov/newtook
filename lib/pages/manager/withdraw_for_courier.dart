@@ -46,7 +46,7 @@ class WithdrawForCourierView extends StatefulWidget {
 
 class _WithdrawForCourierViewState extends State<WithdrawForCourierView> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _amountController = TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
   CurrencyFormatterSettings euroSettings = CurrencyFormatterSettings(
     symbol: 'сум',
     symbolSide: SymbolSide.right,

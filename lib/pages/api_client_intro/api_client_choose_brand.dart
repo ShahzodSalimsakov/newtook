@@ -59,7 +59,7 @@ class _ApiClientChooseBrandState extends State<ApiClientChooseBrand> {
     setState(() {
       isLoading = true;
     });
-    String hexString = brand.sign!;
+    String hexString = brand.sign;
     List<String> splitted = [];
     for (int i = 0; i < hexString.length; i = i + 2) {
       splitted.add(hexString.substring(i, i + 2));
@@ -76,7 +76,7 @@ class _ApiClientChooseBrandState extends State<ApiClientChooseBrand> {
     String serviceName = base64Decoded.split("|")[1];
     try {
       var response = await http.post(
-        Uri.parse('https://${apiUrl}/graphql'),
+        Uri.parse('https://$apiUrl/graphql'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -215,7 +215,7 @@ class Card3DWidget extends StatelessWidget {
       child: ClipRRect(
         borderRadius: border,
         child: Image.network(
-          card!.logoPath!,
+          card!.logoPath,
           fit: BoxFit.cover,
         ),
       ),
