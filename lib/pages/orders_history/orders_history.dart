@@ -400,8 +400,9 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                       controller: _scrollController,
                       shrinkWrap: true,
                       elements: _posts,
-                      groupBy: (element) =>
-                          DateFormat('yyyyMMdd').format(element.created_at),
+                      groupBy: (element) => DateFormat('yyyyMMdd').format(
+                          DateTime.parse(element.created_at.toString())
+                              .toUtc()),
                       groupSeparatorBuilder: (String groupByValue) => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -477,8 +478,10 @@ class _OrdersHistoryViewState extends State<OrdersHistoryView> {
                                   Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      DateFormat('dd.MM.yyyy HH:mm')
-                                          .format(element.created_at),
+                                      DateFormat('dd.MM.yyyy HH:mm').format(
+                                          DateTime.parse(
+                                                  element.created_at.toString())
+                                              .toLocal()),
                                       style: const TextStyle(
                                           fontSize: 20,
                                           fontWeight: FontWeight.bold),
@@ -1046,7 +1049,8 @@ class _DateRangePickerState extends State<DateRangePicker> {
                         ? _date
                         : (_range.startDate ?? _range.endDate)),
                     textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w600),
                   )
                 : Row(
                     children: <Widget>[

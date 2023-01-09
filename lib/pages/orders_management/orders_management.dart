@@ -17,7 +17,6 @@ import 'package:easy_refresh/easy_refresh.dart';
 
 // ignore: depend_on_referenced_packages
 
-
 import '../../models/customer.dart';
 import '../../models/order.dart';
 import '../../models/order_status.dart';
@@ -258,8 +257,9 @@ class _OrdersManagementViewState extends State<OrdersManagementView> {
                         controller: _scrollController,
                         shrinkWrap: true,
                         elements: _posts,
-                        groupBy: (element) =>
-                            DateFormat('yyyyMMdd').format(element.created_at),
+                        groupBy: (element) => DateFormat('yyyyMMdd').format(
+                            DateTime.parse(element.created_at.toString())
+                                .toLocal()),
                         groupSeparatorBuilder: (String groupByValue) => Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -338,8 +338,10 @@ class _OrdersManagementViewState extends State<OrdersManagementView> {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                        DateFormat('dd.MM.yyyy HH:mm')
-                                            .format(element.created_at),
+                                        DateFormat('dd.MM.yyyy HH:mm').format(
+                                            DateTime.parse(element.created_at
+                                                    .toString())
+                                                .toLocal()),
                                         style: const TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold),
