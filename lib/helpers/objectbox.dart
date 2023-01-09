@@ -59,6 +59,12 @@ class ObjectBox {
   }
 
   void addWaitingOrders(List<WaitingOrderModel> orders) {
+    for (var element in orders) {
+      final query = _waitingOrdersBox
+          .query(WaitingOrderModel_.identity.equals(element.identity))
+          .build();
+      query.remove();
+    }
     _waitingOrdersBox.putMany(orders);
   }
 
